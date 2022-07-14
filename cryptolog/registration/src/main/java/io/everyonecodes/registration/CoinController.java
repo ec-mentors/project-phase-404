@@ -17,7 +17,12 @@ public class CoinController {
         this.client = client;
     }
 
-    @GetMapping("/home/top100")
+    @GetMapping
+    String index() {
+        return "home";
+    }
+
+    @GetMapping("/top100")
     public String top100(Model model) {
         try {
             List<Coin> coinList = client.getTop100ByMarketCap();

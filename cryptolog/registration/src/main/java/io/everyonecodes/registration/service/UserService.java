@@ -1,4 +1,4 @@
-package io.everyonecodes.registration.repository;
+package io.everyonecodes.registration.service;
 
 import io.everyonecodes.registration.data.User;
 

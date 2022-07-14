@@ -1,8 +1,5 @@
 package io.everyonecodes.registration.data;
 
-import com.sun.istack.NotNull;
-import org.aspectj.bridge.IMessage;
-
 import javax.persistence.*;
 
 @Entity
@@ -18,6 +15,13 @@ public class Role {
 
 	@Column(name = "role_desc")
 	private String desc;
+
+	public Role() {
+	}
+
+	public Role(String role) {
+		this.role = role;
+	}
 
 	public int getId() {
 		return id;
@@ -42,6 +46,13 @@ public class Role {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Role{" +
+				"id=" + id +
+				", role='" + role + '\'' +
+				", desc='" + desc + '\'' +
+				'}';
+	}
 }
