@@ -22,7 +22,7 @@ public class User {
 
 	@NotNull
 	@Email(message = "Invalid email format!")
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	private String email;
 
 	//@Length(min = 5,message = "Password has to be at least 5 characters long!")
@@ -53,8 +53,6 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
 
 
 	public String getEmail() {

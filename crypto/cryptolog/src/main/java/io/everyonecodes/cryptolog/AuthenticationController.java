@@ -6,7 +6,6 @@ import io.everyonecodes.cryptolog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,24 +60,40 @@ public class AuthenticationController {
         return "home";
     }
 
-    //@RequestMapping(value = "/register", method = RequestMethod.POST)
+//    @RequestMapping(value = "/register", method = RequestMethod.POST)
+//    public ModelAndView registerUser(@Valid User user, BindingResult bindingResult, ModelMap modelMap) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        if (bindingResult.hasErrors()) {
+//            modelAndView.addObject("successMessage", "Please write the fields in the right format!");
+//            modelMap.addAttribute("bindingResult", bindingResult);
+//        } else if (userService.isUserAlreadyPresent(user)) {
+//            modelAndView.addObject("successMessage", "User already exists!");
+//        } else {
+//            userService.saveUser(user);
+//            modelAndView.addObject("successMessage", "User is registered successfully, please verify your email. <a href=\"/login\">Login</a>");
+//           // modelAndView.setViewName("firstlogin");
+//            emailSenderService.sendEmail(user);
+//        }
+//        modelAndView.addObject("user", new User());
+//        modelAndView.setViewName("register");
+//        return modelAndView;
+//    }
+
     @PostMapping("/register")
-    public ModelAndView registerUser(@Valid User user, BindingResult bindingResult, ModelMap modelMap) {
+    public String registerUser(@Valid User user, BindingResult bindingResult, Model model) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("successMessage", "Please write the fields in the right format!");
-            modelMap.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("successMessage", "Please write the fields in the right format!");
         } else if (userService.isUserAlreadyPresent(user)) {
-            modelAndView.addObject("successMessage", "User already exists!");
+            model.addAttribute("successMessage", "User already exists!");
         } else {
             userService.saveUser(user);
-            modelAndView.addObject("successMessage", "User is registered successfully, please verify your email. <a href=\"/login\">Login</a>");
-           // modelAndView.setViewName("firstlogin");
+            model.addAttribute("successMessage", "User is registered successfully, please verify your email. <a href=\"/login\">Login</a>");
+            // modelAndView.setViewName("firstlogin");
             emailSenderService.sendEmail(user);
         }
-        modelAndView.addObject("user", new User());
-        modelAndView.setViewName("register");
-        return modelAndView;
+        model.addAttribute("user", new User());
+        return "register";
     }
 
 }
