@@ -50,10 +50,4 @@ public class RegistrationController {
         model.addAttribute("user", new User());
         return "register";
     }
-
-    @GetMapping(path = "confirm")
-    public ModelAndView confirm(@RequestParam("token") String token) {
-        return confirmationTokenService.confirmToken(token);
-    }
 }
-

@@ -38,11 +38,8 @@ public class SecurityConfiguration {
         http.authorizeRequests()
                 // URLs matching for access rights
                 //.antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/register").permitAll()
-                .antMatchers("/confirm").permitAll()
-                .antMatchers("/forgot").permitAll()
-                .antMatchers("/reset").permitAll()
+                .antMatchers("/login", "/register", "/confirm").permitAll()
+                .antMatchers("/forgot", "/reset").permitAll()
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
                 .antMatchers("/home/**").hasAnyAuthority("SUPER_USER", "ADMIN_USER", "SITE_USER")
                 .anyRequest().authenticated()
