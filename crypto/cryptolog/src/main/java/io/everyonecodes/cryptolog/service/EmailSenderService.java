@@ -32,5 +32,4 @@ public class EmailSenderService {
         message.setSubject("Verification Email");
         mailSender.send(message);
     }
-
 }
