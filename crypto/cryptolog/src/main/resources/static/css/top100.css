@@ -1,8 +1,8 @@
 table {
+  clear: both;
   border-collapse: collapse;
   table-layout: fixed;
   font-family: Arial, Helvetica, sans-serif;
-  align-self: center;
   margin: 0 auto;
 }
 
@@ -19,7 +19,6 @@ table th {
   color: white;
   text-align: right;
   background-color: darkcyan;
-  border: 0.3px solid white;
 }
 
 table td {
@@ -35,4 +34,26 @@ th:nth-child(-n+2), td:nth-child(-n+2) {
 
 tr:nth-child(even) {
   background-color: #cef;
+}
+
+#container {
+  margin: 0 auto;
+  width: fit-content;
+  width: -webkit-fit-content;
+}
+
+#logo {
+  float: left;
+  position: relative;
+  top: 0.8em;
+  padding: 0;
+  margin: 0;
+}
+
+#logout {
+  float: right;
+  position: relative;
+  top: 1em;
+  padding: 0;
+  margin: 0;
 }

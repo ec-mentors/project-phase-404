@@ -6,9 +6,17 @@
     <link th:href="@{/css/top100.css}" rel="stylesheet" />
 </head>
 <body>
-    <table>
-        <caption>Top 100 coins</caption>
-        <thead>
+    <div id="container">
+        <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" height="45px">
+        <div id="logout">
+            <select id="usermenu" onchange="window.location.replace(this.value);">
+                <option value="">👤</option>
+                <option value="/logout">Logout</option>
+            </select>
+        </div>
+        <table>
+            <caption>Top 100 coins</caption>
+            <thead>
             <tr>
                 <th>Rank</th>
                 <th>Name</th>
@@ -16,8 +24,8 @@
                 <th>All-Time High Price</th>
                 <th>&#037; Drop from All-time High Price</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <tr th:each="coin: ${coinList}">
                 <td th:text="${coin.market_cap_rank}"/>
                 <td th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'" />
@@ -25,7 +33,8 @@
                 <td th:text="${coin.ath}" />
                 <td th:text="${coin.ath_change_percentage}" />
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

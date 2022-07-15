@@ -1,9 +1,13 @@
 body {
     background-color: black;
-    background-image: url(cryptologbackround.jpg);
+    background-image: url("../images/cryptologbackround.jpg");
     background-size: cover;
 }
 
 p {
     margin: 0.3em;
+}
+
+#logo {
+    margin-left: 0.5em;
 }
