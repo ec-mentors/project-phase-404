@@ -1,4 +1,4 @@
-package io.everyonecodes.cryptolog;
+package io.everyonecodes.cryptolog.controller;
 
 import io.everyonecodes.cryptolog.data.ConfirmationToken;
 import io.everyonecodes.cryptolog.data.User;
@@ -20,20 +20,15 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
-public class AuthenticationController {
+public class LoginController {
     private final UserService userService;
-    private final VerificationEmailSenderService emailSenderService;
-    private final ConfirmationTokenService confirmationTokenService;
 
-    public AuthenticationController(UserService userService, VerificationEmailSenderService emailSenderService, ConfirmationTokenService confirmationTokenService) {
+    public LoginController(UserService userService) {
         this.userService = userService;
-        this.emailSenderService = emailSenderService;
-        this.confirmationTokenService = confirmationTokenService;
     }
 
     @GetMapping("/login")
     String login(HttpServletRequest request, Model model) {
-
         HttpSession session = request.getSession(false);
         String errorMessage = null;
         if (session != null) {
@@ -52,42 +47,6 @@ public class AuthenticationController {
                 model.addAttribute("errorMessage", errorMessage);
             }
         }
-
         return "login";
     }
-
-    @GetMapping("/register")
-    String register(Model model) {
-        User user = new User();
-        model.addAttribute(user);
-        return "register";
-    }
-
-    @GetMapping("/home")
-    String home() {
-        return "home";
-    }
-
-    @PostMapping("/register")
-    public String registerUser(@Valid User user, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("successMessage", "Please write the fields in the right format!");
-            return "register";
-        } else if (userService.isUserAlreadyPresent(user)) {
-            model.addAttribute("successMessage", "There is already an account registered with CryptoLog for the email " + user.getEmail() + ". Please proceed to log in.");
-        } else {
-            userService.saveUser(user);
-            model.addAttribute("successMessage", "User is registered successfully, please verify your email.");
-            ConfirmationToken confirmationToken = confirmationTokenService.createToken(user);
-            emailSenderService.sendEmail(user, confirmationToken);
-        }
-        model.addAttribute("user", new User());
-        return "register";
-    }
-
-    @GetMapping(path = "confirm")
-    public ModelAndView confirm(@RequestParam("token") String token) {
-        return confirmationTokenService.confirmToken(token);
-    }
 }
-

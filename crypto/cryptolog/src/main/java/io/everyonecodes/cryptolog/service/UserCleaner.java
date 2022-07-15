@@ -1,4 +1,4 @@
-package io.everyonecodes.cryptolog;
+package io.everyonecodes.cryptolog.service;
 
 import io.everyonecodes.cryptolog.data.ConfirmationToken;
 import org.springframework.stereotype.Service;

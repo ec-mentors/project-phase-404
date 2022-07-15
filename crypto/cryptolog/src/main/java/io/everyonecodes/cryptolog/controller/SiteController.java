@@ -1,5 +1,6 @@
-package io.everyonecodes.cryptolog;
+package io.everyonecodes.cryptolog.controller;
 
+import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Coin;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,11 @@ public class SiteController {
 
     @GetMapping
     String index() {
+        return "home";
+    }
+
+    @GetMapping("/home")
+    String home() {
         return "home";
     }
 

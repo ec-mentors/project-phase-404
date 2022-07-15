@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -34,5 +35,15 @@ public class UserServiceImp implements UserService {
     @Override
     public boolean isUserAlreadyPresent(User user) {
         return userRepository.existsByEmail(user.getEmail());
+    }
+
+    @Override
+    public Optional<User> findUserByResetToken(String token) {
+        return userRepository.findUserByResetToken(token);
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String userEmail) {
+        return userRepository.findByEmail(userEmail);
     }
 }
