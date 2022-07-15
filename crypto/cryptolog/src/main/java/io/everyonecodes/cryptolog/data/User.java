@@ -19,7 +19,7 @@ public class User {
     private String name;
 
     @NotBlank(message = "Email must not be empty")
-    @Email(message = "Invalid email format")
+    @Email(message = "Email is not valid. Please enter a correct email")
     @Column(name = "email", unique = true)
     private String email;
 

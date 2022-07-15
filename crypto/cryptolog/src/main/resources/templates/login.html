@@ -26,7 +26,7 @@
                 type="password" th:placeholder="Password" id="password" name="password" class="form-control"/> <br/>
 
             <div align="center" th:if="${param.error}">
-                <p style="font-size: 20; color: #FF1C19;">Email or Password is invalid.</p>
+                <p style="font-size: 20; color: #FF1C19;" th:text="${errorMessage}"></p>
             </div>
             <button class="btn btn-lg btn-primary" name="Submit" value="Login" type="Submit" th:text="Login"
                     style="margin-right:10px;"></button>

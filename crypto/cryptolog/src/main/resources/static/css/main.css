@@ -4,7 +4,7 @@ body {
     background-size: cover;
 }
 
-p {
+p .error {
     margin: 0.3em;
 }
 
