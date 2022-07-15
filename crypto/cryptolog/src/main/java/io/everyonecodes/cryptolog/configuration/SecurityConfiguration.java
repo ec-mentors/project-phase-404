@@ -14,16 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
-//@EnableWebSecurity()
-//@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
 
-//	@Autowired
-//	private BCryptPasswordEncoder bCryptPasswordEncoder;
-//
-//	@Autowired
-//	private DataSource dataSource;
-//
 //	@Value("${spring.queries.users-query}")
 //	private String usersQuery;
 //
@@ -84,10 +76,4 @@ public class SecurityConfiguration {
                 .map(UserPrincipal::new)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
-
-//	@Override
-//	public void configure(WebSecurity web) throws Exception {
-//		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
-//	}
-
 }
