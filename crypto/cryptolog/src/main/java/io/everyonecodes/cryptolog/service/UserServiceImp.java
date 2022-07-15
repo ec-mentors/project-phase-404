@@ -2,9 +2,9 @@ package io.everyonecodes.cryptolog.service;
 
 import io.everyonecodes.cryptolog.data.Role;
 import io.everyonecodes.cryptolog.data.User;
+import io.everyonecodes.cryptolog.repository.RoleRepository;
 import io.everyonecodes.cryptolog.repository.UserRepository;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -12,16 +12,14 @@ import java.util.List;
 
 @Service
 public class UserServiceImp implements UserService {
-private final PasswordEncoder encoder;
-//private final RoleRepository roleRepository;
-private final UserRepository userRepository;
-private final JavaMailSender mailSender;
+    private final BCryptPasswordEncoder encoder;
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
 
-    public UserServiceImp(PasswordEncoder encoder, /*RoleRepository roleRepository,*/ UserRepository userRepository, JavaMailSender mailSender) {
+    public UserServiceImp(BCryptPasswordEncoder encoder, RoleRepository roleRepository, UserRepository userRepository) {
         this.encoder = encoder;
-        //this.roleRepository = roleRepository;
+        this.roleRepository = roleRepository;
         this.userRepository = userRepository;
-        this.mailSender = mailSender;
     }
 
     @Override
@@ -36,8 +34,7 @@ private final JavaMailSender mailSender;
 
     @Override
     public boolean isUserAlreadyPresent(User user) {
-        //return userRepository.findByEmail(user.getEmail()).isPresent();
-        return userRepository.existsByEmail(user.getEmail());
+        return userRepository.findByEmail(user.getEmail()).isPresent();
     }
 
 }
