@@ -1,0 +1,13 @@
+package io.everyonecodes.cryptolog;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class CryptologApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
