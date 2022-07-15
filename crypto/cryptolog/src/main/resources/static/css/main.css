@@ -124,9 +124,14 @@ h2 {
   flex-flow: column nowrap;
 }
 
+
 .card img {
   border: 5px double #333;
   border-radius: 50%;
+
+p .error {
+    margin: 0.3em;
+
 }
 
 .card figcaption {

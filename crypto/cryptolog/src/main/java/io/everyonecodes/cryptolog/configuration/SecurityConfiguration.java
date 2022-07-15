@@ -39,11 +39,15 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 // URLs matching for access rights
+
                 .antMatchers("/").permitAll()
                 .antMatchers("/about").permitAll()
 
-                .antMatchers("/login").permitAll()
-                .antMatchers("/register").permitAll()
+
+
+
+                .antMatchers("/login", "/register", "/confirm").permitAll()
+                .antMatchers("/forgot", "/reset").permitAll()
 
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
                 .antMatchers("/home/**").hasAnyAuthority("SUPER_USER", "ADMIN_USER", "SITE_USER")
@@ -52,8 +56,8 @@ public class SecurityConfiguration {
                 // form login
                 .csrf().disable().formLogin()
                 .loginPage("/login")
-                .failureUrl("/login?error=true")
                 .defaultSuccessUrl("/top100")
+                .failureUrl("/login?error=true")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and()

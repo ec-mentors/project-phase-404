@@ -24,7 +24,7 @@ public class VerificationEmailSenderService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(buildEmail(user.getName(), "http://localhost:9200/confirm?token=" + confirmationToken.getToken(),
                     confirmationToken.getExpiresAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))), true);
-            helper.setTo("raul_bh_93@yahoo.com");
+            helper.setTo(user.getEmail());
             helper.setSubject("Confirm your email");
             helper.setFrom("cryptolog@gmail.com");
             mailSender.send(mimeMessage);

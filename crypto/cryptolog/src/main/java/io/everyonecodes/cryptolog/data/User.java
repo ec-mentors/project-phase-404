@@ -3,6 +3,7 @@ package io.everyonecodes.cryptolog.data;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Entity
@@ -19,13 +20,15 @@ public class User {
     private String name;
 
     @NotBlank(message = "Email must not be empty")
-    @Email(message = "Invalid email format")
+    @Email(message = "Email is not valid. Please enter a correct email")
     @Column(name = "email", unique = true)
     private String email;
 
+    private String resetToken;
+
     // Temp: for testing
-    //@Pattern(regexp = "^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)(?=.*?[!@#\\]\\[:()\\\"`;+\\-'|_?,.</\\\\>=$%}{^&*~]).{8,}$",
-    //message = "Password needs to be 8 characters in length and must contain at least one lower case letter, one upper case letter, one number and one special character")
+    @Pattern(regexp = "^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)(?=.*?[!@#\\]\\[:()\\\"`;+\\-'|_?,.</\\\\>=$%}{^&*~]).{8,}$",
+    message = "Password needs to be 8 characters in length and must contain at least one lower case letter, one upper case letter, one number and one special character")
     @Column(name = "password")
     private String password;
 
@@ -86,5 +89,11 @@ public class User {
         this.roles = roles;
     }
 
+    public String getResetToken() {
+        return resetToken;
+    }
 
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
 }

@@ -1,5 +1,6 @@
-package io.everyonecodes.cryptolog;
+package io.everyonecodes.cryptolog.controller;
 
+import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Coin;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,11 @@ public class SiteController {
         return "about";
     }
 
+    @GetMapping("/home")
+    String home() {
+        return "home";
+    }
+
     @GetMapping("/top100")
     public String top100(Model model) {
         try {
@@ -34,8 +40,8 @@ public class SiteController {
             model.addAttribute(coinList);
             return "top100";
         } catch (RestClientException e) {
-            model.addAttribute("errorMsg", e.getMessage());
-            return "error";
+            model.addAttribute("errorMessage", e.getMessage());
+            return "clientError.html";
         }
     }
 }
