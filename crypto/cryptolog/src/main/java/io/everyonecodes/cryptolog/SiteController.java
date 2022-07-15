@@ -19,7 +19,12 @@ public class SiteController {
 
     @GetMapping
     String index() {
-        return "home";
+        return "index";
+    }
+
+    @GetMapping("/about")
+    String about() {
+        return "about";
     }
 
     @GetMapping("/top100")

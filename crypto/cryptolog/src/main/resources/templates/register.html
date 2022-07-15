@@ -9,13 +9,25 @@
 </head>
 <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
 <body>
-<div style="background-color: black; height: 70px;">
-    <img id="logo" th:src="@{/images/cryptologo_white.svg}" alt="CryptoLog logo" height="70px">
-</div>
-<div class="container-fluid" style="margin-top: 30px;">
+<header  >
+    <h1>Welcome</h1>
+    <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="30%" height="30%"/>
+    <nav aria-label="primary navigation">
+        <ul class="navlist">
+            <li class="navlist-item"><a href="/">Home</a></li>
+            <li class="navlist-item"><a href="/about">About</a></li>
 
-    <div class="row col-lg-4 col-lg-offset-4"
-         style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
+            <li class="navlist-item"><a href="/login">Login</a></li>
+            <li class="navlist-item"><a href="/register">Register</a></li>
+
+        </ul>
+    </nav>
+</header>
+<main>
+<div class="container">
+
+    <div
+         >
         <form autocomplete="off" action="#" th:action="@{/register}" th:object="${user}" method="post"
               class="form-signin" role="form">
             <h3 class="form-signin-heading">Account Registration</h3>
@@ -50,5 +62,9 @@
         </form>
     </div>
 </div>
+</main>
+<footer>
+    <p>&copy; 404 Name not found Co.</p>
+</footer>
 </body>
 </html>
