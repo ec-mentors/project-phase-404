@@ -46,24 +46,22 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ModelAndView registerUser(@Valid User user, BindingResult bindingResult, ModelMap modelMap) {
+    public String registerUser(@Valid User user, BindingResult bindingResult, Model model) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("successMessage", "Please write the fields in the right format!");
-            modelAndView.setViewName("register");
-            return modelAndView;
-
+            model.addAttribute("successMessage", "Please write the fields in the right format!");
+            return "register";
         } else if (userService.isUserAlreadyPresent(user)) {
-            modelAndView.addObject("successMessage", "User already exists!");
+            model.addAttribute("successMessage", "User already exists!");
         } else {
             userService.saveUser(user);
+            model.addAttribute("successMessage", "User is registered successfully, please verify your email.");// <a href=\"/login\">Login</a>");
+            // modelAndView.setViewName("firstlogin");
             ConfirmationToken confirmationToken = confirmationTokenService.createToken(user);
             emailSenderService.sendEmail(user, confirmationToken);
-            modelAndView.addObject("successMessage", "User is registered successfully,please verify your email.");
         }
-        modelAndView.addObject("user", new User());
-        modelAndView.setViewName("register");
-        return modelAndView;
+        model.addAttribute("user", new User());
+        return "register";
     }
 
     @GetMapping(path = "confirm")

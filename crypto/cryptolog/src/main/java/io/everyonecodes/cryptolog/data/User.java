@@ -23,7 +23,7 @@ public class User {
     @Column(name = "email", unique = true)
     private String email;
 
-    //@Length(min = 5,message = "Password has to be at least 5 characters long!")
+    // Temp: for testing
     //@Pattern(regexp = "^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)(?=.*?[!@#\\]\\[:()\\\"`;+\\-'|_?,.</\\\\>=$%}{^&*~]).{8,}$",
     //message = "Password needs to be 8 characters in length and must contain at least one lower case letter, one upper case letter, one number and one special character")
     @Column(name = "password")
@@ -33,7 +33,7 @@ public class User {
     private String status;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "auth_user_role", joinColumns = @JoinColumn(name = "auth_user_id"), inverseJoinColumns = @JoinColumn(name = "auth_role_id"))
+    //@JoinTable(name = "auth_user_role", joinColumns = @JoinColumn(name = "auth_user_id"), inverseJoinColumns = @JoinColumn(name = "auth_role_id")) - brauchen wir nicht: geht automatisch!
     private Set<Role> roles;
 
     public int getId() {
