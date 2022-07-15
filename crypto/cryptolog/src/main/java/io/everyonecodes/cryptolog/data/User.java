@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.Set;
 
@@ -16,12 +17,12 @@ public class User {
 	@Column(name = "auth_user_id")
 	private int id;
 
-	@NotNull
+	@NotBlank(message = "Name must not be empty")
 	@Column(name = "name")
 	private String name;
 
-	@NotNull
-	@Email(message = "Invalid email format!")
+	@NotBlank(message = "Email must not be empty")
+	@Email(message = "Invalid email format")
 	@Column(name = "email", unique = true)
 	private String email;
 

@@ -18,16 +18,19 @@
 				<div class="form-group">
 					<div class="">
 						<input type="text" th:field="*{name}" placeholder="Name" class="form-control" />
+						<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="">
 						<input type="text" th:field="*{email}" placeholder="Email - Example: abc@gmail.com/abcd@yahoo.com" class="form-control" />
+						<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="">
 						<input type="password" th:field="*{password}" placeholder="Password - min. 8 chars, 1 upper, 1 lowercase and a special symbol" class="form-control"/>
+						<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 					</div>
 				</div>
 				<div class="form-group">
@@ -36,6 +39,7 @@
 					</div>
 				</div>
 				<span th:utext="${successMessage}"></span>
+				<span>Already registred? <a href="/login">Login</a></span>
 			</form>
 		</div>
 	</div>

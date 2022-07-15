@@ -84,11 +84,12 @@ public class AuthenticationController {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
             model.addAttribute("successMessage", "Please write the fields in the right format!");
+            return "register";
         } else if (userService.isUserAlreadyPresent(user)) {
             model.addAttribute("successMessage", "User already exists!");
         } else {
             userService.saveUser(user);
-            model.addAttribute("successMessage", "User is registered successfully, please verify your email. <a href=\"/login\">Login</a>");
+            model.addAttribute("successMessage", "User is registered successfully, please verify your email.");// <a href=\"/login\">Login</a>");
             // modelAndView.setViewName("firstlogin");
             emailSenderService.sendEmail(user);
         }
