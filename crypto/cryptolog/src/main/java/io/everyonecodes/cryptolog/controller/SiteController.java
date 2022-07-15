@@ -36,7 +36,7 @@ public class SiteController {
             return "top100";
         } catch (RestClientException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "error";
+            return "connectionError.html";
         }
     }
 }
