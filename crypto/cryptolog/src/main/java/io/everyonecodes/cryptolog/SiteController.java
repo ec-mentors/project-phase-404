@@ -29,7 +29,7 @@ public class SiteController {
             model.addAttribute(coinList);
             return "top100";
         } catch (RestClientException e) {
-            model.addAttribute("errorMsg", e.getMessage());
+            model.addAttribute("errorMessage", e.getMessage());
             return "error";
         }
     }
