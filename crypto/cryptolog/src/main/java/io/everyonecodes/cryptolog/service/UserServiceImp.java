@@ -5,6 +5,7 @@ import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.repository.RoleRepository;
 import io.everyonecodes.cryptolog.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -12,13 +13,13 @@ import java.util.List;
 
 @Service
 public class UserServiceImp implements UserService {
-    private final BCryptPasswordEncoder encoder;
-    private final RoleRepository roleRepository;
+    private final PasswordEncoder encoder;
+    //private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
-    public UserServiceImp(BCryptPasswordEncoder encoder, RoleRepository roleRepository, UserRepository userRepository) {
+    public UserServiceImp(PasswordEncoder encoder, /*RoleRepository roleRepository,*/ UserRepository userRepository) {
         this.encoder = encoder;
-        this.roleRepository = roleRepository;
+        //this.roleRepository = roleRepository;
         this.userRepository = userRepository;
     }
 
