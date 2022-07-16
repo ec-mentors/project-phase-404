@@ -27,7 +27,7 @@ public class UserServiceImp implements UserService {
     public void saveUser(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         user.setStatus("NOT_VERIFIED");
-        Role userRole = roleRepository.findByRole("SITE_USER");
+        Role userRole = roleRepository.findByName("SITE_USER");
         if (userRole == null) {
             userRole = new Role("SITE_USER", "This user has access to site, after login - normal user");
         }
