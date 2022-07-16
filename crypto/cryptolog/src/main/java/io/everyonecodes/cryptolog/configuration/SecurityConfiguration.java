@@ -18,11 +18,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfiguration {
 
-	@Value("${spring.queries.users-query}")
-	private String usersQuery;
-
-	@Value("${spring.queries.roles-query}")
-	private String rolesQuery;
+//	@Value("${spring.queries.users-query}")
+//	private String usersQuery;
+//
+//	@Value("${spring.queries.roles-query}")
+//	private String rolesQuery;
 
 //	@Override
 //	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -42,9 +42,6 @@ public class SecurityConfiguration {
 
                 .antMatchers("/").permitAll()
                 .antMatchers("/about").permitAll()
-
-
-
 
                 .antMatchers("/login", "/register", "/confirm").permitAll()
                 .antMatchers("/forgot", "/reset").permitAll()
