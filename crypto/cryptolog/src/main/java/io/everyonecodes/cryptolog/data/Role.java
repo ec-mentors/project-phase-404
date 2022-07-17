@@ -11,16 +11,17 @@ public class Role {
     private int id;
 
     @Column(name = "role_name")
-    private String role;
+    private String name;
 
     @Column(name = "role_desc")
-    private String desc;
+    private String description;
 
     public Role() {
     }
 
-    public Role(String role) {
-        this.role = role;
+    public Role(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public int getId() {
@@ -31,19 +32,19 @@ public class Role {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public String getName() {
+        return name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
