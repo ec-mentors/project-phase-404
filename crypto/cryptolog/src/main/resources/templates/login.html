@@ -12,7 +12,7 @@
 
 <body>
 <header  >
-    <h1>Welcome</h1>
+    <h1>Login</h1>
     <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="30%" height="30%"/>
     <nav aria-label="primary navigation">
         <ul class="navlist">
@@ -35,14 +35,14 @@
         <!-- <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" /> -->
         <form th:action="@{/login}" method="POST" class="form-signin">
             <h3 class="form-signin-heading" th:text="Login"></h3>
-            <br/> <input type="text" id="email" name="email" th:placeholder="Email" class="form-control"/> <br/> <input
-                type="password" th:placeholder="Password" id="password" name="password" class="form-control"/> <br/>
+            <br/> <input type="text" id="email" name="email" placeholder="Email" class="form-control"/> <br/>
+            <input type="password" placeholder="Password" id="password" name="password" class="form-control"/> <br/>
 
-            <div align="center" th:if="${param.error}">
-                <p style="font-size: 20; color: #FF1C19;" th:text="${errorMessage}"></p>
+            <div  th:if="${param.error}">
+                <p  th:text="${errorMessage}"></p>
             </div>
             <button class="btn btn-lg btn-primary" name="Submit" value="Login" type="Submit" th:text="Login"
-                    style="margin-right:10px;"></button>
+                    ></button>
             <a href="/forgot-password">Forgot password?</a>
         </form>
     </div>
