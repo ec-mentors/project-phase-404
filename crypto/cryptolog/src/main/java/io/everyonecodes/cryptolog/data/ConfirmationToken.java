@@ -46,6 +46,9 @@ public class ConfirmationToken {
     public ConfirmationToken() {
     }
 
+    public ConfirmationToken(User user) {
+    }
+
     public Long getId() {
         return id;
     }

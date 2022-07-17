@@ -47,7 +47,7 @@ public class SecurityConfiguration {
 
 
                 .antMatchers("/login", "/register", "/confirm").permitAll()
-                .antMatchers("/forgot", "/reset").permitAll()
+                .antMatchers("/forgot-password", "/reset", "/confirm-reset", "/reset-password").permitAll()
 
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
                 .antMatchers("/home/**").hasAnyAuthority("SUPER_USER", "ADMIN_USER", "SITE_USER")
