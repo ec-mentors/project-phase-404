@@ -150,7 +150,7 @@ p .error {
     font-size: 3rem;
 }
 
-.container {
+.containered {
     margin: 100px;
     padding-left: 10px;
     display:flex;
