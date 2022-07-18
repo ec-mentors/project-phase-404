@@ -37,29 +37,7 @@
     </div>
 </header>
 <main>
-    <div id="contain">
-        <table>
-            <caption>Top 100 coins</caption>
-            <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Current Price (USD)</th>
-                <th>All-Time High Price</th>
-                <th>&#037; Drop from All-time High Price</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="coin: ${coinList}">
-                <td th:text="${coin.market_cap_rank}"/>
-                <td th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'"/>
-                <td th:text="${coin.current_price}"/>
-                <td th:text="${coin.ath}"/>
-                <td th:text="${coin.ath_change_percentage}"/>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+
 </main>
 <footer>
     <p>&copy; 404 Name not found Co.</p>
