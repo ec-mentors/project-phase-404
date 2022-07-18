@@ -28,17 +28,17 @@ public class SiteController {
         return "about";
     }
 
-    @GetMapping("/home")
-    String home() {
-        return "home";
-    }
+//    @GetMapping("/home")
+//    String home() {
+//        return "home";
+//    }
 
-    @GetMapping("/top100")
+    @GetMapping("/home")
     public String top100(Model model) {
         try {
             List<Coin> coinList = client.getTop100ByMarketCap();
             model.addAttribute(coinList);
-            return "top100";
+            return "home";
         } catch (RestClientException e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "clientError.html";

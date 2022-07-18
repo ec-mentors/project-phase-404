@@ -53,7 +53,7 @@ public class SecurityConfiguration {
                 // form login
                 .csrf().disable().formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/top100")
+                .defaultSuccessUrl("/home")
                 .failureUrl("/login?error=true")
                 .usernameParameter("email")
                 .passwordParameter("password")

@@ -34,6 +34,7 @@ public class LoginController {
                 model.addAttribute("errorMessage", "Your email or password is incorrect. Please try again");
             } else if (errorMessage.equals("User is disabled")) {
                 model.addAttribute("errorMessage", "Your Account is not verified. Please check your emails for instructions");
+
             } else {
                 model.addAttribute("errorMessage", errorMessage);
             }
