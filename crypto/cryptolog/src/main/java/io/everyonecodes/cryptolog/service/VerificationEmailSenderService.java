@@ -2,7 +2,7 @@ package io.everyonecodes.cryptolog.service;
 
 import io.everyonecodes.cryptolog.data.ConfirmationToken;
 import io.everyonecodes.cryptolog.data.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -14,8 +14,12 @@ import java.time.format.DateTimeFormatter;
 
 @Service
 public class VerificationEmailSenderService {
-    @Autowired
-    private JavaMailSender mailSender;
+
+    private final JavaMailSender mailSender;
+
+    public VerificationEmailSenderService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     @Async
     public void sendEmail(User user, ConfirmationToken confirmationToken) {
@@ -24,13 +28,22 @@ public class VerificationEmailSenderService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(buildEmail(user.getName(), "http://localhost:9200/confirm?token=" + confirmationToken.getToken(),
                     confirmationToken.getExpiresAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))), true);
-            helper.setTo(user.getEmail());
+            helper.setTo("raul_bh_93@yahoo.com");
             helper.setSubject("Confirm your email");
             helper.setFrom("cryptolog@gmail.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            throw new IllegalStateException("failed to send email");
+            throw new IllegalStateException("Failed to send email");
         }
+    }
+    @Async
+    public void sendEmail2(User user, ConfirmationToken confirmationToken) {
+        SimpleMailMessage helper = new SimpleMailMessage();
+        helper.setText("Please confirm your email by clicking on the following link: " + "http://localhost:9200/confirm?token=" + confirmationToken.getToken());
+        helper.setTo("raul_bh_93@yahoo.com");
+        helper.setSubject("Confirm your email");
+        helper.setFrom("cryptolog@gmail.com");
+        mailSender.send(helper);
     }
 
     private String buildEmail(String name, String link, String expiresAt) {

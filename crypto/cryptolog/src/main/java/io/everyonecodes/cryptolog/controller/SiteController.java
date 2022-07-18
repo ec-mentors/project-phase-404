@@ -27,6 +27,21 @@ public class SiteController {
         return "index";
     }
 
+    @GetMapping("/portfolio")
+    String protfolio() {
+        return "portfolio";
+    }
+
+    @GetMapping("/asset")
+    String asset() {
+        return "asset";
+    }
+
+    @GetMapping("/calculator")
+    String calculator() {
+        return "calculator";
+    }
+
     @GetMapping("/about")
     String about() {
         return "about";

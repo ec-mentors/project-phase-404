@@ -1,6 +1,7 @@
 package io.everyonecodes.cryptolog.controller;
 
-import io.everyonecodes.cryptolog.service.UserService;
+import io.everyonecodes.cryptolog.service.ConfirmationTokenService;
+import io.everyonecodes.cryptolog.service.VerificationEmailSenderService;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
@@ -12,10 +13,12 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
-    private final UserService userService;
+    private final VerificationEmailSenderService emailSenderService;
+    private final ConfirmationTokenService confirmationTokenService;
 
-    public LoginController(UserService userService) {
-        this.userService = userService;
+    public LoginController(VerificationEmailSenderService emailSenderService, ConfirmationTokenService confirmationTokenService) {
+        this.emailSenderService = emailSenderService;
+        this.confirmationTokenService = confirmationTokenService;
     }
 
     @GetMapping("/login")
@@ -31,12 +34,16 @@ public class LoginController {
         }
         if (errorMessage != null) {
             if (errorMessage.equals("Bad credentials")) {
+
                 model.addAttribute("errorMessage", "Your email or password is incorrect. Please try again");
+
             } else if (errorMessage.equals("User is disabled")) {
-                model.addAttribute("errorMessage", "Your Account is not verified. Please check your emails for instructions");
+
+                model.addAttribute("errorMessage", "Your email is not validated!");
 
             } else {
                 model.addAttribute("errorMessage", errorMessage);
+
             }
         }
         return "login";

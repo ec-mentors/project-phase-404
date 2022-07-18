@@ -60,7 +60,7 @@ public class ConfirmationTokenService {
         confirmationToken.setConfirmedAt(LocalDateTime.now());
         confirmationTokenRepository.save(confirmationToken);
         User user = confirmationToken.getUser();
-        user.setStatus("VERIFIED");
+        user.setVerified(true);
         userRepository.save(user);
         modelAndView.setViewName("confirmed");
         return modelAndView;

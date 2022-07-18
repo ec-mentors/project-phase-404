@@ -52,12 +52,10 @@ public class PasswordCon {
 
             String token = UUID.randomUUID().toString();
             User userE = existingUser.get();
-//            ConfirmationToken confirmationToken =confirmationTokenService.createToken(user);
-            ConfirmationToken confirmationToken = new ConfirmationToken(token, userE, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15));
-            confirmationTokenRepository.save(confirmationToken);
+           ConfirmationToken confirmationToken =confirmationTokenService.createToken(userE);
 
             SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(userE.getEmail());
+            mailMessage.setTo("raul_bh_93@yahoo.com");
             mailMessage.setSubject("Complete Password Reset!");
             mailMessage.setFrom("raulbodog993@gmail.com");
             mailMessage.setText("To complete the password reset process, please click here: "
@@ -85,12 +83,14 @@ public class PasswordCon {
         if(oToken.isPresent()) {
             ConfirmationToken token = oToken.get();
             Optional<User> existingUser = userRepository.findByEmail(token.getUser().getEmail());
+            if (existingUser.isPresent()) {
             User user = existingUser.get();
-            user.setStatus("VERIFIED");
+            user.setVerified(true);
             userRepository.save(user);
             modelAndView.addObject("user", user);
             modelAndView.addObject("emailId", user.getEmail());
             modelAndView.setViewName("resetPassword2");
+        }
         } else {
             modelAndView.addObject("message", "The link is invalid or broken!");
             modelAndView.setViewName("error");
@@ -103,12 +103,16 @@ public class PasswordCon {
 
         if(user.getEmail() != null) {
            Optional<User>  otTokenUser = userRepository.findByEmail(user.getEmail());
-            User tokenUser = otTokenUser.get();
-            tokenUser.setPassword(encoder.encode(user.getPassword()));
-            userRepository.save(tokenUser);
-            modelAndView.addObject("message", "Password successfully reset. You can now log in with the new credentials.");
-            modelAndView.setViewName("successResetPassword");
-        } else {
+           if (otTokenUser.isPresent()){
+
+               User tokenUser = otTokenUser.get();
+               tokenUser.setPassword(encoder.encode(user.getPassword()));
+               userRepository.save(tokenUser);
+               modelAndView.addObject("message", "Password successfully reset. You can now log in with the new credentials.");
+               modelAndView.setViewName("successResetPassword");
+           }
+           }
+             else {
             modelAndView.addObject("message","The link is invalid or broken!");
             modelAndView.setViewName("error");
         }
