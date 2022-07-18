@@ -38,6 +38,10 @@
 </header>
 <main>
     <div id="contain">
+        <form th:action="@{/home}" method="post">
+            <input type="text" placeholder="Search ..." name="filter" th:value="${filter}">
+            <input type="submit" value="Submit">
+        </form>
         <table>
             <caption>Top 100 coins</caption>
             <thead>
