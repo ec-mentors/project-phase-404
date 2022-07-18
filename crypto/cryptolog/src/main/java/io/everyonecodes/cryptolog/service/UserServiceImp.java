@@ -26,7 +26,7 @@ public class UserServiceImp implements UserService {
     @Override
     public void saveUser(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setStatus("NOT_VERIFIED");
+        user.setVerified(false);
         Role userRole = roleRepository.findByName("SITE_USER");
         if (userRole == null) {
             userRole = new Role("SITE_USER", "This user has access to site, after login - normal user");
@@ -48,5 +48,21 @@ public class UserServiceImp implements UserService {
     @Override
     public Optional<User> findUserByEmail(String userEmail) {
         return userRepository.findByEmail(userEmail);
+    }
+
+    @Override
+    public boolean isUserValid(User user) {
+        var oUser =  userRepository.findByEmail(user.getEmail());
+        return oUser.map(User::isVerified).orElse(false);
+
+
+    }
+
+    @Override
+    public void deleteUserByEmail(User user) {
+        Optional<User> oUser = userRepository.findByEmail(user.getEmail());
+        if (oUser.isPresent()){
+            userRepository.delete(user);
+        }
     }
 }

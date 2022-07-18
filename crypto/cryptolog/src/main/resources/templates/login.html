@@ -12,8 +12,8 @@
 
 <body>
 <header  >
-    <h1>Welcome</h1>
-    <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="15%" height="15%"/>
+    <h1>Login</h1>
+    <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="30%" height="30%"/>
     <nav aria-label="primary navigation">
         <ul class="navlist">
             <li class="navlist-item"><a href="/">Home</a></li>
@@ -35,21 +35,22 @@
                         <div class="text-center">
 
 
-        <!-- <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" /> -->
-        <form th:action="@{/login}" method="POST" class="form-signin">
-            <h3 class="form-signin-heading" th:text="Login"></h3>
-            <br/> <input type="text" id="email" name="email" placeholder="Email" class="form-control"/> <br/>
-            <input type="password" placeholder="Password" id="password" name="password" class="form-control"/> <br/>
+                            <!-- <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" /> -->
+                            <form th:action="@{/login}" method="POST" class="form-signin">
+                                <h3 class="form-signin-heading" th:text="Login"></h3>
+                                <br/> <input type="text" id="email" name="email" placeholder="Email" class="form-control"/> <br/>
+                                <input type="password" placeholder="Password" id="password" name="password" class="form-control"/> <br/>
 
-            <div  th:if="${param.error}">
-                <p  th:text="${errorMessage}"></p>
-            </div>
-            <button class="btn btn-lg btn-primary" name="Submit" value="Login" type="Submit" th:text="Login"
-                    ></button>
-            <a href="/forgot-password">Forgot password?</a>
+                                <div  th:if="${param.error}">
+                                    <a href="/verification">Verification link</a>
+                                    <p  th:text="${errorMessage}"></p>
+                                </div>
+                                <button class="btn btn-lg btn-primary" name="Submit" value="Login" type="Submit" th:text="Login"
+                                ></button>
+                                <a href="/forgot-password">Forgot password?</a>
 
-            <h4>New to CryptoLog? <br> <br>  <a href="/register">Register!</a></h4>
-        </form>
+                                <h4>New to CryptoLog? <br> <br>  <a href="/register">Register!</a></h4>
+                            </form>
                         </div>
                     </div>
                 </div>

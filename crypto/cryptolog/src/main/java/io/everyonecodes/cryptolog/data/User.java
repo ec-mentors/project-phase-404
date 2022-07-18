@@ -3,6 +3,7 @@ package io.everyonecodes.cryptolog.data;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ public class User {
     @Column(name = "auth_user_id")
     private int id;
 
-    @NotBlank(message = "Name must not be empty")
+    @NotNull(message = "Name must not be null")
     @Column(name = "name")
     private String name;
 
@@ -26,17 +27,19 @@ public class User {
 
     private String resetToken;
 
-    // Temp: for testing
+    private int loginAttempts;
+
+
+
     @Pattern(regexp = "^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)(?=.*?[!@#\\]\\[:()\\\"`;+\\-'|_?,.</\\\\>=$%}{^&*~]).{8,}$",
     message = "Password needs to be 8 characters in length and must contain at least one lower case letter, one upper case letter, one number and one special character")
     @Column(name = "password")
     private String password;
 
-    @Column(name = "status")
-    private String status;
+    @Column(name = "verified")
+    private boolean isVerified;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    //@JoinTable(name = "auth_user_role", joinColumns = @JoinColumn(name = "auth_user_id"), inverseJoinColumns = @JoinColumn(name = "auth_role_id")) - brauchen wir nicht: geht automatisch!
     private Set<Role> roles;
 
     public int getId() {
@@ -55,7 +58,13 @@ public class User {
         this.name = name;
     }
 
+    public int getLoginAttempts() {
+        return loginAttempts;
+    }
 
+    public void setLoginAttempts(int loginAttempts) {
+        this.loginAttempts = loginAttempts;
+    }
     public String getEmail() {
         return email;
     }
@@ -72,13 +81,12 @@ public class User {
         this.password = password;
     }
 
-
-    public String getStatus() {
-        return status;
+    public boolean isVerified() {
+        return isVerified;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setVerified(boolean verified) {
+        isVerified = verified;
     }
 
     public Set<Role> getRoles() {
@@ -96,4 +104,5 @@ public class User {
     public void setResetToken(String resetToken) {
         this.resetToken = resetToken;
     }
+
 }

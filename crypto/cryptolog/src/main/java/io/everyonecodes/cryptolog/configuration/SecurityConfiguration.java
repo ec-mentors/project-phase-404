@@ -1,35 +1,40 @@
 package io.everyonecodes.cryptolog.configuration;
 
+
+import io.everyonecodes.cryptolog.CustomLoginFailureHandler;
+import io.everyonecodes.cryptolog.CustomLoginSuccessHandler;
 import io.everyonecodes.cryptolog.UserPrincipal;
+import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 @Configuration
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
 
-//	@Value("${spring.queries.users-query}")
-//	private String usersQuery;
-//
-//	@Value("${spring.queries.roles-query}")
-//	private String rolesQuery;
-
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
-//				.dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
-//	}
-
+    private final CustomLoginFailureHandler customLoginFailureHandler;
+    private final CustomLoginSuccessHandler customLoginSuccessHandler;
+    public SecurityConfiguration(CustomLoginFailureHandler customLoginFailureHandler, CustomLoginSuccessHandler customLoginSuccessHandler) {
+        this.customLoginFailureHandler = customLoginFailureHandler;
+        this.customLoginSuccessHandler = customLoginSuccessHandler;
+    }
     @Bean
     PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
@@ -44,7 +49,7 @@ public class SecurityConfiguration {
                 .antMatchers("/about").permitAll()
 
                 .antMatchers("/login", "/register", "/confirm").permitAll()
-                .antMatchers("/forgot-password", "/reset", "/confirm-reset", "/reset-password").permitAll()
+                .antMatchers("/forgot-password", "/reset", "/confirm-reset", "/reset-password","/verification","/loginValidation").permitAll()
 
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
                 .antMatchers("/home/**").hasAnyAuthority("SUPER_USER", "ADMIN_USER", "SITE_USER")
@@ -53,10 +58,11 @@ public class SecurityConfiguration {
                 // form login
                 .csrf().disable().formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/home")
                 .failureUrl("/login?error=true")
                 .usernameParameter("email")
                 .passwordParameter("password")
+                .successHandler(customLoginSuccessHandler)
+                .failureHandler(customLoginFailureHandler)
                 .and()
                 // logout
                 .logout()
