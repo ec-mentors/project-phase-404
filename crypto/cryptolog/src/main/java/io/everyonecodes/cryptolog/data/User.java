@@ -5,6 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -41,7 +42,16 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles;
-
+    
+    public User() {
+    }
+    
+    public User(int id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+    
     public int getId() {
         return id;
     }
@@ -104,5 +114,26 @@ public class User {
     public void setResetToken(String resetToken) {
         this.resetToken = resetToken;
     }
-
+    
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) {
+            return true;
+        }
+        if(o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return id == user.id && loginAttempts == user.loginAttempts && isVerified == user.isVerified && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(resetToken, user.resetToken) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email, resetToken, loginAttempts, password, isVerified, roles);
+    }
+    
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", name='" + name + '\'' + ", email='" + email + '\'' + ", resetToken='" + resetToken + '\'' + ", loginAttempts=" + loginAttempts + ", password='" + password + '\'' + ", isVerified=" + isVerified + ", roles=" + roles + '}';
+    }
 }
