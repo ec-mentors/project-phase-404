@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestClientException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class SiteController {
@@ -47,27 +46,22 @@ public class SiteController {
         return "about";
     }
 
-//    @GetMapping("/home")
-//    String home() {
-//        return "home";
-//    }
-
     @GetMapping("/home")
     public String top100(Model model) {
-        try {
+        try { // how can this be more DRY?
             coinList = client.getTop100ByMarketCap();
-            model.addAttribute(coinList);
-            return "home";
         } catch (RestClientException e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "clientError";
         }
+        model.addAttribute(coinList);
+        return "home";
     }
 
     @PostMapping("/home")
-    public String filter(Model model, @RequestParam("filter") String filter) {
+    public String filter(Model model, @RequestParam String filter) {
         if (coinList == null) {
-            try {
+            try { // how can this be more DRY?
                 coinList = client.getTop100ByMarketCap();
             } catch (RestClientException e) {
                 model.addAttribute("errorMessage", e.getMessage());
@@ -80,7 +74,7 @@ public class SiteController {
                         coin.getSymbol().toLowerCase().contains(filterString)
         ).toList();
         model.addAttribute("coinList", filteredList);
+        model.addAttribute("filter", filter);
         return "home";
     }
-
 }

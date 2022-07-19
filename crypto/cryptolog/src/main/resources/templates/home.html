@@ -51,6 +51,7 @@
                 <th>Current Price (USD)</th>
                 <th>All-Time High Price</th>
                 <th>&#037; Drop from All-time High Price</th>
+                <th>Tier</th>
             </tr>
             </thead>
             <tbody>
@@ -60,6 +61,7 @@
                 <td th:text="${coin.current_price}"/>
                 <td th:text="${coin.ath}"/>
                 <td th:text="${coin.ath_change_percentage}"/>
+                <td th:text="${coin.market_cap_rank <= 2} ? 1 : (${coin.market_cap_rank <= 50} ? 2 : 3)"/>
             </tr>
             </tbody>
         </table>
