@@ -20,7 +20,7 @@ public class LoginAttemptsEmailService {
     public void sendEmailLoginFail(User user) {
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setTo("raul_bh_93@yahoo.com");
+        simpleMailMessage.setTo(user.getEmail());
         simpleMailMessage.setSubject("CryptoLog Warning");
         simpleMailMessage.setText("Someone is trying to log in on your CryptoLog account!");
         simpleMailMessage.setFrom("cryptolog@gmail.com");
