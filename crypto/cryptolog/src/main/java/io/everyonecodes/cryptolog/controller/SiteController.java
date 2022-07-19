@@ -2,13 +2,14 @@ package io.everyonecodes.cryptolog.controller;
 
 import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Coin;
+import io.everyonecodes.cryptolog.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestClientException;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -17,8 +18,11 @@ public class SiteController {
     private List<Coin> coinList;
     private final CoingeckoClient client;
 
-    public SiteController(CoingeckoClient client) {
+    private final UserService userService;
+
+    public SiteController(CoingeckoClient client, UserService userService) {
         this.client = client;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -46,20 +50,28 @@ public class SiteController {
         return "about";
     }
 
-    @GetMapping("/home")
-    public String top100(Model model) {
-        try { // how can this be more DRY?
-            coinList = client.getTop100ByMarketCap();
-        } catch (RestClientException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "clientError";
-        }
-        model.addAttribute(coinList);
-        return "home";
-    }
+//    @GetMapping("/home")
+//    public String top100(Model model) {
+//        try { // how can this be more DRY?
+//            coinList = client.getTop100ByMarketCap();
+//        } catch (RestClientException e) {
+//            model.addAttribute("errorMessage", e.getMessage());
+//            return "clientError";
+//        }
+//        model.addAttribute(coinList);
+//        return "home";
+//    }
 
-    @PostMapping("/home")
-    public String filter(Model model, @RequestParam String filter) {
+    @GetMapping("/home")
+    public String filter(Model model,
+                         @RequestParam(required = false) String filter,
+                         @RequestParam(required = false) String coinId,
+                         Principal principal) {
+
+        String userName = principal.getName();
+        var user = userService.findUserByEmail(userName).get();
+
+        // Load top100, if not already loaded
         if (coinList == null) {
             try { // how can this be more DRY?
                 coinList = client.getTop100ByMarketCap();
@@ -68,13 +80,28 @@ public class SiteController {
                 return "clientError";
             }
         }
-        String filterString = filter.toLowerCase();
-        var filteredList = coinList.stream().filter(coin ->
-                coin.getName().toLowerCase().contains(filterString) ||
-                        coin.getSymbol().toLowerCase().contains(filterString)
-        ).toList();
-        model.addAttribute("coinList", filteredList);
+        // add / remove coins to portfolie
+        if (coinId != null) {
+            if (user.getCoinIds().contains(coinId)) {
+                user.getCoinIds().remove(coinId);
+            } else {
+                user.getCoinIds().add(coinId);
+            }
+            userService.reSaveUser(user);
+        }
+        // filter coin list
+        if (filter != null) {
+            String filterString = filter.toLowerCase();
+            var filteredList = coinList.stream().filter(
+                    coin -> coin.getName().toLowerCase().contains(filterString) ||
+                            coin.getSymbol().toLowerCase().contains(filterString)
+            ).toList();
+            model.addAttribute("coinList", filteredList);
+        } else {
+            model.addAttribute(coinList);
+        }
         model.addAttribute("filter", filter);
+        model.addAttribute("portfolio", user.getCoinIds());
         return "home";
     }
 }

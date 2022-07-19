@@ -5,6 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -30,8 +31,6 @@ public class User {
 
     private int loginAttempts;
 
-
-
     @Pattern(regexp = "^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)(?=.*?[!@#\\]\\[:()\\\"`;+\\-'|_?,.</\\\\>=$%}{^&*~]).{8,}$",
     message = "Password needs to be 8 characters in length and must contain at least one lower case letter, one upper case letter, one number and one special character")
     @Column(name = "password")
@@ -42,10 +41,13 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> coinIds = new HashSet<>();
     
     public User() {
     }
-    
+
     public User(int id, String name, String email) {
         this.id = id;
         this.name = name;
@@ -114,7 +116,12 @@ public class User {
     public void setResetToken(String resetToken) {
         this.resetToken = resetToken;
     }
-    
+
+    public Set<String> getCoinIds() {
+        return coinIds;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if(this == o) {

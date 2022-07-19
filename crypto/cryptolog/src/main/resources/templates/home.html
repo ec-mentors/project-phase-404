@@ -5,7 +5,7 @@
 <header th:replace="/fragments/general.html :: header"></header>
 <main>
     <div id="contain">
-        <form th:action="@{/home}" method="post">
+        <form th:action="@{/home}" method="get">
             <input type="text" placeholder="Search ..." name="filter" th:value="${filter}" autofocus>
             <input type="submit" value="Submit">
         </form>
@@ -19,6 +19,7 @@
                 <th>All-Time High Price</th>
                 <th>&#037; Drop from All-time High Price</th>
                 <th>Tier</th>
+                <th>Portfolio</th>
             </tr>
             </thead>
             <tbody>
@@ -29,6 +30,9 @@
                 <td th:text="${coin.ath}"/>
                 <td th:text="${coin.ath_change_percentage}"/>
                 <td th:text="${coin.market_cap_rank <= 2} ? 1 : (${coin.market_cap_rank <= 50} ? 2 : 3)"/>
+                <td><a th:href="@{/home(coinId=${coin.id},filter=${filter})}" style="color: red; font-size: large; font-weight: bold;">
+                    <span th:text="${#lists.contains(portfolio, coin.id)} ? '*' : '–'"/>
+                </a></td>
             </tr>
             </tbody>
         </table>
