@@ -59,7 +59,7 @@ public class SiteController {
     }
 
     @PostMapping("/home")
-    public String filter(Model model, @RequestParam("filter") String filter) {
+    public String filter(Model model, @RequestParam String filter) {
         if (coinList == null) {
             try { // how can this be more DRY?
                 coinList = client.getTop100ByMarketCap();
