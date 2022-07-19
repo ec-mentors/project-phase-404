@@ -9,19 +9,24 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
 </head>
 <body>
-<header  >
-    <h1>Welcome</h1>
-    <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="30%" height="30%"/>
-    <nav aria-label="primary navigation">
-        <ul class="navlist">
-            <li class="navlist-item"><a href="/">Home</a></li>
-            <li class="navlist-item"><a href="/about">About</a></li>
+<header>
+    <div class="containernav">
+        <nav class="pre-nav">
+            <a href="#" class="logo">
+                <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="60%" height="60%"/>
+            </a>
+        </nav>
+        <nav>
+            <ul>
+                <li><a href="/" class="active">Home</a></li>
+                <li class="navlist-item"><a href="/about">About</a></li>
+                <li class="navlist-item"><a href="/register">Register</a></li>
+                <li class="navlist-item"><a href="/login" class="highlight">Login</a></li>
 
-            <li class="navlist-item"><a href="/login">Login</a></li>
-            <li class="navlist-item"><a href="/register">Register</a></li>
+            </ul>
+        </nav>
 
-        </ul>
-    </nav>
+    </div>
 </header>
 <main>
     <div class="form-gap"></div>

@@ -36,7 +36,8 @@ body {
 header
  {
   position: sticky;
-  background-color: black;
+    background-color: black;
+
   color: whitesmoke;
   text-align: center;
 }
@@ -47,49 +48,68 @@ position: sticky;
   color: whitesmoke;
   text-align: center;
 }
-header h1 {
-  margin-top: 5 px;
+a {
+    color: white;
+    text-decoration: none;
 }
-header {
-  display: flow-root;
-  justify-content: space-evenly;
-  align-items: flex-start;
-  top: 0;
+
+.containernav {
+
+    margin: 0 auto;
+    padding: 1rem;
+    width: 1000px;
+    max-width: 100%;
 }
 
 nav {
-  background-color: #eee;
-  box-shadow: 0 15px 5px -5px black;
-  
-  
-}
-.navlist {
-  display: block;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-
-}
-.navlist-item {
-  display: inline-block;
-  padding: 10px 5px;
-  transition: all 2s;
-}
-.navlist-item a {
-  color:black;
-  font-size: 1.5rem;
-  text-decoration: none;
-  padding: 10px 5px;
-  transition: all 1s;
-}
-.navlist-item :hover {
-  background-color:rgb(179, 190, 190);
-}
-.navlist-item :hover a{
-  color:rgb(0, 10, 10);
+    padding: 0.5rem 0;
 }
 
+.pre-nav {
+    font-size: 1.7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #026e90;
+    font-weight: bold;
+    font-size: 3rem;
+}
+
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+}
+
+nav li {
+    flex: 1 auto;
+}
+
+nav li a {
+    background-color: #2d99a4;
+    display: block;
+    padding: 1rem 2rem;
+    text-align: center;
+}
+
+nav a.active {
+    background-color: #fff;
+    color: #026e78;
+    font-weight: bold;
+}
+
+nav a.highlight {
+    background-color: #026e78;
+    color: #fff;
+}
+
+nav a:hover {
+    opacity: 0.8;
+}
 main {
   flex-grow: 1;
   display: flex;

@@ -5,37 +5,85 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404 Name Not Found</title>
-    <link th:href="@{/css/main.css}" rel="stylesheet" href="css/main.css" />
+    <link th:href="@{/css/styleindex.css}" rel="stylesheet" href="css/styleindex.css" />
   </head>
 
   <body>
-    <header  >
-      <h1>Welcome</h1>
-      <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="15%" height="15%"/>
-      <nav aria-label="primary navigation">
-        <ul class="navlist">
-            <li class="navlist-item"><a href="/about">About</a></li>
-            
-            <li class="navlist-item"><a href="/login">Login</a></li>
-            <li class="navlist-item"><a href="/register">Register</a></li>
-            
-        </ul>
+  <header>
+  <div class="containernav">
+    <nav class="pre-nav">
+      <a href="#" class="logo">
+        <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="60%" height="60%"/>
+      </a>
     </nav>
-    </header>
+    <nav>
+      <ul>
+        <li><a href="/" class="active">Home</a></li>
+        <li class="navlist-item"><a href="/about" >About</a></li>
+        <li class="navlist-item"><a href="/register">Register</a></li>
+        <li class="navlist-item"><a href="/login" class="highlight">Login</a></li>
 
-    <main >
-        <h2>Cryptolog introduction</h2>
-        <section >
-            
+      </ul>
+    </nav>
 
-        
- 
-  
-    </section>
-    </main>
+  </div>
+  </header>
+  <div class="maxi">
 
-    <footer>
-      <p>&copy; 404 Name not found Co.</p>
-    </footer>
+  <main>
+    <div class="box dark-box">
+<!--      <div class="log">-->
+
+<!--      </div>-->
+      <div>
+
+        <h3>The World's Most Comprehensive Tool for
+          Crypto Enthusiasts</h3>
+      </div>
+    </div>
+
+
+    <a href="/portfolio" class="box">
+      <div class="text">
+        <h2>Portfolio</h2>
+        <p>Choose your own currencies</p>
+      </div>
+      <div>
+        <i class="glyphicon glyphicon-chevron-right"></i>
+
+      </div>
+    </a>
+
+    <a href="/asset" class="box">
+      <div class="text">
+        <h2>Assests Allocation</h2>
+        <p>What is that</p>
+      </div>
+      <div>
+        <i class="glyphicon glyphicon-chevron-right"></i>
+
+      </div>
+    </a>
+
+    <a href="/calculator" class="box">
+      <div class="text">
+        <h2>Yield Calculator</h2>
+        <p>Estimate your profit</p>
+      </div>
+      <div>
+        <i class="glyphicon glyphicon-chevron-right"></i>
+
+      </div>
+    </a>
+  </main>
+
+  <aside>
+    <img src="../images/dig.jpg" alt="man" />
+  </aside>
+
+    </div>
+  <footer>
+    <p>&copy; 404 Name not found Co.</p>
+  </footer>
   </body>
 </html>
