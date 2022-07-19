@@ -80,6 +80,7 @@ public class SiteController {
                         coin.getSymbol().toLowerCase().contains(filterString)
         ).toList();
         model.addAttribute("coinList", filteredList);
+        model.addAttribute("filter", filter);
         return "home";
     }
 
