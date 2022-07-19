@@ -39,7 +39,7 @@
 <main>
     <div id="contain">
         <form th:action="@{/home}" method="post">
-            <input type="text" placeholder="Search ..." name="filter" th:value="${filter}">
+            <input type="text" placeholder="Search ..." name="filter" th:value="${filter}" autofocus>
             <input type="submit" value="Submit">
         </form>
         <table>
