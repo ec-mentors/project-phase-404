@@ -55,7 +55,7 @@ public class PasswordCon {
            ConfirmationToken confirmationToken =confirmationTokenService.createToken(userE);
 
             SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo("raul_bh_93@yahoo.com");
+            mailMessage.setTo(user.getEmail());
             mailMessage.setSubject("Complete Password Reset!");
             mailMessage.setFrom("raulbodog993@gmail.com");
             mailMessage.setText("To complete the password reset process, please click here: "

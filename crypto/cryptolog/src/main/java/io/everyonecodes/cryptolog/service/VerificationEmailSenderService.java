@@ -28,9 +28,9 @@ public class VerificationEmailSenderService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(buildEmail(user.getName(), "http://localhost:9200/confirm?token=" + confirmationToken.getToken(),
                     confirmationToken.getExpiresAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))), true);
-            helper.setTo("raul_bh_93@yahoo.com");
+            helper.setTo(user.getEmail());
             helper.setSubject("Confirm your email");
-            helper.setFrom("cryptolog@gmail.com");
+            helper.setFrom("raulbodog993@gmail.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             throw new IllegalStateException("Failed to send email");
@@ -40,9 +40,9 @@ public class VerificationEmailSenderService {
     public void sendEmail2(User user, ConfirmationToken confirmationToken) {
         SimpleMailMessage helper = new SimpleMailMessage();
         helper.setText("Please confirm your email by clicking on the following link: " + "http://localhost:9200/confirm?token=" + confirmationToken.getToken());
-        helper.setTo("raul_bh_93@yahoo.com");
+        helper.setTo(user.getEmail());
         helper.setSubject("Confirm your email");
-        helper.setFrom("cryptolog@gmail.com");
+        helper.setFrom("raulbodog993@gmail.com");
         mailSender.send(helper);
     }
 
