@@ -1,41 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cryptolog</title>
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-    />
-    <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
-
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link th:href="@{/css/style.css}" rel="stylesheet"  href="css/style.css"/>
-
-</head>
+<head th:replace="/fragments/general.html :: head"></head>
 <body>
-<header>
-    <div class="container">
-        <nav class="pre-nav">
-            <a href="#" class="logo">
-                <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="60%" height="60%"/>
-            </a>
-        </nav>
-        <nav>
-            <ul>
-                <li><a href="/home" class="active">Home</a></li>
-                <li><a href="/portfolio">Portfolio</a></li>
-                <li><a href="/asset">Assests Allocation</a></li>
-
-                <li><a href="/calculator" class="highlight">Yield Calculator</a></li>
-                <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
-
-            </ul>
-        </nav>
-
-    </div>
-</header>
+<header th:replace="/fragments/general.html :: header"></header>
 <main>
     <div id="contain">
         <table>
@@ -61,11 +28,6 @@
         </table>
     </div>
 </main>
-<footer>
-    <p>&copy; 404 Name not found Co.</p>
-</footer>
-
-
-
+<footer th:replace="/fragments/general.html :: footer"></footer>
 </body>
 </html>

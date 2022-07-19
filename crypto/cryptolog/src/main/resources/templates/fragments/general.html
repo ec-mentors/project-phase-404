@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+/* REAL HEADER */
+<head th:fragment="head">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cryptolog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
+    <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" href="css/style.css"/>
+</head>
+// JUST FOR PREVIEW REASONS
+<link rel="stylesheet" type="text/css" href="../../static/css/style.css"/>
+<body>
+<header th:fragment="header">
+    <div class="container">
+        <nav class="pre-nav">
+            <a href="#" class="logo">
+                <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="60%" height="60%"/>
+            </a>
+        </nav>
+        <nav>
+            <ul>
+                <li><a href="/home" class="nav">Home</a></li>
+                <li><a href="/portfolio" class="nav">Portfolio</a></li>
+                <li><a href="/asset" class="nav">Assests Allocation</a></li>
+                <li><a href="/calculator" class="nav highlight">Yield Calculator</a></li>
+                <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main th:fragment="top100">
+    <div id="contain">
+        <table>
+            <caption>Top 100 coins</caption>
+            <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Current Price (USD)</th>
+                <th>All-Time High Price</th>
+                <th>&#037; Drop from All-time High Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="coin: ${coinList}">
+                <td th:text="${coin.market_cap_rank}"/>
+                <td th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'"/>
+                <td th:text="${coin.current_price}"/>
+                <td th:text="${coin.ath}"/>
+                <td th:text="${coin.ath_change_percentage}"/>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer th:fragment="footer" id="footer">
+    <p>&copy; 404 Name not found Co.</p>
+</footer>
+</body>
+</html>
