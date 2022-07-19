@@ -33,9 +33,16 @@ body {
   flex-direction: column;
 }
 
-header,
-footer {
+header
+ {
   position: sticky;
+  background-color: black;
+  color: whitesmoke;
+  text-align: center;
+}
+
+footer {
+position: sticky;
   background-color: black;
   color: whitesmoke;
   text-align: center;
@@ -108,6 +115,7 @@ h2 {
 
 
 .card {
+margin-top: 5px;
   scroll-margin-top: 8rem;
   width: min(100%, 350px);
   background-color: #cbd5e1;

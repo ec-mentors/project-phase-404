@@ -1,7 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
 
 * {
+margin: 0;
+  padding: 0;
     box-sizing: border-box;
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 
 body {
@@ -16,12 +22,30 @@ body {
 }
 
 
-header,
-footer {
+header {
   position: sticky;
   background-color: black;
   color: whitesmoke;
   text-align: center;
+}
+
+footer {
+margin-top: 10px;
+position: fixed;
+  background-color: black;
+  color: whitesmoke;
+  text-align: center;
+  bottom: 0px;
+      left: 0px;
+      right: 0px;
+      margin-bottom: 0px;
+}
+#footer {
+  margin-top: 10px;
+  position: sticky;
+    background-color: black;
+    color: whitesmoke;
+    text-align: center;
 }
 
 a {
