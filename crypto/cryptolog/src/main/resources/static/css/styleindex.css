@@ -9,7 +9,7 @@ html {
 header
  {
   position: sticky;
-    background-color: black;
+    background-color: #202020;
 
   color: whitesmoke;
   text-align: center;
@@ -31,7 +31,8 @@ body {
 }
 
 .maxi {
-    background-image: radial-gradient(whitesmoke, black);
+
+    background-image: radial-gradient(whitesmoke, grey);
     color: #fff;
     display: flex;
     align-items: center;
@@ -136,6 +137,7 @@ aside img {
 
 .dark-box {
     background-color: #202020;
+    color: white;
     margin-bottom: auto;
 }
 
