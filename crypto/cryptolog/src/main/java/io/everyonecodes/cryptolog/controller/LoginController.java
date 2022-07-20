@@ -41,7 +41,7 @@ public class LoginController {
 
             } else if (errorMessage.equals("User is disabled")) {
 
-                model.addAttribute("errorMessage", "Your email is not validated!");
+                model.addAttribute("errorMessage", "Your email is not validated! Resend <a href=\"/verification\">Verification Link</a>?");
 
             } else {
                 model.addAttribute("errorMessage", errorMessage);
