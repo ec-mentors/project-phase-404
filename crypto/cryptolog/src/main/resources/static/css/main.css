@@ -54,7 +54,6 @@ a {
 }
 
 .containernav {
-
     margin: 0 auto;
     padding: 1rem;
     width: 1000px;
@@ -135,7 +134,7 @@ h2 {
 
 
 .card {
-  margin-top: 0.7rem;
+  margin-top: 0.5rem;
   scroll-margin-top: 8rem;
   width: min(100%, 350px);
   background-color: #cbd5e1;
