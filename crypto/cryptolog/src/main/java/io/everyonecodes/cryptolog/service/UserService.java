@@ -2,6 +2,7 @@ package io.everyonecodes.cryptolog.service;
 
 import io.everyonecodes.cryptolog.data.User;
 
+import java.security.Principal;
 import java.util.Optional;
 
 public interface UserService {
@@ -15,6 +16,8 @@ public interface UserService {
     Optional<User> findUserByResetToken(String token);
 
     Optional<User> findUserByEmail(String userEmail);
+
+    User loadLoggedInUser(Principal principal);
 
     boolean isUserValid(User user);
 

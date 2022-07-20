@@ -2,6 +2,7 @@ package io.everyonecodes.cryptolog.controller;
 
 import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Coin;
+import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,11 +69,9 @@ public class SiteController {
                          @RequestParam(required = false) String coinId,
                          Principal principal) {
 
-        String userName = principal.getName();
-        var user = userService.findUserByEmail(userName).get();
+        User user = userService.loadLoggedInUser(principal);
 
-        // Load top100, if not already loaded
-        if (coinList == null) {
+        if (coinList == null || filter == null) { // Load top100, if not already loaded or fresh pageload (i.e. other user)
             try { // how can this be more DRY?
                 coinList = client.getTop100ByMarketCap();
             } catch (RestClientException e) {
@@ -80,8 +79,7 @@ public class SiteController {
                 return "clientError";
             }
         }
-        // add / remove coins to portfolie
-        if (coinId != null) {
+        if (coinId != null) { // add / remove coins to portfolio
             if (user.getCoinIds().contains(coinId)) {
                 user.getCoinIds().remove(coinId);
             } else {
@@ -89,14 +87,10 @@ public class SiteController {
             }
             userService.saveUser(user);
         }
-        // filter coin list
-        if (filter != null) {
-            String filterString = filter.toLowerCase();
-            var filteredList = coinList.stream().filter(
-                    coin -> coin.getName().toLowerCase().contains(filterString) ||
-                            coin.getSymbol().toLowerCase().contains(filterString)
-            ).toList();
-            model.addAttribute("coinList", filteredList);
+        if (filter != null) { // filter coin list
+            String filterLC = filter.toLowerCase();
+            var filteredList = getFilteredList(coinList, filterLC);
+            model.addAttribute(filteredList);
         } else {
             model.addAttribute(coinList);
         }
@@ -112,43 +106,39 @@ public class SiteController {
                          @RequestParam(required = false) String coinId,
                          Principal principal) {
 
-        String userName = principal.getName();
-        var user = userService.findUserByEmail(userName).get();
+        User user = userService.loadLoggedInUser(principal);
 
         if (user.getCoinIds().isEmpty()) {
             return "portfolio-empty";
         }
-        // remove coins from portfolio
-        if (coinId != null) {
-            if (user.getCoinIds().contains(coinId)) {
-                user.getCoinIds().remove(coinId);
-            } else {
-                user.getCoinIds().add(coinId);
-            }
+        if (coinId != null) { // remove coins from portfolio
+            user.getCoinIds().remove(coinId);
             userService.saveUser(user);
         }
-        // Load portfolio, always
-        List<Coin> portfolioCoinList;
+        List<Coin> portfolioList; // Always load portfolio from API
         try { // how can this be more DRY?
-            portfolioCoinList = client.getCoinsById(user.getCoinIds());
+            portfolioList = client.getCoinsById(user.getCoinIds());
         } catch (RestClientException e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "clientError";
         }
-        // filter coin list
-        if (filter != null) {
-            String filterString = filter.toLowerCase();
-            var filteredList = portfolioCoinList.stream().filter(
-                    coin -> coin.getName().toLowerCase().contains(filterString) ||
-                            coin.getSymbol().toLowerCase().contains(filterString)
-            ).toList();
-            model.addAttribute("coinList", filteredList);
+        if (filter != null) {  // filter coin list
+            String filterLC = filter.toLowerCase();
+            var filteredList = getFilteredList(portfolioList, filterLC);
+            model.addAttribute(filteredList);
         } else {
-            model.addAttribute(portfolioCoinList);
+            model.addAttribute(portfolioList);
         }
         model.addAttribute("filter", filter);
         model.addAttribute("portfolio", user.getCoinIds());
         model.addAttribute("target", "/portfolio");
         return "home";
+    }
+
+    private List<Coin> getFilteredList(List<Coin> coinList, String filter) {
+        return coinList.stream().filter(
+                coin -> coin.getName().toLowerCase().contains(filter) ||
+                        coin.getSymbol().toLowerCase().contains(filter)
+        ).toList();
     }
 }

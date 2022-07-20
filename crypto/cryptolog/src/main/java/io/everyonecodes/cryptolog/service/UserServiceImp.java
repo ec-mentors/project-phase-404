@@ -7,6 +7,7 @@ import io.everyonecodes.cryptolog.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -66,11 +67,15 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public User loadLoggedInUser(Principal principal) {
+        String userName = principal.getName();
+        return findUserByEmail(userName).orElse(null);
+    }
+
+    @Override
     public boolean isUserValid(User user) {
         var oUser =  userRepository.findByEmail(user.getEmail());
         return oUser.map(User::isVerified).orElse(false);
-
-
     }
 
     @Override
