@@ -54,7 +54,7 @@ public class CoingeckoClient {
     public List<Coin> getCoinsById(Set<String> coinIds) {
         Map<String, Object> params = new HashMap<>();
         params.put("vs_currency", "usd");
-        params.put("ids", coinIds);
+        params.put("ids", String.join(",", coinIds));
 
         String url = generateURL("coins/markets", params);
 
