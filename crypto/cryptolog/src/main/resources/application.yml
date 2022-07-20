@@ -11,8 +11,8 @@ spring:
   mail:
     default-encoding: UTF-8
     host: smtp.gmail.com
-    username: raulbodog993@gmail.com
-    password: blpomflzjflxefze
+    username: cryptolog.404@gmail.com
+    password: cxhfesceypprkety
     port: 587
     properties.mail.smtp:
       auth: true
@@ -23,7 +23,7 @@ spring:
 
 
     from:
-     email: raulbodog993@gmail.com
+     email: cryptolog.404@gmail.com
 
   queries:
     users-query: select email, password, '1' as enabled from auth_user where email=? and verified='true'
