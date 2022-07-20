@@ -36,7 +36,11 @@ body {
 header
  {
   position: sticky;
+<<<<<<< HEAD
+   background-color: #202020;
+=======
     background-color: #202020;
+>>>>>>> 128802a7c9d429819493089c54c64c2b77168155
 
   color: whitesmoke;
   text-align: center;
@@ -59,11 +63,17 @@ a {
     width: 1000px;
     max-width: 100%;
 }
+<<<<<<< HEAD
 
 .container a{
-    color: #2d99a4;
+color: #2d99a4;
 }
 
+=======
+.container a {
+color: blue;
+}
+>>>>>>> 128802a7c9d429819493089c54c64c2b77168155
 nav {
     padding: 0.5rem 0;
 }
