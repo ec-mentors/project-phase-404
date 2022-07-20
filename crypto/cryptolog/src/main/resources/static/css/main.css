@@ -36,7 +36,7 @@ body {
 header
  {
   position: sticky;
-    background-color: black;
+    background-color: #202020;
 
   color: whitesmoke;
   text-align: center;
@@ -58,6 +58,10 @@ a {
     padding: 1rem;
     width: 1000px;
     max-width: 100%;
+}
+
+.container a{
+    color: #2d99a4;
 }
 
 nav {
