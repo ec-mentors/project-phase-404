@@ -135,7 +135,7 @@ h2 {
 
 
 .card {
-margin-top: 5px;
+  margin-top: 0.7rem;
   scroll-margin-top: 8rem;
   width: min(100%, 350px);
   background-color: #cbd5e1;
