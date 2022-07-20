@@ -1,7 +1,7 @@
 package io.everyonecodes.cryptolog.controller;
 
-import io.everyonecodes.cryptolog.service.ConfirmationTokenService;
-import io.everyonecodes.cryptolog.service.VerificationEmailSenderService;
+import io.everyonecodes.cryptolog.data.User;
+import io.everyonecodes.cryptolog.service.UserService;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
@@ -13,16 +13,18 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
-    private final VerificationEmailSenderService emailSenderService;
-    private final ConfirmationTokenService confirmationTokenService;
+   private final UserService userService;
 
-    public LoginController(VerificationEmailSenderService emailSenderService, ConfirmationTokenService confirmationTokenService) {
-        this.emailSenderService = emailSenderService;
-        this.confirmationTokenService = confirmationTokenService;
+    public LoginController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/login")
     String login(HttpServletRequest request, Model model) {
+        var oUser = userService.findUserByEmail("admin@gmail.com");
+        if (oUser.isEmpty()){
+            userService.saveAdmin(new User("admin","admin@gmail.com","Password1!" ));
+        }
         HttpSession session = request.getSession(false);
         String errorMessage = null;
         if (session != null) {
