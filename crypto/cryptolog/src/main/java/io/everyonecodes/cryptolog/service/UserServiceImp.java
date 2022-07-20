@@ -25,18 +25,15 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void saveUser(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setVerified(false);
-        Role userRole = roleRepository.findByName("SITE_USER");
-        if (userRole == null) {
-            userRole = new Role("SITE_USER", "This user has access to site, after login - normal user");
+        if (!isUserAlreadyPresent(user)) {
+            user.setPassword(encoder.encode(user.getPassword()));
+            user.setVerified(false);
+            Role userRole = roleRepository.findByName("SITE_USER");
+            if (userRole == null) {
+                userRole = new Role("SITE_USER", "This user has access to site, after login - normal user");
+            }
+            user.setRoles(new HashSet<>(List.of(userRole)));
         }
-        user.setRoles(new HashSet<>(List.of(userRole)));
-        userRepository.save(user);
-    }
-
-    @Override
-    public void reSaveUser(User user) {
         userRepository.save(user);
     }
 

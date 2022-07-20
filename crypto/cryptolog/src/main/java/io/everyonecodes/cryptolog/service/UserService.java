@@ -8,8 +8,6 @@ public interface UserService {
 
 	void saveUser(User user);
 
-	void reSaveUser(User user);
-	
 	 boolean isUserAlreadyPresent(User user);
 
     Optional<User> findUserByResetToken(String token);

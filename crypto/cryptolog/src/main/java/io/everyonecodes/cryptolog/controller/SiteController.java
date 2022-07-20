@@ -87,7 +87,7 @@ public class SiteController {
             } else {
                 user.getCoinIds().add(coinId);
             }
-            userService.reSaveUser(user);
+            userService.saveUser(user);
         }
         // filter coin list
         if (filter != null) {
