@@ -33,9 +33,13 @@
         </nav>
     </div>
 </header>
-<main th:fragment="top100">
+<main>
     <div id="contain">
-        <table>
+        <form th:fragment="filter" th:action="@{/home}" method="get">
+            <input type="text" placeholder="Search ..." name="filter" th:value="${filter}" autofocus>
+            <input type="submit" value="Submit">
+        </form>
+        <table th:fragment="toptable">
             <caption>Top 100 coins</caption>
             <thead>
             <tr>
@@ -44,6 +48,8 @@
                 <th>Current Price (USD)</th>
                 <th>All-Time High Price</th>
                 <th>&#037; Drop from All-time High Price</th>
+                <th>Add to portfolio</th>
+                <th>Tier</th>
             </tr>
             </thead>
             <tbody>
@@ -53,6 +59,10 @@
                 <td th:text="${coin.current_price}"/>
                 <td th:text="${coin.ath}"/>
                 <td th:text="${coin.ath_change_percentage}"/>
+                <td><a th:href="@{/home(coinId=${coin.id},filter=${filter})}" style="color: red; font-size: large; font-weight: bold;">
+                    <span th:text="${#lists.contains(portfolio, coin.id)} ? '*' : '–'"/>
+                </a></td>
+                <td th:text="${coin.market_cap_rank <= 2} ? 1 : (${coin.market_cap_rank <= 50} ? 2 : 3)"/>
             </tr>
             </tbody>
         </table>

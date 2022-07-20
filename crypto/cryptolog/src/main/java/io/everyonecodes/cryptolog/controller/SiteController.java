@@ -16,6 +16,7 @@ import java.util.List;
 public class SiteController {
 
     private List<Coin> coinList;
+    private List<Coin> portfolioCoinList;
     private final CoingeckoClient client;
 
     private final UserService userService;
@@ -30,10 +31,10 @@ public class SiteController {
         return "index";
     }
 
-    @GetMapping("/portfolio")
-    String protfolio() {
-        return "portfolio";
-    }
+//    @GetMapping("/portfolio")
+//    String protfolio() {
+//        return "portfolio";
+//    }
 
     @GetMapping("/asset")
     String asset() {
@@ -99,6 +100,49 @@ public class SiteController {
             model.addAttribute("coinList", filteredList);
         } else {
             model.addAttribute(coinList);
+        }
+        model.addAttribute("filter", filter);
+        model.addAttribute("portfolio", user.getCoinIds());
+        return "home";
+    }
+
+    @GetMapping("/portfolio")
+    public String portfolio(Model model,
+                         @RequestParam(required = false) String filter,
+                         @RequestParam(required = false) String coinId,
+                         Principal principal) {
+
+        String userName = principal.getName();
+        var user = userService.findUserByEmail(userName).get();
+
+        // Load top100, if not already loaded
+        if (portfolioCoinList == null) {
+            try { // how can this be more DRY?
+                portfolioCoinList = client.getCoinsById(user.getCoinIds());
+            } catch (RestClientException e) {
+                model.addAttribute("errorMessage", e.getMessage());
+                return "clientError";
+            }
+        }
+        // add / remove coins to portfolie
+        if (coinId != null) {
+            if (user.getCoinIds().contains(coinId)) {
+                user.getCoinIds().remove(coinId);
+            } else {
+                user.getCoinIds().add(coinId);
+            }
+            userService.saveUser(user);
+        }
+        // filter coin list
+        if (filter != null) {
+            String filterString = filter.toLowerCase();
+            var filteredList = portfolioCoinList.stream().filter(
+                    coin -> coin.getName().toLowerCase().contains(filterString) ||
+                            coin.getSymbol().toLowerCase().contains(filterString)
+            ).toList();
+            model.addAttribute("coinList", filteredList);
+        } else {
+            model.addAttribute(portfolioCoinList);
         }
         model.addAttribute("filter", filter);
         model.addAttribute("portfolio", user.getCoinIds());
