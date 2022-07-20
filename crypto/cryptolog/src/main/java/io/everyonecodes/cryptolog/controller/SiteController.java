@@ -30,10 +30,10 @@ public class SiteController {
         return "index";
     }
 
-    @GetMapping("/portfolio")
-    String protfolio() {
-        return "portfolio";
-    }
+//    @GetMapping("/portfolio")
+//    String protfolio() {
+//        return "portfolio";
+//    }
 
     @GetMapping("/asset")
     String asset() {
@@ -102,6 +102,53 @@ public class SiteController {
         }
         model.addAttribute("filter", filter);
         model.addAttribute("portfolio", user.getCoinIds());
+        model.addAttribute("target", "/home");
+        return "home";
+    }
+
+    @GetMapping("/portfolio")
+    public String portfolio(Model model,
+                         @RequestParam(required = false) String filter,
+                         @RequestParam(required = false) String coinId,
+                         Principal principal) {
+
+        String userName = principal.getName();
+        var user = userService.findUserByEmail(userName).get();
+
+        if (user.getCoinIds().isEmpty()) {
+            return "portfolio-empty";
+        }
+        // remove coins from portfolio
+        if (coinId != null) {
+            if (user.getCoinIds().contains(coinId)) {
+                user.getCoinIds().remove(coinId);
+            } else {
+                user.getCoinIds().add(coinId);
+            }
+            userService.saveUser(user);
+        }
+        // Load portfolio, always
+        List<Coin> portfolioCoinList;
+        try { // how can this be more DRY?
+            portfolioCoinList = client.getCoinsById(user.getCoinIds());
+        } catch (RestClientException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "clientError";
+        }
+        // filter coin list
+        if (filter != null) {
+            String filterString = filter.toLowerCase();
+            var filteredList = portfolioCoinList.stream().filter(
+                    coin -> coin.getName().toLowerCase().contains(filterString) ||
+                            coin.getSymbol().toLowerCase().contains(filterString)
+            ).toList();
+            model.addAttribute("coinList", filteredList);
+        } else {
+            model.addAttribute(portfolioCoinList);
+        }
+        model.addAttribute("filter", filter);
+        model.addAttribute("portfolio", user.getCoinIds());
+        model.addAttribute("target", "/portfolio");
         return "home";
     }
 }

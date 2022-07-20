@@ -4,10 +4,7 @@ import io.everyonecodes.cryptolog.data.Coin;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -52,5 +49,18 @@ public class CoingeckoClient {
         return params.keySet().stream()
                 .map(key -> key + "={" + key + "}")
                 .collect(Collectors.joining("&", BASE_URL + endPoint + "?", ""));
+    }
+
+    public List<Coin> getCoinsById(Set<String> coinIds) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("vs_currency", "usd");
+        params.put("ids", String.join(",", coinIds));
+
+        String url = generateURL("coins/markets", params);
+
+        var response = restTemplate.getForObject(url, Coin[].class, params);
+
+        return Arrays.stream(response != null ? response : new Coin[0])
+                .collect(Collectors.toList());
     }
 }
