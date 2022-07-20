@@ -108,12 +108,12 @@ public class SiteController {
 
         User user = userService.loadLoggedInUser(principal);
 
-        if (user.getCoinIds().isEmpty()) {
-            return "portfolio-empty";
-        }
         if (coinId != null) { // remove coins from portfolio
             user.getCoinIds().remove(coinId);
             userService.saveUser(user);
+        }
+        if (user.getCoinIds().isEmpty()) {
+            return "portfolio-empty";
         }
         List<Coin> portfolioList; // Always load portfolio from API
         try { // how can this be more DRY?
