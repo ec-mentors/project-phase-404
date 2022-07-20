@@ -36,6 +36,19 @@ public class UserServiceImp implements UserService {
         }
         userRepository.save(user);
     }
+    @Override
+    public void saveAdmin(User user) {
+        if (!isUserAlreadyPresent(user)) {
+            user.setPassword(encoder.encode(user.getPassword()));
+            user.setVerified(true);
+            Role userRole = roleRepository.findByName("SITE_USER");
+            if (userRole == null) {
+                userRole = new Role("SITE_USER", "This user has access to site, after login - normal user");
+            }
+            user.setRoles(new HashSet<>(List.of(userRole)));
+        }
+        userRepository.save(user);
+    }
 
     @Override
     public boolean isUserAlreadyPresent(User user) {
