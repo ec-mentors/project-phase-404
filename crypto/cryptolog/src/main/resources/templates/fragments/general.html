@@ -35,7 +35,7 @@
 </header>
 <main>
     <div id="contain">
-        <form th:fragment="filter" th:action="@{/home}" method="get">
+        <form th:fragment="filter" th:action="${target}" method="get">
             <input type="text" placeholder="Search ..." name="filter" th:value="${filter}" autofocus>
             <input type="submit" value="Submit">
         </form>
@@ -59,7 +59,7 @@
                 <td th:text="${coin.current_price}"/>
                 <td th:text="${coin.ath}"/>
                 <td th:text="${coin.ath_change_percentage}"/>
-                <td><a th:href="@{/home(coinId=${coin.id},filter=${filter})}" style="color: red; font-size: large; font-weight: bold;">
+                <td><a th:href="@{${target}(coinId=${coin.id},filter=${filter})}" style="color: red; font-size: large; font-weight: bold;">
                     <span th:text="${#lists.contains(portfolio, coin.id)} ? '*' : '–'"/>
                 </a></td>
                 <td th:text="${coin.market_cap_rank <= 2} ? 1 : (${coin.market_cap_rank <= 50} ? 2 : 3)"/>

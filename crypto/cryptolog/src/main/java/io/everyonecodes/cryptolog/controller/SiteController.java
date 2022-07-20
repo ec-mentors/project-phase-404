@@ -16,7 +16,6 @@ import java.util.List;
 public class SiteController {
 
     private List<Coin> coinList;
-    private List<Coin> portfolioCoinList;
     private final CoingeckoClient client;
 
     private final UserService userService;
@@ -103,6 +102,7 @@ public class SiteController {
         }
         model.addAttribute("filter", filter);
         model.addAttribute("portfolio", user.getCoinIds());
+        model.addAttribute("target", "/home");
         return "home";
     }
 
@@ -115,16 +115,10 @@ public class SiteController {
         String userName = principal.getName();
         var user = userService.findUserByEmail(userName).get();
 
-        // Load top100, if not already loaded
-        if (portfolioCoinList == null) {
-            try { // how can this be more DRY?
-                portfolioCoinList = client.getCoinsById(user.getCoinIds());
-            } catch (RestClientException e) {
-                model.addAttribute("errorMessage", e.getMessage());
-                return "clientError";
-            }
+        if (user.getCoinIds().isEmpty()) {
+            return "portfolio-empty";
         }
-        // add / remove coins to portfolie
+        // remove coins from portfolio
         if (coinId != null) {
             if (user.getCoinIds().contains(coinId)) {
                 user.getCoinIds().remove(coinId);
@@ -132,6 +126,14 @@ public class SiteController {
                 user.getCoinIds().add(coinId);
             }
             userService.saveUser(user);
+        }
+        // Load portfolio, always
+        List<Coin> portfolioCoinList;
+        try { // how can this be more DRY?
+            portfolioCoinList = client.getCoinsById(user.getCoinIds());
+        } catch (RestClientException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "clientError";
         }
         // filter coin list
         if (filter != null) {
@@ -146,6 +148,7 @@ public class SiteController {
         }
         model.addAttribute("filter", filter);
         model.addAttribute("portfolio", user.getCoinIds());
+        model.addAttribute("target", "/portfolio");
         return "home";
     }
 }
