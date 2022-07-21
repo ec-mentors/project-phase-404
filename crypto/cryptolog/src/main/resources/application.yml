@@ -13,13 +13,19 @@ spring:
     host: smtp.gmail.com
     username: cryptolog.404@gmail.com
     password: cxhfesceypprkety
+#    username: raulbodog993@gmail.com
+#    password: frdzkhcahjgvgyes
     port: 587
-    properties.mail.smtp:
-      auth: true
-      starttls.enable: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
     protocol: smtp
     test-connection: false
-    ssl.trust: smtp.gmail.com
+    ssl:
+      trust: smtp.gmail.com
 
 
     from:
