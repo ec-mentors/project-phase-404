@@ -26,7 +26,7 @@ public class VerificationEmailSenderService {
     private final String sender;
     private final String failed;
 
-    public VerificationEmailSenderService(JavaMailSender mailSender, @Value("${messages.email.verification.encoding}") String encoding, @Value("${messages.email.verification.link}") String link, @Value("${messages.email.verification.datePattern}") String datePattern, @Value("${messages.email.verification.confirmTitle}") String confirmTitle, @Value("${messages.email.verification.confirmText}") String confirmText, @Value("${messages.email.verification.sender}") String sender, @Value("${messages.email.verification.failed}") String failed) {
+    public VerificationEmailSenderService(JavaMailSender mailSender, @Value("${messages.email.verification.encoding}") String encoding, @Value("${messages.email.verification.link}") String link, @Value("${messages.email.verification.datePattern}") String datePattern, @Value("${messages.email.verification.confirmTitle}") String confirmTitle, @Value("${messages.email.verification.confirmText}") String confirmText, @Value("${messages.email.sender}") String sender, @Value("${messages.email.verification.failed}") String failed) {
         this.mailSender = mailSender;
         this.encoding = encoding;
         this.link = link;

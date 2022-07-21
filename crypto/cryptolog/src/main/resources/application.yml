@@ -44,17 +44,16 @@ messages:
     ex: expired
     co: confirmed
   email:
+    sender: cryptolog.404@gmail.com
     loginFail:
       warningTitle: CryptoLog Warning
       warningText: Someone is trying to log in on your CryptoLog account!
-      warningFrom: cryptolog@gmail.com
     verification:
       encoding: "utf-8"
       link: "http://localhost:9200/confirm?token="
       datePattern: "yyyy-MM-dd HH:mm"
       confirmTitle: Confirm your email
       confirmText: "Please confirm your email by clicking on the following link: http://localhost:9200/confirm?token="
-      sender: cryptolog.404@gmail.com
       failed: Failed to send email
   user:
     userRole:
