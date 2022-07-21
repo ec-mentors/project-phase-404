@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <!--REAL HEADER-->
 <head th:fragment="head">
     <meta charset="UTF-8" />
@@ -11,9 +12,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" href="css/style.css"/>
 </head>
+
 <!--JUST FOR PREVIEW REASONS-->
 <link rel="stylesheet" type="text/css" href="../../static/css/style.css"/>
 <!--END-->
+
 <body>
 <header th:fragment="header">
     <div class="container">
@@ -35,10 +38,12 @@
 </header>
 <main>
     <div id="contain">
+
         <form th:fragment="filter" th:action="${target}" method="get">
             <input type="text" placeholder="Search ..." name="filter" th:value="${filter}" autofocus>
             <input type="submit" value="Submit">
         </form>
+
         <table th:fragment="toptable">
             <caption>Top 100 coins</caption>
             <thead>
@@ -66,10 +71,13 @@
             </tr>
             </tbody>
         </table>
+
     </div>
 </main>
+
 <footer th:fragment="footer" id="footer">
     <p>&copy; 404 Name not found Co.</p>
 </footer>
+
 </body>
 </html>
