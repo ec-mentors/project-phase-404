@@ -44,6 +44,9 @@ public class User {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> coinIds = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private AssetsAllocation assetsAllocation;
     
     public User() {
     }
