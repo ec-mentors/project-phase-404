@@ -4,6 +4,7 @@ import io.everyonecodes.cryptolog.data.Role;
 import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.repository.RoleRepository;
 import io.everyonecodes.cryptolog.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,38 +18,47 @@ public class UserServiceImp implements UserService {
     private final PasswordEncoder encoder;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    
+    private final String roleName;
+    private final String roleDescription;
 
-    public UserServiceImp(PasswordEncoder encoder, RoleRepository roleRepository, UserRepository userRepository) {
+    public UserServiceImp(PasswordEncoder encoder, RoleRepository roleRepository, UserRepository userRepository, @Value("${messages.user.userRole.name}") String roleName, @Value("${messages.user.userRole.description}") String roleDescription) {
         this.encoder = encoder;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.roleName = roleName;
+        this.roleDescription = roleDescription;
     }
 
     @Override
     public void saveUser(User user) {
         if (!isUserAlreadyPresent(user)) {
-            user.setPassword(encoder.encode(user.getPassword()));
+
+            prepareUserDetails(user);
             user.setVerified(false);
-            Role userRole = roleRepository.findByName("SITE_USER");
-            if (userRole == null) {
-                userRole = new Role("SITE_USER", "This user has access to site, after login - normal user");
-            }
-            user.setRoles(new HashSet<>(List.of(userRole)));
+
         }
         userRepository.save(user);
     }
     @Override
     public void saveAdmin(User user) {
         if (!isUserAlreadyPresent(user)) {
-            user.setPassword(encoder.encode(user.getPassword()));
+ 
+            prepareUserDetails(user);
             user.setVerified(true);
-            Role userRole = roleRepository.findByName("SITE_USER");
-            if (userRole == null) {
-                userRole = new Role("SITE_USER", "This user has access to site, after login - normal user");
-            }
-            user.setRoles(new HashSet<>(List.of(userRole)));
         }
+        
         userRepository.save(user);
+    }
+    
+    private void prepareUserDetails(User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        Role userRole = roleRepository.findByName(roleName);
+        if (userRole == null) {
+            userRole = new Role(roleName, roleDescription);
+        }
+        
+        user.setRoles(new HashSet<>(List.of(userRole)));
     }
 
     @Override

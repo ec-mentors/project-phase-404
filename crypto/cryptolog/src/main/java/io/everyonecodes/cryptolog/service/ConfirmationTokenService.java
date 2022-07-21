@@ -4,6 +4,7 @@ import io.everyonecodes.cryptolog.data.ConfirmationToken;
 import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.repository.ConfirmationTokenRepository;
 import io.everyonecodes.cryptolog.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,10 +17,19 @@ import java.util.UUID;
 public class ConfirmationTokenService {
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final UserRepository userRepository;
+    
+    private final String tokenNotFound;
+    private final String alreadyConfirmed;
+    private final String expired;
+    private final String confirmed;
 
-    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository, UserRepository userRepository) {
+    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository, UserRepository userRepository, @Value("${messages.token.nf}") String tokenNotFound, @Value("${messages.token.ac}") String alreadyConfirmed, @Value("${messages.token.ex}") String expired, @Value("${messages.token.co}") String confirmed) {
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.userRepository = userRepository;
+        this.tokenNotFound = tokenNotFound;
+        this.alreadyConfirmed = alreadyConfirmed;
+        this.expired = expired;
+        this.confirmed = confirmed;
     }
 
     public Optional<ConfirmationToken> getToken(String token) {
@@ -31,8 +41,6 @@ public class ConfirmationTokenService {
         ConfirmationToken confirmationToken = new ConfirmationToken(token, user, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15));
         confirmationTokenRepository.save(confirmationToken);
         return confirmationToken;
-
-
     }
 
     @Transactional
@@ -40,10 +48,10 @@ public class ConfirmationTokenService {
         ModelAndView modelAndView = new ModelAndView();
         ConfirmationToken confirmationToken = getToken(token)
                 .orElseThrow(() ->
-                        new IllegalStateException("token not found"));
+                        new IllegalStateException(tokenNotFound));
 
         if (confirmationToken.getConfirmedAt() != null) {
-            modelAndView.setViewName("alreadyconfirmed");
+            modelAndView.setViewName(alreadyConfirmed);
             return modelAndView;
         }
 
@@ -53,7 +61,7 @@ public class ConfirmationTokenService {
 
             confirmationTokenRepository.delete(confirmationToken);
             userRepository.delete(confirmationToken.getUser());
-            modelAndView.setViewName("expired");
+            modelAndView.setViewName(expired);
             return modelAndView;
         }
 
@@ -62,7 +70,7 @@ public class ConfirmationTokenService {
         User user = confirmationToken.getUser();
         user.setVerified(true);
         userRepository.save(user);
-        modelAndView.setViewName("confirmed");
+        modelAndView.setViewName(confirmed);
         return modelAndView;
     }
 }

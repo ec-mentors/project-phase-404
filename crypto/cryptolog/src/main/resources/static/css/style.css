@@ -119,11 +119,13 @@ table {
 }
 
 table caption {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: xx-large;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    font-size: 1.75em;
     font-weight: bold;
     margin: 0.3em;
     padding: 0.3em;
+    text-shadow: 0px 0px 2px #0008
 }
 
 table th {
@@ -155,4 +157,52 @@ tr:nth-child(odd) {
   margin: 0 auto;
   width: fit-content;
   width: -webkit-fit-content;
+}
+
+/* --- Grid-System --- */
+
+.grid-container {
+    display: grid;
+    place-items: center;
+    grid-template-columns: 30% 30% 30%;
+    grid-template-rows: 30px 30px;
+    grid-auto-flow: row;
+    grid-column-gap: 2%;
+    grid-row-gap: 5%;
+    justify-items: center;
+    justify-content: space-evenly;  
+}
+
+.row::after{
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.col-1{ width: 30%; }
+.col-2{width: 30%;}
+.col-3{width: 30%;}
+
+
+@media (max-width: 1024px) {
+  .col-1{ width: 30%; }
+  .col-2{width: 30%;}
+  .col-3{width: 30%;}
+}
+
+@media (max-width: 768px) {
+  .col-1{ width: 100%; }
+  .col-2{ width: 100%; }
+  .col-3{ width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .col-1{ width: 100%; }
+  .col-2{ width: 100%; }
+  .col-3{ width: 100%; }
+}
+
+.row-1>p{
+    font-size: 5rem;
+    text-align: center;
 }
