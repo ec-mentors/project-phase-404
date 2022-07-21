@@ -2,6 +2,7 @@ package io.everyonecodes.cryptolog.service;
 
 import io.everyonecodes.cryptolog.data.ConfirmationToken;
 import io.everyonecodes.cryptolog.data.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -16,33 +17,48 @@ import java.time.format.DateTimeFormatter;
 public class VerificationEmailSenderService {
 
     private final JavaMailSender mailSender;
+    
+    private final String encoding;
+    private final String link;
+    private final String datePattern;
+    private final String confirmTitle;
+    private final String confirmText;
+    private final String sender;
+    private final String failed;
 
-    public VerificationEmailSenderService(JavaMailSender mailSender) {
+    public VerificationEmailSenderService(JavaMailSender mailSender, @Value("${cryptolog.messages.email.verification.encoding}") String encoding, @Value("${cryptolog.messages.email.verification.link}") String link, @Value("${cryptolog.messages.email.verification.datePattern}") String datePattern, @Value("${cryptolog.messages.email.verification.confirmTitle}") String confirmTitle, @Value("${cryptolog.messages.email.verification.confirmText}") String confirmText, @Value("${cryptolog.messages.email.verification.sender}") String sender, @Value("${cryptolog.messages.email.verification.failed}") String failed) {
         this.mailSender = mailSender;
+        this.encoding = encoding;
+        this.link = link;
+        this.datePattern = datePattern;
+        this.confirmTitle = confirmTitle;
+        this.confirmText = confirmText;
+        this.sender = sender;
+        this.failed = failed;
     }
 
     @Async
     public void sendEmail(User user, ConfirmationToken confirmationToken) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-            helper.setText(buildEmail(user.getName(), "http://localhost:9200/confirm?token=" + confirmationToken.getToken(),
-                    confirmationToken.getExpiresAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))), true);
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, encoding);
+            helper.setText(buildEmail(user.getName(), link + confirmationToken.getToken(),
+                    confirmationToken.getExpiresAt().format(DateTimeFormatter.ofPattern(datePattern))), true);
             helper.setTo(user.getEmail());
-            helper.setSubject("Confirm your email");
-            helper.setFrom("raulbodog993@gmail.com");
+            helper.setSubject(confirmTitle);
+            helper.setFrom(sender);
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            throw new IllegalStateException("Failed to send email");
+            throw new IllegalStateException(failed);
         }
     }
     @Async
     public void sendEmail2(User user, ConfirmationToken confirmationToken) {
         SimpleMailMessage helper = new SimpleMailMessage();
-        helper.setText("Please confirm your email by clicking on the following link: " + "http://localhost:9200/confirm?token=" + confirmationToken.getToken());
+        helper.setText(confirmText + confirmationToken.getToken());
         helper.setTo(user.getEmail());
-        helper.setSubject("Confirm your email");
-        helper.setFrom("raulbodog993@gmail.com");
+        helper.setSubject(confirmTitle);
+        helper.setFrom(sender);
         mailSender.send(helper);
     }
 
