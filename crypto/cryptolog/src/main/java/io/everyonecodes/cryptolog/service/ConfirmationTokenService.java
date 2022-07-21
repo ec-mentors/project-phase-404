@@ -23,7 +23,7 @@ public class ConfirmationTokenService {
     private final String expired;
     private final String confirmed;
 
-    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository, UserRepository userRepository, @Value("${cryptolog.messages.token.nf}") String tokenNotFound, @Value("${cryptolog.messages.token.ac}") String alreadyConfirmed, @Value("${cryptolog.messages.token.ex}") String expired, @Value("${cryptolog.messages.token.co}") String confirmed) {
+    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository, UserRepository userRepository, @Value("${messages.token.nf}") String tokenNotFound, @Value("${messages.token.ac}") String alreadyConfirmed, @Value("${messages.token.ex}") String expired, @Value("${messages.token.co}") String confirmed) {
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.userRepository = userRepository;
         this.tokenNotFound = tokenNotFound;

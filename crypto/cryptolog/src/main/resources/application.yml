@@ -37,11 +37,27 @@ security:
   basic:
     enabled: false
 
-#  queries:
-#    users-query: select email, password, '1' as enabled from auth_user where email=? and status='VERIFIED'
-#    roles-query: select u.email, r.role_name from auth_user u inner join auth_user_role ur on(u.auth_user_id=ur.auth_user_id) inner join auth_role r on(ur.auth_role_id=r.auth_role_id) where u.email=?
-#security:
-#  basic:
-#    enabled: false
-
+messages:
+  token:
+    nf: token not found
+    ac: alreadyconfirmed
+    ex: expired
+    co: confirmed
+  email:
+    loginFail:
+      warningTitle: CryptoLog Warning
+      warningText: Someone is trying to log in on your CryptoLog account!
+      warningFrom: cryptolog@gmail.com
+    verification:
+      encoding: "utf-8"
+      link: "http://localhost:9200/confirm?token="
+      datePattern: "yyyy-MM-dd HH:mm"
+      confirmTitle: Confirm your email
+      confirmText: "Please confirm your email by clicking on the following link: http://localhost:9200/confirm?token="
+      sender: cryptolog.404@gmail.com
+      failed: Failed to send email
+  user:
+    userRole:
+      name: "SITE_USER"
+      description: "This user has access to site, after login - normal user"
 
