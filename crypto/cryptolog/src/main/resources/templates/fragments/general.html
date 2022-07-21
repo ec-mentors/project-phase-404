@@ -45,7 +45,7 @@
         </form>
 
         <table th:fragment="toptable">
-            <caption>Top 100 coins</caption>
+            <caption th:text="${tableTitle}"></caption>
             <thead>
             <tr>
                 <th>Rank</th>

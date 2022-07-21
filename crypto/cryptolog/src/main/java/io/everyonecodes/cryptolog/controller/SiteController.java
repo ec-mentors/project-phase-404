@@ -94,6 +94,7 @@ public class SiteController {
         } else {
             model.addAttribute(coinList);
         }
+        model.addAttribute("tableTitle", "Top 100 Coins");
         model.addAttribute("filter", filter);
         model.addAttribute("portfolio", user.getCoinIds());
         model.addAttribute("target", "/home");
@@ -129,6 +130,7 @@ public class SiteController {
         } else {
             model.addAttribute(portfolioList);
         }
+        model.addAttribute("tableTitle", "My Portfolio");
         model.addAttribute("filter", filter);
         model.addAttribute("portfolio", user.getCoinIds());
         model.addAttribute("target", "/portfolio");
