@@ -71,29 +71,26 @@ public class SiteController {
 
         User user = userService.loadLoggedInUser(principal);
 
-        if (coinList == null || filter == null) { // Load top100, if not already loaded or fresh pageload (i.e. other user)
+        if (coinId == null) { // Load top100, if not already loaded or fresh pageload (i.e. other user)
             try { // how can this be more DRY?
-                coinList = client.getTop100ByMarketCap();
+                if (filter != null && !filter.isBlank()) {
+                    coinList = client.findCoinsFromAll(filter);
+                } else {
+                    coinList = client.getTop100ByMarketCap();
+                }
             } catch (RestClientException e) {
                 model.addAttribute("errorMessage", e.getMessage());
                 return "clientError";
             }
-        }
-        if (coinId != null) { // add / remove coins to portfolio
-            if (user.getCoinIds().contains(coinId)) {
+        } else {
+            if (user.getCoinIds().contains(coinId)) { // add / remove coins to portfolio
                 user.getCoinIds().remove(coinId);
             } else {
                 user.getCoinIds().add(coinId);
             }
             userService.saveUser(user);
         }
-        if (filter != null) { // filter coin list
-            String filterLC = filter.toLowerCase();
-            var filteredList = getFilteredList(coinList, filterLC);
-            model.addAttribute(filteredList);
-        } else {
-            model.addAttribute(coinList);
-        }
+        model.addAttribute(coinList);
         model.addAttribute("tableTitle", "Top 100 Coins");
         model.addAttribute("filter", filter);
         model.addAttribute("portfolio", user.getCoinIds());
@@ -123,10 +120,9 @@ public class SiteController {
             model.addAttribute("errorMessage", e.getMessage());
             return "clientError";
         }
-        if (filter != null) {  // filter coin list
-            String filterLC = filter.toLowerCase();
-            var filteredList = getFilteredList(portfolioList, filterLC);
-            model.addAttribute(filteredList);
+        if (filter != null && !filter.isBlank()) {  // filter coin list
+            var searchList = client.findCoinsFromAll(filter);
+            model.addAttribute(searchList);
         } else {
             model.addAttribute(portfolioList);
         }

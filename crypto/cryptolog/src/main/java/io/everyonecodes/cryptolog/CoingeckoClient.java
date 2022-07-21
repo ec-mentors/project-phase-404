@@ -1,6 +1,7 @@
 package io.everyonecodes.cryptolog;
 
 import io.everyonecodes.cryptolog.data.Coin;
+import io.everyonecodes.cryptolog.data.SearchDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -63,4 +64,25 @@ public class CoingeckoClient {
         return Arrays.stream(response != null ? response : new Coin[0])
                 .collect(Collectors.toList());
     }
+
+    public List<Coin> findCoinsFromAll(String search) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("query", search.trim());
+
+        String url = generateURL("search", params);
+
+        var response = restTemplate.getForObject(url, SearchDTO.class, params);
+
+        List<Coin> result = List.of();
+        if (response != null) {
+            var coinIds = response.getCoins().stream()
+                    .map(Coin::getId)
+                    .collect(Collectors.toSet());
+
+            result = getCoinsById(coinIds);
+        }
+
+        return result;
+    }
+
 }
