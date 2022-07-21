@@ -17,7 +17,7 @@ public class LoginAttemptsEmailService {
     private final String warningText;
     private final String warningFromEmail;
 
-    public LoginAttemptsEmailService(JavaMailSender mailSender, @Value("${cryptolog.messages.email.warningTitle}") String warningTitle, @Value("${cryptolog.messages.email.warningText}") String warningText, @Value("${cryptolog.messages.email.warningFrom}") String warningFromEmail) {
+    public LoginAttemptsEmailService(JavaMailSender mailSender, @Value("${cryptolog.messages.email.loginFail.warningTitle}") String warningTitle, @Value("${cryptolog.messages.email.loginFail.warningText}") String warningText, @Value("${cryptolog.messages.email.loginFail.warningFrom}") String warningFromEmail) {
         this.mailSender = mailSender;
         this.warningTitle = warningTitle;
         this.warningText = warningText;

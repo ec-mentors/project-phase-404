@@ -22,7 +22,7 @@ public class UserServiceImp implements UserService {
     private final String roleName;
     private final String roleDescription;
 
-    public UserServiceImp(PasswordEncoder encoder, RoleRepository roleRepository, UserRepository userRepository, @Value("${cryptolog.messages.user.userRole.name}") String roleName, @Value("${cryptolog.messages.user.userRole.description}") String roleDescription) {
+    public UserServiceImp(PasswordEncoder encoder, RoleRepository roleRepository, UserRepository userRepository, @Value("${cryptolog.messages.user.userRole.roleName}") String roleName, @Value("${cryptolog.messages.user.userRole.roleDescription}") String roleDescription) {
         this.encoder = encoder;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
