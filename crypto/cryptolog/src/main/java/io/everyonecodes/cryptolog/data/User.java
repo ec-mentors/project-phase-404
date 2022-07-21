@@ -3,7 +3,6 @@ package io.everyonecodes.cryptolog.data;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Objects;
@@ -18,7 +17,7 @@ public class User {
     @Column(name = "auth_user_id")
     private int id;
 
-    @NotNull(message = "Name must not be null")
+    @NotBlank(message = "Name must not be empty")
     @Column(name = "name")
     private String name;
 
