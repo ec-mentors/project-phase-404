@@ -11,6 +11,8 @@ public class Coin {
     private double market_cap;
     private int market_cap_rank;
 
+    private String image;
+
     private double ath;
     private double ath_change_percentage;
 
@@ -36,6 +38,10 @@ public class Coin {
 
     public int getMarket_cap_rank() {
         return market_cap_rank;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public double getAth() {
