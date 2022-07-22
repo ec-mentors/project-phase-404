@@ -71,12 +71,13 @@ public class SiteController {
                          Principal principal) {
 
         User user = userService.loadLoggedInUser(principal);
+
         List<Coin> coinFiveList = client.getTop100ByMarketCap().stream().sorted(Comparator.comparing(Coin::getAth_change_percentage))
                 .limit(5).toList();
 
         String coinString = coinFiveList.stream()
-                .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price()+ " USD" + " +++ ")
-                .collect(Collectors.joining( " ", "TOP FIVE COINS IN DISCOUNT:  +++  ", ""));
+                .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price()+ " USD")
+                .collect(Collectors.joining( " ", "TOP FIVE COINS IN DISCOUNT:  +++  ", " +++ "));
 
         model.addAttribute("coinString", coinString);
 
