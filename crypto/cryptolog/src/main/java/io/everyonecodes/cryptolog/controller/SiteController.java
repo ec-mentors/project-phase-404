@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestClientException;
 
 import java.security.Principal;
 import java.util.List;
@@ -72,16 +71,16 @@ public class SiteController {
         User user = userService.loadLoggedInUser(principal);
 
         if (coinId == null) { // Load top100, if not already loaded or fresh pageload (i.e. other user)
-            try { // how can this be more DRY?
-                if (filter != null && !filter.isBlank()) {
-                    coinList = client.findCoinsFromAll(filter);
-                } else {
-                    coinList = client.getTop100ByMarketCap();
-                }
-            } catch (RestClientException e) {
-                model.addAttribute("errorMessage", e.getMessage());
-                return "clientError";
+//            try { // how can this be more DRY?
+            if (filter != null && !filter.isBlank()) {
+                coinList = client.findCoinsFromAll(filter);
+            } else {
+                coinList = client.getTop100ByMarketCap();
             }
+//            } catch (RestClientException e) {
+//                model.addAttribute("errorMessage", e.getMessage());
+//                return "clientError";
+//            }
         } else {
             if (user.getCoinIds().contains(coinId)) { // add / remove coins to portfolio
                 user.getCoinIds().remove(coinId);
@@ -100,32 +99,31 @@ public class SiteController {
 
     @GetMapping("/portfolio")
     public String portfolio(Model model,
-                         @RequestParam(required = false) String filter,
-                         @RequestParam(required = false) String coinId,
-                         Principal principal) {
+                            @RequestParam(required = false) String filter,
+                            @RequestParam(required = false) String coinId,
+                            Principal principal) {
 
         User user = userService.loadLoggedInUser(principal);
 
         if (coinId != null) { // remove coins from portfolio
-            user.getCoinIds().remove(coinId);
+            if (user.getCoinIds().contains(coinId)) { // add / remove coins to portfolio
+                user.getCoinIds().remove(coinId);
+            } else {
+                user.getCoinIds().add(coinId);
+            }
             userService.saveUser(user);
         }
         if (user.getCoinIds().isEmpty()) {
             return "portfolio-empty";
         }
-        List<Coin> portfolioList; // Always load portfolio from API
-        try { // how can this be more DRY?
-            portfolioList = client.getCoinsById(user.getCoinIds());
-        } catch (RestClientException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "clientError";
-        }
-        if (filter != null && !filter.isBlank()) {  // filter coin list
-            var searchList = client.findCoinsFromAll(filter);
-            model.addAttribute(searchList);
+        if (filter != null && !filter.isBlank()) {  // search all coins
+            if (coinId == null) {
+                coinList = client.findCoinsFromAll(filter);
+            }
         } else {
-            model.addAttribute(portfolioList);
+            coinList = client.getCoinsById(user.getCoinIds());
         }
+        model.addAttribute(coinList);
         model.addAttribute("tableTitle", "My Portfolio");
         model.addAttribute("filter", filter);
         model.addAttribute("portfolio", user.getCoinIds());

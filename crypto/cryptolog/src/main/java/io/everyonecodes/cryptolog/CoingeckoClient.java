@@ -74,7 +74,7 @@ public class CoingeckoClient {
         var response = restTemplate.getForObject(url, SearchDTO.class, params);
 
         List<Coin> result = List.of();
-        if (response != null) {
+        if (response != null && !response.getCoins().isEmpty()) {
             var coinIds = response.getCoins().stream()
                     .map(Coin::getId)
                     .collect(Collectors.toSet());
