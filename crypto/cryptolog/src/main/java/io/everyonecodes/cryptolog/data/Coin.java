@@ -6,15 +6,18 @@ public class Coin {
     private String id;
     private String symbol;
     private String name;
+    private String image;
 
     private double current_price;
     private double market_cap;
     private int market_cap_rank;
-
-    private String image;
+    private double price_change_24h;
+    private double price_change_percentage_24h;
 
     private double ath;
     private double ath_change_percentage;
+
+    private String last_updated;
 
     public String getId() {
         return id;
@@ -26,6 +29,10 @@ public class Coin {
 
     public String getName() {
         return name;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public double getCurrent_price() {
@@ -40,8 +47,12 @@ public class Coin {
         return market_cap_rank;
     }
 
-    public String getImage() {
-        return image;
+    public double getPrice_change_24h() {
+        return price_change_24h;
+    }
+
+    public double getPrice_change_percentage_24h() {
+        return price_change_percentage_24h;
     }
 
     public double getAth() {
@@ -50,6 +61,10 @@ public class Coin {
 
     public double getAth_change_percentage() {
         return ath_change_percentage;
+    }
+
+    public String getLast_updated() {
+        return last_updated;
     }
 
     @Override
