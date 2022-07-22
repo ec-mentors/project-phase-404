@@ -71,30 +71,21 @@ public class SiteController {
                          Principal principal) {
 
         User user = userService.loadLoggedInUser(principal);
-        List<Coin> coinFiveList;
-        try { // how can this be more DRY?
-            coinFiveList = client.getTop100ByMarketCap().stream().sorted(Comparator.comparing(Coin::getAth_change_percentage))
-                    .limit(5).collect(Collectors.toList());
-        } catch (RestClientException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "clientError";
-        }
-        String coinString = coinFiveList.stream().map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price()+ " USD" + " +++ ").collect(Collectors.joining( " "));
-        String coinStringF = "TOP FIVE COINS IN DISCOUNT:  +++  " + coinString;
-//        model.addAttribute(coinString);
-        model.addAttribute("coinString", coinStringF);
+        List<Coin> coinFiveList = client.getTop100ByMarketCap().stream().sorted(Comparator.comparing(Coin::getAth_change_percentage))
+                .limit(5).toList();
 
-        if (coinId == null) { // Load top100, if not already loaded or fresh pageload (i.e. other user)
-//            try { // how can this be more DRY?
+        String coinString = coinFiveList.stream()
+                .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price()+ " USD" + " +++ ")
+                .collect(Collectors.joining( " ", "TOP FIVE COINS IN DISCOUNT:  +++  ", ""));
+
+        model.addAttribute("coinString", coinString);
+
+        if (coinId == null) {
             if (filter != null && !filter.isBlank()) {
                 coinList = client.findCoinsFromAll(filter);
             } else {
                 coinList = client.getTop100ByMarketCap();
             }
-//            } catch (RestClientException e) {
-//                model.addAttribute("errorMessage", e.getMessage());
-//                return "clientError";
-//            }
         } else {
             if (user.getCoinIds().contains(coinId)) { // add / remove coins to portfolio
                 user.getCoinIds().remove(coinId);
