@@ -219,15 +219,15 @@ tr:nth-child(odd) {
 }
 
 @media (max-width: 768px) {
-  .col-1{ width: 100%; }
-  .col-2{ width: 100%; }
-  .col-3{ width: 100%; }
+  .col-1{ width: -100%; }
+  .col-2{ width: -100%; }
+  .col-3{ width: -100%; }
 }
 
 @media (max-width: 480px) {
-  .col-1{ width: 100%; }
-  .col-2{ width: 100%; }
-  .col-3{ width: 100%; }
+  .col-1{ width: -100%; }
+  .col-2{ width: -100%; }
+  .col-3{ width: -100%; }
 }
 
 .row-1>p{
@@ -249,9 +249,9 @@ padding: 0.5rem;
 
 
   /* animation properties */
-  -moz-transform: translateX(-100%);
-  -webkit-transform: translateX(-100%);
-  transform: translateX(-100%);
+  -moz-transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  transform: translateX(+-100%);
 
   -moz-animation: my-animation 30s linear infinite;
   -webkit-animation: my-animation 30s linear infinite;
@@ -260,25 +260,25 @@ padding: 0.5rem;
 
 /* for Firefox */
 @-moz-keyframes my-animation {
-  from { -moz-transform: translateX(-100%); }
-  to { -moz-transform: translateX(100%); }
+  from { -moz-transform: translateX(100%); }
+  to { -moz-transform: translateX(-100%); }
 }
 
 /* for Chrome */
 @-webkit-keyframes my-animation {
-  from { -webkit-transform: translateX(-100%); }
-  to { -webkit-transform: translateX(100%); }
+  from { -webkit-transform: translateX(100%); }
+  to { -webkit-transform: translateX(-100%); }
 }
 
 @keyframes my-animation {
   from {
-    -moz-transform: translateX(-100%);
-    -webkit-transform: translateX(-100%);
-    transform: translateX(-100%);
-  }
-  to {
     -moz-transform: translateX(100%);
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
+  }
+  to {
+    -moz-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
   }
 }

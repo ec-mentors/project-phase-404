@@ -77,7 +77,7 @@ public class SiteController {
 
         String coinString = coinFiveList.stream()
                 .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price()+ " USD")
-                .collect(Collectors.joining( " ", "TOP FIVE COINS IN DISCOUNT:  +++  ", " +++ "));
+                .collect(Collectors.joining( " +++ ", "TOP FIVE COINS IN DISCOUNT: +++ ", " +++"));
 
         model.addAttribute("coinString", coinString);
 
