@@ -136,7 +136,7 @@ table th {
   border-right: 0.3px solid white;
 }
 
-th:last-child {
+table th:last-child {
   border: none;
 }
 
@@ -145,6 +145,29 @@ table td {
   border: 0.3px solid #777;
   color: #333;
   text-align: right;
+}
+
+table td img {
+    float: left;
+    height: 1.55em;
+    margin-right: 0.5em;
+}
+
+table td span {
+    position: relative;
+    top: 0.2em;
+}
+
+table th:nth-child(-n+2), td:nth-child(-n+2) {
+  text-align: left;
+}
+
+table tr:nth-child(even) {
+  background-color: #cef;
+}
+
+table tr:nth-child(odd) {
+  background-color: #91e3f1;
 }
 
 th:nth-child(-n+2), td:nth-child(-n+2) {
