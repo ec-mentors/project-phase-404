@@ -4,6 +4,10 @@
 <body>
 <header th:replace="/fragments/general.html :: header"></header>
 <main>
+    <div id="scroll-container">
+        <div id="scroll-text" th:action="@{/home/text}" method="GET"  th:text="${coinString}" > </div>
+        <!--        <span th:utext="${coinString}"></span>-->
+    </div>
     <div id="contain">
         <form th:replace="/fragments/general.html :: filter"></form>
         <table th:replace="/fragments/general.html :: toptable"></table>

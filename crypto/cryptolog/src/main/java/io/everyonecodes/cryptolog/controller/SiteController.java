@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestClientException;
 
 import java.security.Principal;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class SiteController {
@@ -70,6 +72,18 @@ public class SiteController {
                          Principal principal) {
 
         User user = userService.loadLoggedInUser(principal);
+        List<Coin> coinFiveList;
+        try { // how can this be more DRY?
+            coinFiveList = client.getTop100ByMarketCap().stream().sorted(Comparator.comparing(Coin::getAth_change_percentage))
+                    .limit(5).collect(Collectors.toList());
+        } catch (RestClientException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "clientError";
+        }
+        String coinString = coinFiveList.stream().map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price()+ " USD" + " +++ ").collect(Collectors.joining( " "));
+        String coinStringF = "TOP FIVE COINS IN DISCOUNT:  +++  " + coinString;
+//        model.addAttribute(coinString);
+        model.addAttribute("coinString", coinStringF);
 
         if (coinList == null || filter == null) { // Load top100, if not already loaded or fresh pageload (i.e. other user)
             try { // how can this be more DRY?
