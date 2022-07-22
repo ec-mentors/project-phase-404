@@ -130,9 +130,14 @@ table caption {
 
 table th {
   padding: 0.3em;
-  color: white;
-  text-align: right;
+  color: whitesmoke;
   background-color: darkcyan;
+  text-align: right;
+  border-right: 0.3px solid white;
+}
+
+th:last-child {
+  border: none;
 }
 
 table td {

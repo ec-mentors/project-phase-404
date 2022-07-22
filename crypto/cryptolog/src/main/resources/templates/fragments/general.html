@@ -10,19 +10,15 @@
     <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
     <script src="/js/main.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
 </head>
-
-<!--JUST FOR PREVIEW REASONS-->
-<link rel="stylesheet" type="text/css" href="../../static/css/style.css"/>
-<!--END-->
 
 <body>
 <header th:fragment="header">
     <div class="container">
         <nav class="pre-nav">
             <a href="#" class="logo">
-                <img id="logo" src="/images/cryptologo_cyan.svg" alt="CryptoLog logo" width="60%" height="60%"/>
+                <img id="logo" src="../../static/images/cryptologo_cyan.svg" th:src="@{images/cryptologo_cyan.svg}" alt="CryptoLog logo" width="60%" height="60%"/>
             </a>
         </nav>
         <nav>
@@ -59,15 +55,18 @@
             </thead>
             <tbody>
             <tr th:each="coin: ${coinList}">
-                <td th:text="${coin.market_cap_rank}"/>
-                <td th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'"/>
+                <td th:text="${coin.market_cap_rank > 0} ? ${coin.market_cap_rank} : ''"/>
+                <td>
+                    <img th:src="${coin.image}" style="height: 1em;">
+                    <span th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'"/>
+                </td>
                 <td th:text="${coin.current_price}"/>
                 <td th:text="${coin.ath}"/>
                 <td th:text="${coin.ath_change_percentage}"/>
                 <td><a th:href="@{${target}(coinId=${coin.id},filter=${filter})}" style="color: darkblue; font-size: large; font-weight: bold;">
                     <span th:text="${#lists.contains(portfolio, coin.id)} ? '&#9733;' : '&#9734;'"/>
                 </a></td>
-                <td th:text="${coin.market_cap_rank <= 2} ? 1 : (${coin.market_cap_rank <= 50} ? 2 : 3)"/>
+                <td th:text="${coin.market_cap_rank == 0} ? 3 : (${coin.market_cap_rank <= 2} ? 1 : (${coin.market_cap_rank <= 50} ? 2 : 3))"/>
             </tr>
             </tbody>
         </table>
