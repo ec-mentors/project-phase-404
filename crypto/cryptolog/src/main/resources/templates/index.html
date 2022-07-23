@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404 Name Not Found</title>
-    <link th:href="@{/css/styleindex.css}" rel="stylesheet" href="css/styleindex.css" />
+    <title>CryptoLog</title>
+    <script src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
+    <link th:href="@{/css/styleindex.css}" rel="stylesheet" href="../../static/css/styleindex.css" />
   </head>
 
   <body>
-  <header th:insert="fragments/header :: header"></header>
+  <header th:replace="fragments/outer :: header"></header>
   <div class="maxi">
 
   <main>
@@ -69,12 +69,12 @@
   </main>
 
   <aside>
-    <img src="../images/bit.jpg" alt="man" height="50%" width="50%"/>
+    <img src="../../static/images/bit.jpg" th:src="@{images/bit.jpg}" alt="man" height="50%" width="50%"/>
 
   </aside>
 
     </div>
-  <footer>
+  <footer th:replace="fragments/outer :: footer">
     <p>&copy; 404 Name not found Co.</p>
   </footer>
   </body>

@@ -1,128 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/outer :: head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 Name Not Found</title>
-    <link rel="stylesheet" href="css/main.css" />
-  </head>
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.css" th:href="@{/css/main.css}">
+</head>
 
-  <body>
-  <header th:insert="fragments/header :: header"></header>
+<body>
+<header th:replace="fragments/outer :: header"></header>
 
-    <main >
-        <h2>Scrum Team</h2>
-        <section class="box">
-            
+<main>
+    <h2>Scrum Team</h2>
+    <section class="box">
 
-        
- <article id="profile6" class="card">
-        <figure>
-          <img
-            src="../images/Mihai.jpg"
-            alt="Mihai"
-            width="512"
-            height="512"
-          />
-          <figcaption>Mihai</figcaption>
-        </figure>
-        <p><q>Product owner</q></p>
-      </article>
-      <article id="profile7" class="card">
-        <figure>
-          <img
-            src="../images/Adriana.jpg"
-            alt="Adriana"
-            width="512"
-            height="512"
-          />
-          <figcaption>Adriana</figcaption>
-        </figure>
-        <p><q>Scrum master</q></p>
-      </article>
-      <article id="profile8" class="card">
-        <figure>
-          <img
-            src="../images/Efosa.jpg"
-            alt="Efosa"
-            width="512"
-            height="512"
-          />
-          <figcaption>Efosa <span class="nowrap"></span></figcaption>
-        </figure>
-        <p><q>Scrum master</q></p>
-      </article>
+        <article id="profile6" class="card">
+            <figure>
+                <img src="../../static/images/Mihai.jpg" th:src="@{images/Mihai.jpg}" alt="Mihai" width="512" height="512">
+                <figcaption>Mihai</figcaption>
+            </figure>
+            <p><q>Product owner</q></p>
+        </article>
+
+        <article id="profile7" class="card">
+            <figure>
+                <img src="../../static/images/Adriana.jpg" th:src="@{images/Adriana.jpg}" alt="Adriana" width="512" height="512">
+                <figcaption>Adriana</figcaption>
+            </figure>
+            <p><q>Scrum master</q></p>
+        </article>
+
+        <article id="profile8" class="card">
+            <figure>
+                <img src="../../static/images/Efosa.jpg" th:src="@{images/Efosa.jpg}" alt="Efosa" width="512" height="512">
+                <figcaption>Efosa <span class="nowrap"></span></figcaption>
+            </figure>
+            <p><q>Scrum master</q></p>
+        </article>
+
     </section>
+
     <h2>Developers</h2>
-        <section class="box">
+    <section class="box">
 
-       
-      <article id="profile1" class="card">
-        <figure>
-          <img
-            src="../images/Jasmin.png"
-            alt="Jasmin"
-            width="512"
-            height="512"
-          />
-          <figcaption>Jasmin</figcaption>
-        </figure>
-        <p><q>I code stuff.</q></p>
-      </article>
-      <article id="profile2" class="card">
-        <figure>
-          <img
-            src="../images/Laura.jpg"
-            alt="Laura"
-            width="512"
-            height="512"
-          />
-          <figcaption>Laura</figcaption>
-        </figure>
-        <p><q>I code stuff.</q></p>
-      </article>
-      <article id="profile3" class="card">
-        <figure>
-          <img
-            src="../images/Kriszta.jpg"
-            alt="Kriszta"
-            width="512"
-            height="512"
-          />
-          <figcaption>Kriszta <span class="nowrap"></span></figcaption>
-        </figure>
-        <p><q>I code stuff.</q></p>
-      </article>
-      <article id="profile4" class="card">
-        <figure>
-          <img
-          src="../images/Raul.png"
-            alt="Raul"
-            width="512"
-            height="512"
-          />
-          <figcaption>Raul <span class="nowrap"></span></figcaption>
-        </figure>
-        <p><q>I code stuff.</q></p>
-      </article>
-      <article id="profile5" class="card">
-        <figure>
-          <img
-          src="../images/Stefan.jpg"
-            alt="Stefan"
-            width="512"
-            height="512"
-          />
-          <figcaption>Stefan<span class="nowrap"></span></figcaption>
-        </figure>
-        <p><q>I code stuff</q></p>
-      </article>
+        <article id="profile1" class="card">
+            <figure>
+                <img src="../../static/images/Jasmin.png" th:src="@{images/Jasmin.png}" alt="Jasmin" width="512" height="512"/>
+                <figcaption>Jasmin</figcaption>
+            </figure>
+            <p><q>I code stuff.</q></p>
+        </article>
+
+        <article id="profile2" class="card">
+            <figure>
+                <img src="../../static/images/Laura.jpg" th:src="@{images/Laura.jpg}" alt="Laura" width="512" height="512"/>
+                <figcaption>Laura</figcaption>
+            </figure>
+            <p><q>I code stuff.</q></p>
+        </article>
+
+        <article id="profile3" class="card">
+            <figure>
+                <img src="../../static/images/Kriszta.jpg" th:src="@{images/Kriszta.jpg}" alt="Kriszta" width="512" height="512"/>
+                <figcaption>Kriszta <span class="nowrap"></span></figcaption>
+            </figure>
+            <p><q>I code stuff.</q></p>
+        </article>
+
+        <article id="profile4" class="card">
+            <figure>
+                <img src="../../static/images/Raul.png" th:src="@{images/Raul.png}" alt="Raul" width="512" height="512"/>
+                <figcaption>Raul <span class="nowrap"></span></figcaption>
+            </figure>
+            <p><q>I code stuff.</q></p>
+        </article>
+
+        <article id="profile5" class="card">
+            <figure><img src="../../static/images/Stefan.jpg" th:src="@{images/Stefan.jpg}" alt="Stefan" width="512" height="512"/>
+                <figcaption>Stefan<span class="nowrap"></span></figcaption>
+            </figure>
+            <p><q>I code stuff</q></p>
+        </article>
+
     </section>
-    </main>
+</main>
 
-    <footer>
-      <p>&copy; 404 Name not found Co.</p>
-    </footer>
-  </body>
+<footer th:replace="fragments/outer :: footer">
+    <p>&copy; 404 Name not found Co.</p>
+</footer>
+</body>
 </html>

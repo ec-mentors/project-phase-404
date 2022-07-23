@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
+<head th:replace="fragments/outer :: head">
     <meta charset="UTF-8">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <title>Verification email</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.css" th:href="@{/css/main.css}">
 </head>
 <body>
-<header>
+<header th:replace="fragments/outer :: header">
     <div class="containernav">
         <nav class="pre-nav">
             <a href="#" class="logo">
-                <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="60%" height="60%"/>
+                <img id="logo" src="../../static/images/cryptologo_cyan.svg" th:src="@{images/cryptologo_cyan.svg}" alt="CryptoLog logo" width="60%" height="60%"/>
             </a>
         </nav>
         <nav>
@@ -22,10 +22,8 @@
                 <li class="navlist-item"><a href="/about">About</a></li>
                 <li class="navlist-item"><a href="/register">Register</a></li>
                 <li class="navlist-item"><a href="/login" class="highlight">Login</a></li>
-
             </ul>
         </nav>
-
     </div>
 </header>
 <main>
@@ -41,43 +39,51 @@
                             <p>We can resend it to you</p>
                             <div class="panel-body">
 
-            <div th:if="${success}">
-                <div class="alert alert-info"><span th:text="${success}"></span></div>
-            </div>
-            <div th:if="${emailError}">
-                <div class="alert alert-danger"><span th:text="${emailError}"></span></div>
-            </div>
+                                <div th:if="${success}">
+                                    <div class="alert alert-info"><span th:text="${success}"></span></div>
+                                </div>
+                                <div th:if="${emailError}">
+                                    <div class="alert alert-danger"><span th:text="${emailError}"></span></div>
+                                </div>
 
-            <form form id="register-form" role="form" autocomplete="off" class="form"
-                    th:action="@{/verification}" th:object="${user}" method="post">
-                <!--                            <form th:action="@{/verification}" method="post">-->
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                        <input id="email" name="email" placeholder="email address" class="form-control"  type="email">
+                                <form form id="register-form" role="form" autocomplete="off" class="form"
+                                      th:action="@{/verification}" th:object="${user}" method="post">
+                                    <!--                            <form th:action="@{/verification}" method="post">-->
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-envelope color-blue"></i></span>
+                                            <input id="email" name="email" placeholder="email address"
+                                                   class="form-control" type="email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="recover-submit" class="btn btn-lg btn-primary btn-block"
+                                               value="Send Verification Link" type="submit">
+                                    </div>
+
+                                    <input type="hidden" class="hide" name="token" id="token" value="">
+
+                                </form>
+
+
+                                <div class="row">
+
+                                    New user? <a href="/" th:href="@{/register}">Register</a>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <script type="text/javascript" th:src="@{webjars/jquery/3.4.1/jquery.min.js}"></script>
+                        <script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
                     </div>
                 </div>
-                <div class="form-group">
-                    <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Send Verification Link" type="submit">
-                </div>
-
-                <input type="hidden" class="hide" name="token" id="token" value="">
-
-            </form>
-
-
-            <div class="row">
-
-                New user? <a href="/" th:href="@{/register}">Register</a>
-
             </div>
         </div>
     </div>
-
-    <script type="text/javascript" th:src="@{webjars/jquery/3.4.1/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
 </main>
-<footer>
+<footer th:replace="fragments/outer :: footer">
     <p>&copy; 404 Name not found Co.</p>
 </footer>
 </body>

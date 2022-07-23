@@ -34,6 +34,7 @@ public class RegistrationController {
     String register(Model model) {
         User user = new User();
         model.addAttribute(user);
+        model.addAttribute("title", "Register - CryptoLog");
         return "register";
     }
 

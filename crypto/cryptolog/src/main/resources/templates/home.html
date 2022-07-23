@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/fragments/general.html :: head"></head>
+<head th:replace="/fragments/general :: head"></head>
 <body>
-<header th:replace="/fragments/general.html :: header"></header>
+<header th:replace="/fragments/general :: header"></header>
 <main>
     <div th:if="${coinString != null}" id="scroll-container">
         <div id="scroll-text" th:text="${coinString}"></div>
         <!--        <span th:utext="${coinString}"></span>-->
     </div>
     <div id="contain">
-        <form th:replace="/fragments/general.html :: filter"></form>
-        <table th:replace="/fragments/general.html :: toptable"></table>
+        <form th:replace="/fragments/general :: filter"></form>
+        <table th:replace="/fragments/general :: toptable"></table>
     </div>
 </main>
-<footer th:replace="/fragments/general.html :: footer"></footer>
+<footer th:replace="/fragments/general :: footer"></footer>
 </body>
 </html>

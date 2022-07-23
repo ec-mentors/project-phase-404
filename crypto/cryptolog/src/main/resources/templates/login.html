@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <title>CryptoLog - Login</title>
+<head Login th:replace="fragments/outer :: head">
+    <title>Login - CryptoLog</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <script src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.css" th:href="@{/css/main.css}">
 </head>
 
-
 <body>
-<header>
+<header th:replace="fragments/outer :: header">
     <div class="containernav">
         <nav class="pre-nav">
             <a href="#" class="logo">
-                <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="60%" height="60%"/>
+                <img id="logo" src="../../static/images/cryptologo_cyan.svg" th:src="@{images/cryptologo_cyan.svg}" alt="CryptoLog logo" width="60%" height="60%"/>
             </a>
         </nav>
         <nav>
@@ -38,8 +38,6 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="text-center">
-
-
                             <!-- <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" /> -->
                             <form th:action="@{/login}" method="POST" class="form-signin">
                                 <h3 class="form-signin-heading" th:text="Login"></h3>
@@ -49,8 +47,7 @@
                                 <div  th:if="${param.error}">
                                     <p  th:utext="${errorMessage}"></p>
                                 </div>
-                                <button class="btn btn-lg btn-primary" name="Submit" value="Login" type="Submit" th:text="Login"
-                                ></button>
+                                <button class="btn btn-lg btn-primary" name="Submit" type="Submit" th:text="Login">Login</button>
                                 <a href="/forgot-password">Forgot password?</a>
 
                                 <h4>New to CryptoLog? <br> <br>  <a href="/register">Register!</a></h4>
@@ -60,7 +57,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </main>
 <footer>

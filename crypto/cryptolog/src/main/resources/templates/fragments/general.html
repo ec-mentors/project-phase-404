@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<!--REAL HEADER-->
-<head th:fragment="head">
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="${title != null} ? ${title} : 'CryptoLog'"></title>
@@ -14,7 +13,7 @@
 </head>
 
 <body>
-<header th:fragment="header">
+<header>
     <div class="container">
         <nav class="pre-nav">
             <a href="#" class="logo">
@@ -74,7 +73,7 @@
     </div>
 </main>
 
-<footer th:fragment="footer" id="footer">
+<footer id="footer">
     <p>&copy; 2022 404 Name not found Co.</p>
 </footer>
 

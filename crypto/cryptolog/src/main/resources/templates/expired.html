@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/outer :: head">
     <meta charset="UTF-8">
     <title>Expired</title>
 </head>
 <body>
-
-Link Expired.Register again.
+<header th:replace="fragments/outer :: header"/>
+Link Expired. Register again.
 </body>
-<footer>
+<footer th:replace="fragments/outer :: footer">
     <p>&copy; 404 Name not found Co.</p>
 </footer>
 </html>

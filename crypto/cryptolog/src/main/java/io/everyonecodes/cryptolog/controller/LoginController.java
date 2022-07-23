@@ -48,6 +48,7 @@ public class LoginController {
 
             }
         }
+        model.addAttribute("title", "Login - CryptoLog");
         return "login";
     }
 }

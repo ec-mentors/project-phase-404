@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragments/outer :: head">
     <title>Registration Form</title>
     <!-- link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" /-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.css" th:href="@{/css/main.css}">
 </head>
 
 <body>
-<header>
+<header th:replace="fragments/outer :: header">
     <div class="containernav">
         <nav class="pre-nav">
             <a href="#" class="logo">
-                <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="60%" height="60%"/>
+                <img id="logo" src="../../static/images/cryptologo_cyan.svg" th:src="@{images/cryptologo_cyan.svg}" alt="CryptoLog logo" width="60%" height="60%"/>
             </a>
         </nav>
         <nav>
             <ul>
-                <li><a href="/" >Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li class="navlist-item"><a href="/about">About</a></li>
                 <li class="navlist-item"><a href="/register" class="active">Register</a></li>
                 <li class="navlist-item"><a href="/login" class="highlight">Login</a></li>
@@ -31,53 +31,51 @@
 </header>
 <main>
     <div class="form-gap"></div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="panel panel-default">
-    <div class="panel-body">
-        <div class="text-center">
-        <form autocomplete="off" action="#" th:action="@{/register}" th:object="${user}" method="post"
-              class="form-signin" role="form">
-            <h3 class="form-signin-heading">Account Registration</h3>
-            <div class="form-group">
-                <div class="">
-                    <input type="text" th:field="*{name}" placeholder="Name" class="form-control"/>
-                    <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <form autocomplete="off" action="#" th:action="@{/register}" th:object="${user}"
+                                  method="post"
+                                  class="form-signin" role="form">
+                                <h3 class="form-signin-heading">Account Registration</h3>
+                                <div class="form-group">
+                                    <div class="">
+                                        <input type="text" th:field="*{name}" placeholder="Name" class="form-control"/>
+                                        <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="">
+                                        <input type="text" th:field="*{email}" placeholder="Email - Example: abc@gmail.com/abcd@yahoo.com" class="form-control"/>
+                                        <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="">
+                                        <input type="password" th:field="*{password}" placeholder="Password - min. 8 chars, 1 upper, 1 lowercase and a special symbol" class="form-control"/>
+                                        <p class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="">
+                                        <button type="submit" class="btn btn-primary btn-block">Register User</button>
+                                    </div>
+                                </div>
+                                <span th:utext="${successMessage}"></span>
+                                <p>Already registred? <a href="/login">Login</a></p>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="">
-                    <input type="text" th:field="*{email}" placeholder="Email - Example: abc@gmail.com/abcd@yahoo.com"
-                           class="form-control"/>
-                    <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="">
-                    <input type="password" th:field="*{password}"
-                           placeholder="Password - min. 8 chars, 1 upper, 1 lowercase and a special symbol"
-                           class="form-control"/>
-                    <p class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="">
-                    <button type="submit" class="btn btn-primary btn-block">Register User</button>
-                </div>
-            </div>
-            <span th:utext="${successMessage}"></span>
-            <p>Already registred? <a href="/login">Login</a></p>
-        </form>
         </div>
     </div>
-            </div>
-        </div>
     </div>
-    </div>
-</div>
 </main>
-<footer>
+<footer th:replace="fragments/outer :: footer">
     <p>&copy; 404 Name not found Co.</p>
 </footer>
 </body>

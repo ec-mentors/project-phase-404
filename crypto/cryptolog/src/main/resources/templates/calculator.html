@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragments/general :: head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cryptolog</title>
@@ -11,15 +11,15 @@
     <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link th:href="@{/css/style.css}" rel="stylesheet"  href="css/style.css"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"  href="../../static/css/main.css"/>
 
 </head>
 <body>
-<header>
+<header th:replace="fragments/general :: header">
     <div class="container">
         <nav class="pre-nav">
             <a href="#" class="logo">
-                <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="60%" height="60%"/>
+                <img id="logo" src="../../static/images/cryptologo_cyan.svg" th:src="@{images/cryptologo_cyan.svg}" alt="CryptoLog logo" width="60%" height="60%"/>
             </a>
         </nav>
         <nav>
@@ -39,6 +39,6 @@
 <main>
 
 </main>
-<footer>
+<footer th:replace="fragments/general :: footer">
     <p>&copy; 404 Name not found Co.</p>
 </footer>

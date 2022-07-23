@@ -3,7 +3,7 @@
 * {
 margin: 0;
   padding: 0;
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .nowrap {
@@ -11,13 +11,12 @@ margin: 0;
 }
 
 body {
-    font-family: "Roboto", sans-serif;
-    margin: 0;
-        min-height: 100vh;
-
-        background-image: radial-gradient(whitesmoke, black);
-        display: flex;
-        flex-direction: column;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background-image: radial-gradient(whitesmoke, black);
+  display: flex;
+  flex-direction: column;
 
 }
 
@@ -35,52 +34,52 @@ position: fixed;
   color: whitesmoke;
   text-align: center;
   bottom: 0px;
-      left: 0px;
-      right: 0px;
-      margin-bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
 }
 #footer {
   margin-top: 10px;
   position: sticky;
-    background-color: black;
-    color: whitesmoke;
-    text-align: center;
+  background-color: black;
+  color: whitesmoke;
+  text-align: center;
 }
 
-a {
+/*a {
     color: white;
     text-decoration: none;
-}
+}*/
 
 .container {
-    margin: 0 auto;
-    padding: 1rem;
-    width: 1000px;
-    max-width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 1000px;
+  max-width: 100%;
 }
 
 nav {
-    padding: 0.5rem 0;
+  padding: 0.5rem 0;
 }
 
 .pre-nav {
-    font-size: 1.7rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  font-size: 1.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
-    color: #026e78;
-    font-weight: bold;
-    font-size: 2.5rem;
+  color: #026e78;
+  font-weight: bold;
+  font-size: 2.5rem;
 }
 
 nav ul {
-    display: flex;
-    flex-wrap: wrap;
-    list-style-type: none;
-    padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
 }
 
 nav li {
@@ -88,25 +87,27 @@ nav li {
 }
 
 nav li a {
-    background-color: #2d99a4;
-    display: block;
-    padding: 1rem 2rem;
-    text-align: center;
+  background-color: #2d99a4;
+  display: block;
+  padding: 1rem 2rem;
+  text-align: center;
+  color: white;
+  text-decoration: none;
 }
 
-nav a.active {
-    background-color: #fff;
-    color: #026e78;
-    font-weight: bold;
+nav li a.highlight {
+  background-color: #026e78;
+  color: #fff;
 }
 
-nav a.highlight {
-    background-color: #026e78;
-    color: #fff;
+nav li a.active {
+  background-color: #fff;
+  color: #026e78;
+  font-weight: bold;
 }
 
-nav a:hover {
-    opacity: 0.8;
+nav li a:hover:not(.active) {
+  opacity: 0.8;
 }
 
 table {
@@ -118,13 +119,13 @@ table {
 }
 
 table caption {
-    color: white;
-    font-family: "Roboto", sans-serif;
-    font-size: 1.75em;
-    font-weight: bold;
-    margin: 0.3em;
-    padding: 0.3em;
-    text-shadow: 0px 0px 2px #0008
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.75em;
+  font-weight: bold;
+  margin: 0.3em;
+  padding: 0.3em;
+  text-shadow: 0px 0px 2px #0008
 }
 
 table th {
@@ -147,14 +148,14 @@ table td {
 }
 
 table td img {
-    float: left;
-    height: 1.55em;
-    margin-right: 0.5em;
+  float: left;
+  height: 1.55em;
+  margin-right: 0.5em;
 }
 
 table td span {
-    position: relative;
-    top: 0.25em;
+  position: relative;
+  top: 0.25em;
 }
 
 table th:nth-child(-n+2), td:nth-child(-n+2) {
@@ -176,6 +177,7 @@ th:nth-child(-n+2), td:nth-child(-n+2) {
 tr:nth-child(even) {
   background-color: #cef;
 }
+
 tr:nth-child(odd) {
   background-color: #91e3f1;
 }
@@ -233,10 +235,11 @@ tr:nth-child(odd) {
     font-size: 5rem;
     text-align: center;
 }
+
 #scroll-container {
-background-color: #91e3f1;
-margin: 0.5rem;
-padding: 0.5rem;
+  background-color: #91e3f1;
+  margin: 0.5rem;
+  padding: 0.5rem;
   border: 3px solid black;
   border-radius: 5px;
   overflow: hidden;
