@@ -18,8 +18,9 @@ import java.util.stream.Collectors;
 public class SiteController {
 
     private List<Coin> coinList;
-    private final CoingeckoClient client;
+    private List<Coin> coinFiveList;
 
+    private final CoingeckoClient client;
     private final UserService userService;
 
     public SiteController(CoingeckoClient client, UserService userService) {
@@ -75,9 +76,14 @@ public class SiteController {
         if (coinId == null) {
             if (filter != null && !filter.isBlank()) {
                 coinList = client.findCoinsFromAll(filter);
+                coinFiveList = client.getTop100ByMarketCap();
             } else {
                 coinList = client.getTop100ByMarketCap();
+                coinFiveList = coinList;
             }
+            coinFiveList = coinFiveList.stream()
+                    .sorted(Comparator.comparing(Coin::getAth_change_percentage))
+                    .limit(5).toList();
         } else {
             if (user.getCoinIds().contains(coinId)) { // add / remove coins to portfolio
                 user.getCoinIds().remove(coinId);
@@ -86,20 +92,10 @@ public class SiteController {
             }
             userService.saveUser(user);
         }
-
-        List<Coin> coinFiveList; // Generate String for "Top 5 Discount" scrolling text - pretty sure this can be more clean/DRY!
-        if (filter != null && !filter.isBlank()) {
-            coinFiveList = client.getTop100ByMarketCap().stream()
-                    .sorted(Comparator.comparing(Coin::getAth_change_percentage))
-                    .limit(5).toList();
-        } else {
-            coinFiveList = coinList.stream()
-                    .sorted(Comparator.comparing(Coin::getAth_change_percentage))
-                    .limit(5).toList();
-        }
+        
         String coinString = coinFiveList.stream()
-                .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price()+ " USD")
-                .collect(Collectors.joining( " +++ ", "TOP FIVE COINS IN DISCOUNT: +++ ", " +++"));
+                .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price() + " USD")
+                .collect(Collectors.joining(" +++ ", "TOP FIVE COINS IN DISCOUNT: +++ ", " +++"));
 
         model.addAttribute("coinString", coinString);
         model.addAttribute(coinList);
