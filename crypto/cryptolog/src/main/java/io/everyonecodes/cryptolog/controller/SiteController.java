@@ -72,15 +72,6 @@ public class SiteController {
 
         User user = userService.loadLoggedInUser(principal);
 
-        List<Coin> coinFiveList = client.getTop100ByMarketCap().stream().sorted(Comparator.comparing(Coin::getAth_change_percentage))
-                .limit(5).toList();
-
-        String coinString = coinFiveList.stream()
-                .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price()+ " USD")
-                .collect(Collectors.joining( " +++ ", "TOP FIVE COINS IN DISCOUNT: +++ ", " +++"));
-
-        model.addAttribute("coinString", coinString);
-
         if (coinId == null) {
             if (filter != null && !filter.isBlank()) {
                 coinList = client.findCoinsFromAll(filter);
@@ -95,11 +86,27 @@ public class SiteController {
             }
             userService.saveUser(user);
         }
+
+        List<Coin> coinFiveList; // Generate String for "Top 5 Discount" scrolling text - pretty sure this can be more clean/DRY!
+        if (filter != null && !filter.isBlank()) {
+            coinFiveList = client.getTop100ByMarketCap().stream()
+                    .sorted(Comparator.comparing(Coin::getAth_change_percentage))
+                    .limit(5).toList();
+        } else {
+            coinFiveList = coinList.stream()
+                    .sorted(Comparator.comparing(Coin::getAth_change_percentage))
+                    .limit(5).toList();
+        }
+        String coinString = coinFiveList.stream()
+                .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price()+ " USD")
+                .collect(Collectors.joining( " +++ ", "TOP FIVE COINS IN DISCOUNT: +++ ", " +++"));
+
+        model.addAttribute("coinString", coinString);
         model.addAttribute(coinList);
         model.addAttribute("tableTitle", "Top 100 Coins");
         model.addAttribute("filter", filter);
-        model.addAttribute("portfolio", user.getCoinIds());
         model.addAttribute("target", "/home");
+        model.addAttribute("portfolio", user.getCoinIds());
         return "home";
     }
 
