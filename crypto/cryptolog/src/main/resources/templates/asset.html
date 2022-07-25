@@ -4,32 +4,34 @@
     <body>
         <header th:replace="/fragments/general.html :: header"></header>
         <main>
-            <div class="grid-container">
-                <div class="col-1">
-                    <div class="row-1">
-                        <p>The Maximalist</p>
+            <section class="grid-container">
+                <a href="" class="allocation">
+                    <div class="box a">
+                        <p>
+                            The <br> Maximalist
+                        </p>
+                        <span>
+                            100 % Bitcoin
+                        </span>
                     </div>
-                    <div class="row-2">
-                        <p>Opt in</p>
+                </a>
+                <a href="" class="allocation">
+                    <div class="box b">
+                        <p>The <br> Conservative</p>
+                        <span>
+                            80/20
+                        </span>
                     </div>
-                </div>
-                <div class="col-2">
-                    <div class="row-1">
-                        <p>The Conservative</p>
+                </a>
+                <a href="" class="allocation">
+                    <div class="box c">
+                        <p>The <br> Gambler</p>
+                        <span>
+                            40/30/30
+                        </span>
                     </div>
-                    <div class="row-2">
-                        <p>Opt in</p>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="row-1">
-                        <p>The Gambler</p>
-                    </div>
-                    <div class="row-2">
-                        <p>Opt in</p>
-                    </div>
-                </div>
-            </div>
+                </a>
+            </section>
         </main>
         <footer th:replace="/fragments/general.html :: footer"></footer>
     </body>
