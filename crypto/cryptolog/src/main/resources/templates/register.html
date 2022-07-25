@@ -1,35 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Registration Form</title>
-    <!-- link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" /-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--========== BOX ICONS ==========-->
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+    <!--========== CSS ==========-->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+
+
+    <title>Cryptolog</title>
 </head>
 
 <body>
-<header>
-    <div class="containernav">
-        <nav class="pre-nav">
-            <a href="#" class="logo">
-                <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="60%" height="60%"/>
-            </a>
-        </nav>
-        <nav>
-            <ul>
-                <li><a href="/" >Home</a></li>
-                <li class="navlist-item"><a href="/about">About</a></li>
-                <li class="navlist-item"><a href="/register" class="active">Register</a></li>
-                <li class="navlist-item"><a href="/login" class="highlight">Login</a></li>
-
-            </ul>
-        </nav>
-
-    </div>
-</header>
-<main>
+<a href="#" class="scrolltop" id="scroll-top">
+    <i class='bx bx-chevron-up scrolltop__icon'></i>
+</a>
+<header th:insert="fragments/header :: header"></header>
+<main  class="l-main">
+    <section class="login section bd-container"  >
     <div class="form-gap"></div>
 <div class="container">
     <div class="row">
@@ -76,9 +71,12 @@
     </div>
     </div>
 </div>
+    </section>
 </main>
-<footer>
-    <p>&copy; 404 Name not found Co.</p>
-</footer>
+<footer th:insert="fragments/footer :: footer"></footer>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<!--========== MAIN JS ==========-->
+<script src="js/home.js"></script>
 </body>
 </html>

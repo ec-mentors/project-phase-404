@@ -1,81 +1,527 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
-  <head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404 Name Not Found</title>
-    <link th:href="@{/css/styleindex.css}" rel="stylesheet" href="css/styleindex.css" />
-  </head>
+        <!--========== BOX ICONS ==========-->
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
 
-  <body>
-  <header th:insert="fragments/header :: header"></header>
-  <div class="maxi">
+        <!--========== CSS ==========-->
+        <link rel="stylesheet" href="css/styles.css">
+        <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
+        
 
-  <main>
-    <div class="box dark-box">
-<!--      <div class="log">-->
 
-<!--      </div>-->
-      <div>
+        <title>Cryptolog</title>
+    </head>
+    <body>
 
-        <h3>The World's Most Comprehensive Tool for
-          Crypto Enthusiasts</h3>
+        <!--========== SCROLL TOP ==========-->
+        <a href="#" class="scrolltop" id="scroll-top">
+            <i class='bx bx-chevron-up scrolltop__icon'></i>
+        </a>
+
+        <!--========== HEADER ==========-->
+      
+        <header class="l-header" id="header">
+            <nav class="nav bd-container">
+                <a href="#" class="nav__logo"> <img src="../images/cryptologo_cyan.svg" alt="" class="home__img"></a>
+
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="/" class="nav__link active-link">Home</a></li>
+                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                        <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
+                        <li class="nav__item"><a href="#menu" class="nav__link">Register</a></li>
+                        <li class="nav__item"><a href="#contact" class="nav__link">Contact us</a></li>
+
+                        <li><i class='bx bx-moon change-theme' id="theme-button"></i></li>
+                    </ul>
+                </div>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+        </header>
+
+        <main class="l-main">
+            <!--========== HOME ==========-->
+            <section class="home" id="home">
+                <div class="home__container bd-container bd-grid">
+                    <div class="home__data">
+                        <h1 class="home__title">The Worlds Most 
+                            Comprehensive Tool for <br>
+                            Crypto Enthusiasts</h1>
+                        <h2 class="home__subtitle">Sign up today and start planning your investment strategy using
+
+                            our user friendly tools and guides</h2>
+                            <a href="/register" class="button2" >Get Started</a> 
+                        <a href="/login" class="button">Login</a>
+                    </div>
+                    <div class="containerhome">
+                        <div class="homebig"><img src="../images/investchart3.jpg" alt="" ></div>
+                        <div class="homelittle">
+                          <div class="littleone">
+                            <p><i class="fa-solid fa-calculator"></i><br> DCA calculator</p>
+                          </div>
+                          <div class="littletwo">
+                            <i class="fa-solid fa-user-gear"> </i> <br> Portfolio
+                          </div>
+                        </div>
+                      </div>
+                 
+                   
+                </div>
+            </section>
+         
+            <!--========== ABOUT ==========-->
+            <section class="about section bd-container" >
+
+                <div class="container2">
+                    <div class="intro">
+                      <div class="bighead">
+                        <h2>New to Bitcoin and 
+                            cryptocurrencies? 
+                             <br> No problem.</h2>
+                      </div>
+                      <div class="smallhead">
+                        <h3>Our resource center will help guide you through the 
+                            basics of crypto investment and how it s changing the 
+                            way the world thinks about money and finance.</h3>
+                      </div>
+                    </div>
+                    <div class="intropic">
+                      <div class="introbox1">
+                        <div class="introboxtext1">
+                            <p><q> I'm new to crypto. 
+                                I need someone to explain how it 
+                                works</q></p>
+                        </div>
+                        <div class="introboxtext2"> 
+                            <a href="/home" class="button"> <p>Learn more about 
+                            cryptocurrency</p></a>
+                        </div>
+                      </div>
+
+
+                      <div class="introbox2">
+                        <div class="introboxtext3">
+                            <p><q>  I m trying to take 
+                                my crypto 
+                                investments to the 
+                                next level</q></p>
+                        </div>
+                        <div class="introboxtext4">
+                            <a href="/home" class="button"> <p>Learn how to start using 
+                                Crypto</p></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+               
+            </section>
+              <!--========== SERVICES1 ==========-->
+              <section class="services section bd-container" id="services1">
+                
+                <div class="containertop">
+                    <div class="textarea">
+                      <div class="texthead"><h2>Top Cryptocurrency 
+                        For You</h2></div>
+                      <div class="textsub"> <h3 class="section-title">Plan your investment using 100+ 
+                        cryptocurrencies in minutes</h3>
+                    </div>
+                      <div class="textmore"><a href="/home" class="button"> <p>Learn how to start using 
+                        Crypto</p></a></div>
+                    </div>
+
+
+                    <div class="textpic">
+                      <div class="bitpic">
+                        <div class="pictext"> <p >Bitcoin (BTC)<br>
+                            $41.670,00<br>
+                            -2.54%</p></div>
+                        <div class="picpic"><img src="../images/charts.png" alt="" ></div>
+                      </div>
+
+                      <div class="ethpic">
+                        <div class="pictext1"> <p >Ethereum (ETH) <br>
+                            $2,953.79<br>
+                            -1.54%</p></div>
+                        <div class="picpic2"><img src="../images/eth.jpg" alt="" ></div>
+                      </div>
+                      <div class="aepic">
+                        <div class="pictext3"> <p >Aeternity (AE)<br>
+                            $1.008<br>
+                            2.14%</p></div>
+                        <div class="picpic3"><img src="../images/eth.jpg" alt="" ></div>
+                      </div>
+                      <div class="carpic">
+                        <div class="pictext4">  <h3 >Cardano (DA)<br>
+                            $2.176<br>
+                            6.36%</h3></div>
+                        <div class="picpic4"> <img src="../images/cardano.jpg" alt="" ></div>
+                      </div>
+                    </div>
+                  </div>
+
+
+              
+            </section>
+
+            <!--========== SERVICES2 ==========-->
+            <section class="services section bd-container" id="services">
+                <div class="containerfour">
+                    <div class="servicetext">
+                      <div class="serviceheader"><h2>Easiest Way To Strategize & 
+                        Maximize Your Profits</h2></div>
+                      <div class="servicesub"><h3 class="section-title">CryptoLog is the easiestway to plan your investments. Select high 
+                        potential return, calculate potential profits</h3></div>
+                    </div>
+                    <div class="servespic">
+                      <div class="servpic1"> <i class="fa-solid fa-house"></i>
+                        <h3 class="services__title">1 Create Account</h3>
+                        <p class="services__description">research to find the best 
+                            options for you</p></div>
+                      
+                            <div class="servpic2"><i class="fa-solid fa-envelope"></i>
+                                <h3 class="services__title">2 Account Verification</h3>
+                                <p class="services__description">Performed via email, security is top priority by us</p></div>
+                      
+                            <div class="servpic3"> <i class="fa-solid fa-chart-line"></i>
+                                <h3 class="services__title">3 Research Crypto Stats</h3>
+                                <p class="services__description">select the best performing 
+                                    cryptocurrencies</p></div>
+                      
+                            <div class="servpic4"> <i class="fa-brands fa-bitcoin"></i>
+                                <h3 class="services__title">4 Select a portofolio</h3>
+                                <p class="services__description">choose a portofolio 
+                                    diversification option</p></div>
+                    </div>
+                   
+                    <div class="servbigpic"><img src="../images/pyramid.jpg" alt="" ></div>
+                  </div>
+              
+            </section>
+  <!--========== Testimonies ==========-->
+
+ 
+
+  <section class="services section bd-container" >
+
+    <span class="testhead" > <p><strong> What Our Lovely Users Are 
+        Saying About Us</strong></p>  </span>
+   <div class="testis">
+        <figure class="snip1533">
+            <figcaption>
+              <blockquote>
+                <p>If you do the job badly enough, sometimes you don't get asked to do it again.</p>
+              </blockquote>
+              <h3>Wisteria Ravenclaw</h3>
+              
+            </figcaption>
+          </figure>
+          <figure class="snip1533">
+            <figcaption>
+              <blockquote>
+                <p>I'm killing time while I wait for life to shower me with meaning and happiness.</p>
+              </blockquote>
+              <h3>Ursula Gurnmeister</h3>
+            
+            </figcaption>
+          </figure>
+          <figure class="snip1533">
+            <figcaption>
+              <blockquote>
+                <p>The only skills I have the patience to learn are those that have no real application in life. </p>
+              </blockquote>
+              <h3>Ingredia Nutrisha</h3>
+           
+            </figcaption>
+          </figure>
+          <figure class="snip1533">
+            <figcaption>
+              <blockquote>
+                <p>The only skills I have the patience to learn are those that have no real application in life. </p>
+              </blockquote>
+              <h3>Ingredia Nutrisha</h3>
+             
+            </figcaption>
+          </figure>
+        </div>
+</section>
+
+ <!--========== Articles ==========-->
+
+ <section>
+    <div class="containerart">
+        <div class="news">
+          <div class="title">
+            <h2>
+            Recent Article For You</h2>
+          </div>
+          <div class="pict1"> <img src="../images/cardano.jpg" alt="" ></div>
+
+          <div class="descript1">
+            <div class="destitle">
+              <a href="https://www.google.com/">
+                <h4>The Most Expensive 
+                    Transaction on Ethereum 
+                    Cost USD 23.5 Million</h4></a>
+                
+            </div>
+            <div class="descontent">
+                <p>The transaction was made with what is 
+                    possibly the largest transaction fee ever to 
+                    be paid in crypto.</p>
+            </div>
+          </div>
+        
+          <div class="pict2"> <img src="../images/cardano.jpg" alt="" ></div>
+          <div class="descript2">
+            <div class="destitle2">
+                <h4>Altcoin Traders Get a 
+                    New Darling as 
+                    Bitclout Creator</h4>
+            </div>
+            <div class="descontent2">
+                <p>miners keep on finding ways to use the excess 
+                    power which would otherwise go wasted this 
+                    time shaking hands with operators of struggling</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="post">
+          <div class="othernews">
+            <h2>Other news</h2>
+          </div>
+          <div class="social1">
+            <div class="soctitle1">
+                <h4>South Korean Taxman 
+                    to Be Granted Right to</h4>
+            </div>
+            <div class="soccontent1"> <p>Lorem ipsum dolor sit amet, 
+                consectetur adipiscing eli</p></div>
+          </div>
+          <div class="social2">
+            <div class="soctitle2"><h4>Tweet and Get Bitcoin 
+                Twitter Enables BTC </h4></div>
+            <div class="soccontent2"> <p>Lorem ipsum dolor sit amet, 
+                consectetur adipiscing eli</p></div>
+          </div>
+          <div class="social3">
+            <div class="soctitle3"><h4> DYDX Soars as Protocol 
+                Sees Trading Volume </h4></div>
+            <div class="soccontent3"><p>Lorem ipsum dolor sit amet, 
+                consectetur adipiscing eli</p></div>
+          </div>
+        </div>
+      </div>
+ </section>
+
+
+            <!--===== APP =======-->
+            <section class="app section bd-container">
+                <div class="app__container bd-grid">
+                    <div class="app__data">
+                        <span class="section-subtitle app__initial" id="appHo">App</span>
+                        <h2 class="section-title app__initial" id="appH">App is aviable</h2>
+                        <p class="app__description">Download our application to always have the latest crypto news</p>
+                        <div class="app__stores">
+                            <a href="#"><img src="../images/app1.png" alt="" class="app__store"></a>
+                            <a href="#"><img src="../images/app2.png" alt="" class="app__store"></a>
+                        </div>
+                    </div>
+<div class="appimg">
+                    <img src="../images/phone_crytpolog.png" alt="" class="app__img">
+                </div>
+                </div>
+            </section>
+
+
+             <!--========== Team ==========-->
+
+ 
+
+  <section class="services section bd-container" id="about" >
+    <div class="containerteam">
+      <div class="teamhead"><h2>Our Team</h2></div>
+      <div class="teampic">
+        <div class="mem1">
+          <img
+            src="../images/Mihai.jpg"
+            alt="Mihai"
+            width="512"
+            height="512" />
+          
+         <p>Mihai</p> 
+         <p>Product owner</p> 
+        <p><q>🚀</q></p></div>
+        <div class="mem2">
+          <img
+            src="../images/Adriana.jpg"
+            alt="Adriana"
+            width="512"
+            height="512" />
+          
+         <p>Adriana</p> 
+         <p>Scrum Master</p> 
+        <p><q>🚀</q></p>
+        </div>
+
+        <div class="mem3">
+          <img
+            src="../images/Efosa.jpg"
+            alt="Efosa"
+            width="512"
+            height="512" />
+          
+         <p>Efosa</p> 
+         <p>Scrum master</p> 
+        <p><q>🚀</q></p>
+        </div>
+
+        <div class="mem4">
+          <img
+            src="../images/Jasmin.png"
+            alt="Jasmin"
+            width="512"
+            height="512" />
+          
+         <p>Jasmin</p> 
+         <p>Developer</p> 
+        <p><q>🚀</q></p>
+        </div>
+
+        <div class="mem5">
+          <img
+            src="../images/Laura.jpg"
+            alt="Laura"
+            width="512"
+            height="512" />
+          
+         <p>Laura</p> 
+         <p>Developer</p> 
+        <p><q>🚀</q></p>
+        </div>
+        <div class="mem6">
+          <img
+            src="../images/Kriszta.jpg"
+            alt="Kriszta"
+            width="512"
+            height="512" />
+          
+         <p>Kriszta</p> 
+         <p>Developer</p> 
+        <p><q>🚀</q></p>
+        </div>
+        <div class="mem7">
+          <img
+            src="../images/Raul.png"
+            alt="Raul"
+            width="512"
+            height="512" />
+          
+         <p>Raul</p> 
+         <p>Developer</p> 
+        <p><q>🚀</q></p>
+        </div>
+        <div class="mem8">
+          <img
+            src="../images/Stefan.jpg"
+            alt="Stefan"
+            width="512"
+            height="512" />
+          
+         <p>Stefan</p> 
+         <p>Developer</p> 
+        <p><q>🚀</q></p>
+        </div>
       </div>
     </div>
+   
+</section>
 
+            <!--========== CONTACT US ==========-->
+            <section class="contact section bd-container" id="contact">
+                <div class="contact__container bd-grid">
+                    <div class="contact__data">
+                       
+                        <h2 class="section-title contact__initial">Stay ahead of the curve 
+                            with our mailing list</h2>
+                        <p class="contact__description">Join and be the first to get the latest update 
+                            about tips and trick from us</p>
+                    </div>
+                    <div class="sub">
+                    <div class="box_emailed">
+                        <input id="email" name="textinput" 
+                        type="email" autocomplete="off" 
+                        placeholder="Your email address">
+                    </div>
+                    <div class="box_contact__button">
+                        <a href="#" class="button">Subscribe</a>
+                    </div>
+                </div>
+                </div>
+            </section>
+        </main>
 
-    <a href="/portfolio" class="box">
-      <div class="text">
-        <h2>Portfolio</h2>
-        <p>Choose your own currencies</p>
-      </div>
-      <div>
-        <i class="glyphicon glyphicon-chevron-right"></i>
+        <!--========== FOOTER ==========-->
+        <footer class="footer section bd-container">
+            <div class="footer__container bd-grid">
+                <div class="footer__content">
+                    <a href="#" class="footer__logo">Cryptolog</a>
+                    <span class="footer__description">Take your 
+                        crypto to the 
+                        next level</span>
+                    <div>
+                        <a href="#" class="footer__social"><i class='bx bxl-facebook'></i></a>
+                        <a href="#" class="footer__social"><i class='bx bxl-instagram'></i></a>
+                        <a href="#" class="footer__social"><i class='bx bxl-twitter'></i></a>
+                    </div>
+                </div>
 
-      </div>
-    </a>
+                <div class="footer__content">
+                    <h3 class="footer__title">Services</h3>
+                    <ul>
+                        <li><a href="#" class="footer__link">Portfolio</a></li>
+                        <li><a href="#" class="footer__link">Asset Allocation</a></li>
+                        <li><a href="#" class="footer__link">Yield Calculator</a></li>
+                        
+                    </ul>
+                </div>
 
-    <a href="/asset" class="box">
-      <div class="text">
-        <h2>Assests Allocation</h2>
-        <p>What is that</p>
-      </div>
-      <div>
-        <i class="glyphicon glyphicon-chevron-right"></i>
+                <div class="footer__content">
+                    <h3 class="footer__title">Information</h3>
+                    <ul>
+                        <li><a href="#" class="footer__link">Event</a></li>
+                        <li><a href="#" class="footer__link">Contact us</a></li>
+                        <li><a href="#" class="footer__link">Privacy policy</a></li>
+                        <li><a href="#" class="footer__link">Terms of services</a></li>
+                    </ul>
+                </div>
 
-      </div>
-    </a>
-    <a href="/calculator" class="box">
-      <div class="text">
-        <h2>Yield Calculator</h2>
-        <p>Estimate your profit</p>
-      </div>
-      <div>
-        <i class="glyphicon glyphicon-chevron-right"></i>
+                <div class="footer__content">
+                    <h3 class="footer__title">Address</h3>
+                    <ul>
+                        <li>Wiener Neustadt - Austria</li>
+                        <li>BFI Street 13</li>
+                        <li>+43 676 55 55 555</li>
+                        <li>cryptolo.404@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
 
-      </div>
-    </a>
-    <a href="/calculator" class="box">
-      <div class="text">
-        <h2>Yield Calculator</h2>
-        <p>Estimate your profit</p>
-      </div>
-      <div>
-        <i class="glyphicon glyphicon-chevron-right"></i>
+            <p class="footer__copy">&#169; 2022 404NameNotFound All right reserved</p>
+        </footer>
 
-      </div>
-    </a>
-  </main>
+        <!--========== SCROLL REVEAL ==========-->
+        <script src="https://unpkg.com/scrollreveal"></script>
 
-  <aside>
-    <img src="../images/bit.jpg" alt="man" height="50%" width="50%"/>
-
-  </aside>
-
-    </div>
-  <footer>
-    <p>&copy; 404 Name not found Co.</p>
-  </footer>
-  </body>
+        <!--========== MAIN JS ==========-->
+        <script src="/js/home.js"></script>
+    </body>
 </html>

@@ -1,24 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Account confirmation</title>
-</head>
-<body>
-<header  >
-    <h1> Email Verification Success</h1>
-    <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="15%" height="15%"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-</header>
+    <!--========== BOX ICONS ==========-->
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+    <!--========== CSS ==========-->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <title>Confirmed</title>
+
+<body>
+<a href="#" class="scrolltop" id="scroll-top">
+    <i class='bx bx-chevron-up scrolltop__icon'></i>
+</a>
+<header th:insert="fragments/header :: header"></header>
 <main>
     <div class="containered">
-<p>
-        Your account with CryptoLog has been successfully created and your email has been verified! Please click <a href="/login">here</a> to log into your account</p>
+        <p>
+            Your account with CryptoLog has been successfully created and your email has been verified! Please click <a href="/login">here</a> to log into your account</p>
     </div>
 </main>
-<footer>
-    <p>&copy; 404 Name not found Co.</p>
-</footer>
+<footer th:insert="fragments/footer :: footer"></footer>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<!--========== MAIN JS ==========-->
+<script src="js/home.js"></script>
 </body>
 
 </html>
