@@ -39,10 +39,10 @@ position: fixed;
 }
 
 
-/*a {
-    color: white;
+
+a {
     text-decoration: none;
-}*/
+}
 
 .container {
   margin: 0 auto;
@@ -146,7 +146,7 @@ table td img {
   margin-right: 0.5em;
 }
 
-table td span {
+table td span.name {
   position: relative;
   top: 0.25em;
 }

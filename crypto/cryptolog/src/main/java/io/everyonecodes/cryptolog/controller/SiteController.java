@@ -19,6 +19,7 @@ public class SiteController {
 
     private List<Coin> coinList;
     private List<Coin> coinFiveList;
+    private List<Coin> coinThreeList;
 
     private final CoingeckoClient client;
     private final UserService userService;
@@ -91,6 +92,7 @@ public class SiteController {
         
         String coinString = coinFiveList.stream()
                 .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price() + " USD")
+
                 .collect(Collectors.joining(" +++ ", "COINS AT DISCOUNT: +++ ", " +++"));
 
         model.addAttribute("coinString", coinString);
@@ -128,6 +130,18 @@ public class SiteController {
         } else {
             coinList = client.getCoinsById(user.getCoinIds());
         }
+        if (coinThreeList == null) {
+            coinThreeList = client.getTop100ByMarketCap().stream()
+                    .sorted(Comparator.comparing(Coin::getPrice_change_percentage_24h).reversed())
+                    .limit(3)
+                    .toList();
+        }
+
+        String coinString = coinThreeList.stream()
+                .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price() + " USD")
+                .collect(Collectors.joining(" +++ ", "COINS OF THE DAY: +++ ", " +++"));
+
+        model.addAttribute("coinString", coinString);
         model.addAttribute(coinList);
         model.addAttribute("tableTitle", "My Portfolio");
         model.addAttribute("filter", filter);
