@@ -133,7 +133,7 @@ public class SiteController {
         } else {
             coinList = client.getCoinsById(user.getCoinIds());
         }
-        if (coinThreeList == null) {
+        if (coinId == null) {
             coinThreeList = client.getTop100ByMarketCap().stream()
                     .sorted(Comparator.comparing(Coin::getPrice_change_percentage_24h).reversed())
                     .limit(3)
