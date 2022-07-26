@@ -152,7 +152,7 @@ table td img {
   margin-right: 0.5em;
 }
 
-table td span #name {
+table td span.name {
   position: relative;
   top: 0.25em;
 }
