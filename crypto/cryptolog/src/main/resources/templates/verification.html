@@ -5,15 +5,15 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <title>Forgot Password</title>
+    <title>Verification</title>
     <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
 
     <!--========== CSS ==========-->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="../../static/css/styles.css">
     <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<header th:insert="fragments/header :: header"></header>
+<header th:replace="fragments/header :: header"></header>
 <main class="l-main">
     <section class="login section bd-container"  >
     <div class="form-gap"></div>
@@ -35,14 +35,20 @@
                 <div class="alert alert-danger"><span th:text="${emailError}"></span></div>
             </div>
 
-            <form form id="register-form" role="form" autocomplete="off" class="form"
+            <form  id="register-form" role="form" autocomplete="off" class="form"
                     th:action="@{/verification}" th:object="${user}" method="post">
                 <!--                            <form th:action="@{/verification}" method="post">-->
                 <div class="form-group">
+
+
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
                         <input id="email" name="email" placeholder="email address" class="form-control"  type="email">
                     </div>
+
+
+
+
                 </div>
                 <div class="form-group">
                     <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Send Verification Link" type="submit">
@@ -70,7 +76,7 @@
     <script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
     </section>
 </main>
-<footer th:insert="fragments/footer :: footer"></footer>
+<footer th:replace="fragments/footer :: footer"></footer>
 
 <!--========== SCROLL REVEAL ==========-->
 <script src="https://unpkg.com/scrollreveal"></script>

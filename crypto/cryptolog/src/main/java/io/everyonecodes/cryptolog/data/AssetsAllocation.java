@@ -17,6 +17,18 @@ public class AssetsAllocation {
     @Column(name = "allocation_name")
     private String allocationName;
 
+    public AssetsAllocation(Long id, String allocationName) {
+        this.id = id;
+        this.allocationName = allocationName;
+    }
+
+    public AssetsAllocation(String allocationName) {
+        this.allocationName = allocationName;
+    }
+    public AssetsAllocation() {
+
+    }
+
     public Long getId() {
         return id;
     }

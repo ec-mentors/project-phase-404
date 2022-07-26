@@ -38,13 +38,7 @@ position: fixed;
   margin-bottom: 0px;
 }
 
-#footer {
-  margin-top: 10px;
-  position: sticky;
-  background-color: black;
-  color: whitesmoke;
-  text-align: center;
-}
+
 
 a {
     text-decoration: none;

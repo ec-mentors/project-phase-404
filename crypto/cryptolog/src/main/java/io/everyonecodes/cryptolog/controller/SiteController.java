@@ -49,10 +49,6 @@ public class SiteController {
         return "calculator";
     }
 
-    @GetMapping("/about")
-    String about() {
-        return "about";
-    }
 
 //    @GetMapping("/home")
 //    public String top100(Model model) {
@@ -96,6 +92,7 @@ public class SiteController {
         
         String coinString = coinFiveList.stream()
                 .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price() + " USD")
+
                 .collect(Collectors.joining(" +++ ", "COINS AT DISCOUNT: +++ ", " +++"));
 
         model.addAttribute("coinString", coinString);

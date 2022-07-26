@@ -6,14 +6,11 @@
 
         <!--========== BOX ICONS ==========-->
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
-
+        <title th:text="${title != null} ? ${title} : 'CryptoLog'"></title>
         <!--========== CSS ==========-->
-        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" th:href="@{/css/styles.css}" href="../../static/css/styles.css">
         <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
-        
 
-
-        <title>Cryptolog</title>
     </head>
     <body>
 

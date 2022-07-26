@@ -8,7 +8,7 @@
     <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
 
     <!--========== CSS ==========-->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="../../static/css/styles.css">
     <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -22,7 +22,7 @@
     <i class='bx bx-chevron-up scrolltop__icon'></i>
 </a>
 <header th:insert="fragments/header :: header"></header>
-<main>
+<main class="messclass">
     <div class="containered">
         <p>
             We are sorry, but your link with CryptoLog has expired please click <a href="/register">here</a> to register again!</p>
