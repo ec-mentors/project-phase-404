@@ -58,7 +58,7 @@
                 <td th:text="${coin.market_cap_rank > 0} ? ${coin.market_cap_rank} : 'unranked'"/>
                 <td>
                     <img th:src="${coin.image}">
-                    <span th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'"/>
+                    <span id="name" th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'"/>
                 </td>
                 <td th:text="${coin.current_price}"/>
                 <td th:text="${coin.ath}"/>
