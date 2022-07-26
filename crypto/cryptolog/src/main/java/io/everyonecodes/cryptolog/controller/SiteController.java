@@ -141,7 +141,8 @@ public class SiteController {
         }
 
         String coinString = coinThreeList.stream()
-                .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price() + " USD")
+                .map(coin -> coin.getName().toUpperCase() + ": " + coin.getCurrent_price() + " USD "
+                        + (coin.getPrice_change_percentage_24h() > 0 ? "+" : "") + coin.getPrice_change_percentage_24h() + "%")
                 .collect(Collectors.joining(" +++ ", "COINS OF THE DAY: +++ ", " +++"));
 
         model.addAttribute("coinString", coinString);
