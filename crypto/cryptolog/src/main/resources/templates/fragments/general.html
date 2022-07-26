@@ -8,7 +8,7 @@
     <title th:text="${title != null} ? ${title} : 'CryptoLog'"></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
     <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
-    <script src="/js/main.js"></script>
+    <script src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
 </head>
@@ -55,15 +55,15 @@
             </thead>
             <tbody>
             <tr th:each="coin: ${coinList}">
-                <td th:text="${coin.market_cap_rank > 0} ? ${coin.market_cap_rank} : ''"/>
+                <td th:text="${coin.market_cap_rank > 0} ? ${coin.market_cap_rank} : 'unranked'"/>
                 <td>
-                    <img th:src="${coin.image}" style="height: 1em;">
-                    <span th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'"/>
+                    <img th:src="${coin.image}">
+                    <span class="name" th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'"/>
                 </td>
                 <td th:text="${coin.current_price}"/>
                 <td th:text="${coin.ath}"/>
                 <td th:text="${coin.ath_change_percentage}"/>
-                <td><a th:href="@{${target}(coinId=${coin.id},filter=${filter})}" style="color: darkblue; font-size: large; font-weight: bold;">
+                <td><a th:href="${#strings.isEmpty(filter)} ? @{${target}(coinId=${coin.id})} : @{${target}(coinId=${coin.id},filter=${filter})}" style="color: darkblue; font-size: large; font-weight: bold;"/>
                     <span th:text="${#lists.contains(portfolio, coin.id)} ? '&#9733;' : '&#9734;'"/>
                 </a></td>
                 <td th:text="${coin.market_cap_rank == 0} ? 3 : (${coin.market_cap_rank <= 2} ? 1 : (${coin.market_cap_rank <= 50} ? 2 : 3))"/>

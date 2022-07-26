@@ -5,30 +5,17 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <title>Verification email</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <title>Forgot Password</title>
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+    <!--========== CSS ==========-->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<header>
-    <div class="containernav">
-        <nav class="pre-nav">
-            <a href="#" class="logo">
-                <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="60%" height="60%"/>
-            </a>
-        </nav>
-        <nav>
-            <ul>
-                <li><a href="/" class="active">Home</a></li>
-                <li class="navlist-item"><a href="/about">About</a></li>
-                <li class="navlist-item"><a href="/register">Register</a></li>
-                <li class="navlist-item"><a href="/login" class="highlight">Login</a></li>
-
-            </ul>
-        </nav>
-
-    </div>
-</header>
-<main>
+<header th:insert="fragments/header :: header"></header>
+<main class="l-main">
+    <section class="login section bd-container"  >
     <div class="form-gap"></div>
     <div class="container">
         <div class="row">
@@ -69,16 +56,26 @@
             <div class="row">
 
                 New user? <a href="/" th:href="@{/register}">Register</a>
+            </div>
 
             </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
     <script type="text/javascript" th:src="@{webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+    </section>
 </main>
-<footer>
-    <p>&copy; 404 Name not found Co.</p>
-</footer>
+<footer th:insert="fragments/footer :: footer"></footer>
+
+<!--========== SCROLL REVEAL ==========-->
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<!--========== MAIN JS ==========-->
+<script src="js/home.js"></script>
 </body>
 </html>

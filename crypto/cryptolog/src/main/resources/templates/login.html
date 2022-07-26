@@ -1,70 +1,76 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>CryptoLog - Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--========== BOX ICONS ==========-->
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+    <!--========== CSS ==========-->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+
+
+    <title>Cryptolog</title>
 </head>
-
-
 <body>
-<header>
-    <div class="containernav">
-        <nav class="pre-nav">
-            <a href="#" class="logo">
-                <img id="logo" src="../images/cryptologo_cyan.svg" alt="CryptoLog logo" width="60%" height="60%"/>
-            </a>
-        </nav>
-        <nav>
-            <ul>
-                <li><a href="/" >Home</a></li>
-                <li class="navlist-item"><a href="/about">About</a></li>
-                <li class="navlist-item"><a href="/register" class="highlight">Register</a></li>
-                <li class="navlist-item"><a href="/login" class="active" >Login</a></li>
 
-            </ul>
-        </nav>
+<!--========== SCROLL TOP ==========-->
+<a href="#" class="scrolltop" id="scroll-top">
+    <i class='bx bx-chevron-up scrolltop__icon'></i>
+</a>
 
-    </div>
-</header>
-<main>
-    <div class="form-gap"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="text-center">
+<!--========== HEADER ==========-->
+
+<header th:insert="fragments/header :: header"></header>
+
+<main class="l-main">
+    <section class="login section bd-container"  >
+        <div class="form-gap"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
 
 
-                            <!-- <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" /> -->
-                            <form th:action="@{/login}" method="POST" class="form-signin">
-                                <h3 class="form-signin-heading" th:text="Login"></h3>
-                                <br/> <input type="text" id="email" name="email" placeholder="Email" class="form-control"/> <br/>
-                                <input type="password" placeholder="Password" id="password" name="password" class="form-control"/> <br/>
+                                <!-- <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" /> -->
+                                <form th:action="@{/login}" method="POST" class="form-signin">
+                                    <h3 class="form-signin-heading" th:text="Login">Login</h3>
+                                    <br/> <input type="text" id="email" name="email" placeholder="Email" class="form-control"/> <br/>
+                                    <input type="password" placeholder="Password" id="password" name="password" class="form-control"/> <br/>
 
-                                <div  th:if="${param.error}">
-                                    <p  th:utext="${errorMessage}"></p>
-                                </div>
-                                <button class="btn btn-lg btn-primary" name="Submit" value="Login" type="Submit" th:text="Login"
-                                ></button>
-                                <a href="/forgot-password">Forgot password?</a>
+                                    <div  th:if="${param.error}">
+                                        <p  th:utext="${errorMessage}"></p>
+                                    </div>
+                                    <button class="btn btn-lg btn-primary" name="Submit" value="Login" type="Submit" th:text="Login"
+                                    ></button>
+                                    <a href="/forgot-password">Forgot password?</a>
 
-                                <h4>New to CryptoLog? <br> <br>  <a href="/register">Register!</a></h4>
-                            </form>
+                                    <h4>New to CryptoLog? <br> <br>  <a href="/register">Register!</a></h4>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+        </div>
+    </section>
 </main>
-<footer>
-    <p>&copy; 404 Name not found Co.</p>
-</footer>
+
+<!--========== FOOTER ==========-->
+<footer th:insert="fragments/footer :: footer"></footer>
+
+<!--========== SCROLL REVEAL ==========-->
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<!--========== MAIN JS ==========-->
+<script src="js/home.js"></script>
 </body>
 </html>
