@@ -129,6 +129,13 @@ public class User {
         return coinIds;
     }
 
+    public AssetsAllocation getAssetsAllocation() {
+        return assetsAllocation;
+    }
+
+    public void setAssetsAllocation(AssetsAllocation assetsAllocation) {
+        this.assetsAllocation = assetsAllocation;
+    }
 
     @Override
     public boolean equals(Object o) {

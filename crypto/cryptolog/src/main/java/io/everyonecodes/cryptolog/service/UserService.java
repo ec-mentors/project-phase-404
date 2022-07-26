@@ -22,4 +22,5 @@ public interface UserService {
     boolean isUserValid(User user);
 
     void deleteUserByEmail(User user);
+
 }

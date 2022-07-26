@@ -48,10 +48,6 @@ public class SiteController {
         return "calculator";
     }
 
-    @GetMapping("/about")
-    String about() {
-        return "about";
-    }
 
 //    @GetMapping("/home")
 //    public String top100(Model model) {

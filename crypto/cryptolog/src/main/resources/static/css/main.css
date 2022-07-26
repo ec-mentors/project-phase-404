@@ -29,6 +29,8 @@ body {
   min-height: 100vh;
   background-color: #475569;
   background-image: radial-gradient(whitesmoke, black);
+  background-repeat: no-repeat;
+      background-attachment: fixed;
   display: flex;
   flex-direction: column;
 }
@@ -43,10 +45,11 @@ header
 }
 
 footer {
-position: sticky;
+position: fixed;
   background-color: black;
   color: whitesmoke;
   text-align: center;
+   bottom: 0;
 }
 a {
     color: white;
@@ -130,60 +133,23 @@ main {
     flex-flow:wrap;
     column-gap: 0.5rem;
 }
-footer {
-  bottom: 0;
-}
+
 h2 {
     text-shadow: 2px 2px 2px grey;
 }
 
 
-.card {
-  margin-top: 0.5rem;
-  scroll-margin-top: 8rem;
-  width: min(100%, 350px);
-  background-color: #cbd5e1;
-  border: 2px solid #000;
-  border-radius: 15px;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.card figure {
-  display: flex;
-  flex-flow: column nowrap;
-}
 
 
-.card img {
-  border: 5px double #333;
-  border-radius: 50%;
-}
 p .error {
     margin: 0.3em;
 
 }
 
-.card figcaption {
-  font-weight: bolder;
-  font-size: 2rem;
-  margin: 1rem;
-  text-align: center;
-}
-.card figcaption::after {
-   /*  content: '🔥'; */
-    content: '🚀';
-    display: block;
-}
 
-.card figcaption::first-letter {
-    font-size: 3rem;
-}
 
 .containered {
-    margin: 100px;
+    margin: 2rem;
     padding-left: 10px;
     display:flex;
     justify-content: center;
@@ -191,3 +157,11 @@ p .error {
     width: fit-content;
     box-shadow: 2px 6px 6px black;
 }
+
+
+
+
+
+
+
+
