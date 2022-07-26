@@ -28,7 +28,7 @@ spring:
 
 
     from:
-     email: cryptolog.404@gmail.com
+      email: cryptolog.404@gmail.com
 
   queries:
     users-query: select email, password, '1' as enabled from auth_user where email=? and verified='true'

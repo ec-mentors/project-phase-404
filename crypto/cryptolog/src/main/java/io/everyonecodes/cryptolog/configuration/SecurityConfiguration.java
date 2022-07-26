@@ -42,8 +42,9 @@ public class SecurityConfiguration {
                 .antMatchers("/").permitAll()
                 .antMatchers("/about").permitAll()
 
-                .antMatchers("/login", "/register", "/confirm").permitAll()
-                .antMatchers("/forgot-password", "/reset", "/confirm-reset", "/reset-password","/verification","/loginValidation").permitAll()
+                .antMatchers("/login", "/register", "/confirm","/calculator","/calculatorResults").permitAll()
+                .antMatchers("/forgot-password", "/reset", "/confirm-reset", "/reset-password"
+                        ,"/verification","/loginValidation").permitAll()
 
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
                 .antMatchers("/home/**").hasAnyAuthority("SUPER_USER", "ADMIN_USER", "SITE_USER")
@@ -52,7 +53,6 @@ public class SecurityConfiguration {
                 // form login
                 .csrf().disable().formLogin()
                 .loginPage("/login")
-                .failureUrl("/login?error=true")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .successHandler(customLoginSuccessHandler)
