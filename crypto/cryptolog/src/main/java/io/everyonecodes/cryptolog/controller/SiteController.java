@@ -3,13 +3,18 @@ package io.everyonecodes.cryptolog.controller;
 import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Coin;
 import io.everyonecodes.cryptolog.data.User;
+import io.everyonecodes.cryptolog.data.YieldData;
 import io.everyonecodes.cryptolog.service.UserService;
+import io.everyonecodes.cryptolog.service.YieldCalculatorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,11 +25,13 @@ public class SiteController {
     private List<Coin> coinList;
     private List<Coin> coinFiveList;
     private List<Coin> coinThreeList;
+    private final YieldCalculatorService yieldCalculatorService;
 
     private final CoingeckoClient client;
     private final UserService userService;
 
-    public SiteController(CoingeckoClient client, UserService userService) {
+    public SiteController(YieldCalculatorService yieldCalculatorService, CoingeckoClient client, UserService userService) {
+        this.yieldCalculatorService = yieldCalculatorService;
         this.client = client;
         this.userService = userService;
     }
@@ -43,9 +50,61 @@ public class SiteController {
     String asset() {
         return "asset";
     }
-
     @GetMapping("/calculator")
-    String calculator() {
+    public String getYieldResults(Model model,
+                                  @RequestParam(required = false) String monthlyAmount,
+                                  @RequestParam(required = false) String period,
+                                  Principal principal) {
+
+        List<YieldData> yieldDataList = new ArrayList<>();
+        User user = userService.loadLoggedInUser(principal);
+        List<Coin> coinList = client.getCoinsById(user.getCoinIds());
+        if (monthlyAmount == null) {
+            monthlyAmount = "0";
+        }
+        if (monthlyAmount.isBlank()) {
+            monthlyAmount = "0";
+        }
+        if (period == null) {
+            period = "0";
+        }
+        if (period.isBlank()) {
+            period = "0";
+        }
+        if (period.equals("0")) {
+            model.addAttribute("finalProfit", monthlyAmount);
+            model.addAttribute("finalInvestment", monthlyAmount);
+        } else {
+            for (Coin coin : coinList) {
+                yieldDataList.add(yieldCalculatorService.calculate(coin.getId(),
+                        BigDecimal.valueOf(Long.parseLong((monthlyAmount))),
+                        BigDecimal.valueOf(coin.getCurrent_price()),
+                        BigDecimal.valueOf(coin.getAth()),
+                        Integer.parseInt(period)));
+
+            }
+
+            BigDecimal finalProfit = new BigDecimal(0);
+            for (YieldData yieldData : yieldDataList) {
+                finalProfit = finalProfit.add(yieldData.getProfit());
+            }
+            BigDecimal finalInvestmentAmount = new BigDecimal(0);
+            for (YieldData yieldData : yieldDataList) {
+                finalInvestmentAmount = finalInvestmentAmount.add(yieldData.getInvestedAmount());
+            }
+            model.addAttribute("finalProfit", finalProfit.setScale(2, RoundingMode.HALF_UP));
+            model.addAttribute("finalInvestment", finalInvestmentAmount.setScale(2, RoundingMode.HALF_UP));
+            model.addAttribute(yieldDataList);
+            model.addAttribute("monthlyAmount", monthlyAmount);
+            model.addAttribute("period", period);
+            model.addAttribute("tableTitle", "CryptoLog Forecast");
+            model.addAttribute("coin");
+            model.addAttribute("investedAmount");
+            model.addAttribute("forecastedValue");
+            model.addAttribute("profit");
+            model.addAttribute("accumulated");
+        }
+
         return "calculator";
     }
 
