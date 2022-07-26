@@ -37,6 +37,7 @@ position: fixed;
   right: 0px;
   margin-bottom: 0px;
 }
+
 #footer {
   margin-top: 10px;
   position: sticky;
@@ -45,10 +46,9 @@ position: fixed;
   text-align: center;
 }
 
-/*a {
-    color: white;
+a {
     text-decoration: none;
-}*/
+}
 
 .container {
   margin: 0 auto;
