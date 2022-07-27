@@ -108,7 +108,7 @@ table {
   border-collapse: collapse;
   table-layout: fixed;
   font-family: Arial, Helvetica, sans-serif;
-  margin: 0 auto;
+  margin-bottom: 2rem;
 }
 
 table caption {
@@ -234,6 +234,8 @@ tr:nth-child(odd) {
 .allocation{
   color: black;
   text-decoration: none;
+  background-color: rgba(2,110,120,1);
+  border-radius: 50%;
 }
 
 .box:hover{
@@ -322,6 +324,44 @@ tr:nth-child(odd) {
     padding: 0.1em;
   }
 }
+
+.allocation:focus{
+    background-color:olive;
+}
+.containerasset {  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  grid-template-rows: 1fr;
+  grid-auto-columns: 1fr;
+  gap: 5px 5px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "blues chooser";
+}
+
+.blues { grid-area: blues; }
+
+.chooser { grid-area: chooser; }
+
+.assetheadtext h2 {
+color: #026e78;
+font-size: 2rem;
+padding: 2rem;
+text-decoration:
+}
+.assetheadtext h3 {
+color: black;
+font-size: 1.5rem;
+padding-left: 2rem;
+
+}
+
+.selected {
+text-align: center;
+margin: 2rem;
+}
+
+
+
 
 #enabled{
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.533);

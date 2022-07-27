@@ -44,16 +44,17 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> coinIds = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private AssetsAllocation assetsAllocation;
-    
-    public User() {
-    }
 
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
+
+    }
+
+    private String assetsAllocation;
+    
+    public User() {
     }
 
     public User(int id, String name, String email) {
@@ -129,11 +130,11 @@ public class User {
         return coinIds;
     }
 
-    public AssetsAllocation getAssetsAllocation() {
+    public String getAssetsAllocation() {
         return assetsAllocation;
     }
 
-    public void setAssetsAllocation(AssetsAllocation assetsAllocation) {
+    public void setAssetsAllocation(String assetsAllocation) {
         this.assetsAllocation = assetsAllocation;
     }
 
