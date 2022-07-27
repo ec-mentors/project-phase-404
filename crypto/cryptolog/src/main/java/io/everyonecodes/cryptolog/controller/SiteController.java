@@ -18,9 +18,6 @@ import java.util.stream.Collectors;
 public class SiteController {
 
     private List<Coin> coinList;
-    private List<Coin> coinFiveList;
-    private List<Coin> coinThreeList;
-
     private final CoingeckoClient client;
     private final UserService userService;
 
@@ -70,18 +67,17 @@ public class SiteController {
 
         User user = userService.loadLoggedInUser(principal);
 
-        if (coinId == null) {
-            if (filter != null && !filter.isBlank()) {
-                coinList = client.findCoinsFromAll(filter);
-                coinFiveList = client.getTop100ByMarketCap();
-            } else {
-                coinList = client.getTop100ByMarketCap();
-                coinFiveList = coinList;
-            }
-            coinFiveList = coinFiveList.stream()
-                    .sorted(Comparator.comparing(Coin::getAth_change_percentage))
-                    .limit(5).toList();
+        List<Coin> displayList;
+        if (filter != null && !filter.isBlank()) {
+            displayList = client.findCoinsFromAll(filter); // do not store in coinList
         } else {
+            if (coinId == null) {
+                coinList = client.getTop100ByMarketCap();
+            }
+            displayList = coinList;
+        }
+
+        if (coinId != null) {
             if (user.getCoinIds().contains(coinId)) { // add / remove coins to portfolio
                 user.getCoinIds().remove(coinId);
             } else {
@@ -89,14 +85,15 @@ public class SiteController {
             }
             userService.saveUser(user);
         }
-        
-        String coinString = coinFiveList.stream()
-                .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price() + " USD")
 
+        String coinString = coinList.stream()
+                .sorted(Comparator.comparing(Coin::getAth_change_percentage))
+                .limit(5)
+                .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price() + " USD")
                 .collect(Collectors.joining(" +++ ", "COINS AT DISCOUNT: +++ ", " +++"));
 
         model.addAttribute("coinString", coinString);
-        model.addAttribute(coinList);
+        model.addAttribute(displayList);
         model.addAttribute("tableTitle", "Top 100 Coins");
         model.addAttribute("filter", filter);
         model.addAttribute("target", "/home");
@@ -123,27 +120,21 @@ public class SiteController {
         if (user.getCoinIds().isEmpty()) {
             return "portfolio-empty";
         }
+        List<Coin> displayList;
         if (filter != null && !filter.isBlank()) {  // search all coins
-            if (coinId == null) {
-                coinList = client.findCoinsFromAll(filter);
-            }
+            displayList = client.findCoinsFromAll(filter);
         } else {
-            coinList = client.getCoinsById(user.getCoinIds());
+            displayList = client.getCoinsById(user.getCoinIds());
         }
-        if (coinId == null) {
-            coinThreeList = client.getTop100ByMarketCap().stream()
-                    .sorted(Comparator.comparing(Coin::getPrice_change_percentage_24h).reversed())
-                    .limit(3)
-                    .toList();
-        }
-
-        String coinString = coinThreeList.stream()
+        String coinString = coinList.stream()
+                .sorted(Comparator.comparing(Coin::getPrice_change_percentage_24h).reversed())
+                .limit(3)
                 .map(coin -> coin.getName().toUpperCase() + ": " + coin.getCurrent_price() + " USD "
-                        + (coin.getPrice_change_percentage_24h() > 0 ? "+" : "") + coin.getPrice_change_percentage_24h() + "%")
+                        + (coin.getPrice_change_percentage_24h() >= 0d ? "+" : "") + coin.getPrice_change_percentage_24h() + "%")
                 .collect(Collectors.joining(" +++ ", "COINS OF THE DAY: +++ ", " +++"));
 
         model.addAttribute("coinString", coinString);
-        model.addAttribute(coinList);
+        model.addAttribute(displayList);
         model.addAttribute("tableTitle", "My Portfolio");
         model.addAttribute("filter", filter);
         model.addAttribute("portfolio", user.getCoinIds());

@@ -4,7 +4,7 @@
 <body>
 <header th:replace="/fragments/general.html :: header"></header>
 <main>
-    <div th:if="${coinString != null}" id="scroll-container">
+    <div th:if="${coinString}" id="scroll-container">
         <div id="scroll-text" th:text="${coinString}"></div>
         <!--        <span th:utext="${coinString}"></span>-->
     </div>
