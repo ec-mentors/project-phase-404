@@ -9,9 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -59,6 +57,34 @@ public class UserServiceImp implements UserService {
         }
         
         user.setRoles(new HashSet<>(List.of(userRole)));
+    }
+
+    public boolean hasTier (User user) {
+        Set<String> userCoins =  user.getCoinIds();
+        List<Integer> userNumbers = new ArrayList<>();
+        int numberTwo=0;
+        int numberOne=0;
+        for (String coin : userCoins) {
+            try {
+                int coinNumber = Integer.parseInt(coin);
+                userNumbers.add(coinNumber);
+            }
+            catch (NumberFormatException e) {
+                int coinNumber = 3;
+                userNumbers.add(coinNumber);
+                continue;
+            }
+        }
+        for(int number : userNumbers) {
+            if(number > 2 && number <=50) {
+                numberTwo++;
+            }
+            if(number > 50) {
+                numberOne++;
+            }
+        }
+
+        return (numberOne > 0 && numberTwo >0);
     }
 
     @Override

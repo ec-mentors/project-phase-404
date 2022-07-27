@@ -359,7 +359,14 @@ padding-left: 2rem;
 text-align: center;
 margin: 2rem;
 }
-
+.span {
+font-size: 2rem;
+color: black;
+border: 7px solid darkcyan;
+padding: 1rem;
+margin-top: 2rem;
+margin-bottom: 5rem;
+}
 
 
 

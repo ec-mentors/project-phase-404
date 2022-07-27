@@ -67,6 +67,9 @@
             </div>
 
             <div class="chooser">
+
+
+
             <section class="selected">
                 <div class="form-gap"></div>
                 <div class="container">
@@ -80,22 +83,22 @@
                                         <div class="panel-body">
 
                                             <form id="register-form" role="form" autocomplete="off" class="form"
-                                                  th:action="@{/asset}" th:object="${user}" method="post">
+                                                  th:action="@{/asset}" th:object="${assetUpdateForm}" method="post">
 
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <select class="custom-select" id="inputGroupSelect04">
-                                                            <option selected>Assets</option>
-                                                            <option value="1">Maximalist</option>
-                                                            <option value="2">Conservative</option>
-                                                            <option value="3">Gambler</option>
+                                                        <select class="custom-select" id="inputGroupSelect04"
+                                                                 th:field="*{assetsAllocation}">
+                                                            <option th:value="'Maximalist'" th:text="Maximalist"></option>
+                                                            <option th:value="'Conservative'" th:text="Conservative"></option>
+                                                            <option th:value="'Gambler'" th:text="Gambler"></option>
                                                         </select>
 
                                                     </div>
                                                 </div>
                                                 <div class="input-group-append">
 
-                                                    <button class="btn btn-success" type="button">Add Asset</button>
+                                                    <button type="submit" class="btn btn-success" >Add Asset</button>
                                                 </div>
 
                                             </form>
@@ -114,6 +117,7 @@
             </section>
             </div>
             </div>
+            <span class="span" th:utext="${assetMessage}"></span>
         </main>
         <footer th:replace="/fragments/general.html :: footer"></footer>
 
