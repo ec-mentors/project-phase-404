@@ -49,20 +49,37 @@ public class AssetController {
         public String updateAsset(Principal principal, @ModelAttribute("assetUpdateForm")
             AssetUpdateForm assetUpdateForm ,Model model  ) {
         User user = userService.loadLoggedInUser(principal);
-        user.setAssetsAllocation(assetUpdateForm.getAssetsAllocation());
-        userService.saveAdmin(user);
-
-
-        if(user.getAssetsAllocation().equals("Maximalist")) {
-
-            model.addAttribute("assetMessage", "Please mind that The Maximalist portfolio allocation only takes into account Bitcoin. If you have multiple coins in your portfolio, these will be ignored for any yield calculation");
+        if(user.getCoinIds().isEmpty()) {
+            model.addAttribute("assetMessage", "Missing coins. Please mind that you need to continue adding coins to your portfolio in order to select an asset allocation");
         }
-//        else if((assetsAllocation.equals("Gambler") || assetsAllocation.equals("Conservative"))
-//                && userServiceImp.hasTier(user))
-//
-//        {
-//            model.addAttribute("assetMessage", "Missing coin from Tier 2 or 3. Please mind that you need to continue adding coins to your portfolio in order to select this particular asset allocation");
-//        }
+        else {
+            user.setAssetsAllocation(assetUpdateForm.getAssetsAllocation());
+
+            boolean tierTwo = userServiceImp.hasAllTier(user);
+            boolean tierAll = userServiceImp.hasAllTier(user);
+            if (user.getAssetsAllocation().equals("Maximalist")) {
+
+                userService.saveAdmin(user);
+                model.addAttribute("assetMessage", "Please mind that The Maximalist portfolio allocation only takes into account Bitcoin. If you have multiple coins in your portfolio, these will be ignored for any yield calculation");
+            }
+            if (user.getAssetsAllocation().equals("Gambler") && !tierAll) {
+                model.addAttribute("assetMessage", "Missing coin from Tier 2 or 3. Please mind that you need to continue adding coins to your portfolio in order to select this particular asset allocation");
+
+            }
+            if (user.getAssetsAllocation().equals("Gambler") && tierAll) {
+                userService.saveAdmin(user);
+
+            }
+
+            if (user.getAssetsAllocation().equals("Conservative") && !tierTwo) {
+                model.addAttribute("assetMessage", "Missing coin from Tier 2. Please mind that you need to continue adding coins to your portfolio in order to select this particular asset allocation");
+
+            }
+            if (user.getAssetsAllocation().equals("Conservative") && tierTwo) {
+                userService.saveAdmin(user);
+
+            }
+        }
         return "asset";
     }
 }

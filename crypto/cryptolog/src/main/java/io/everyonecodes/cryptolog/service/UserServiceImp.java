@@ -1,5 +1,7 @@
 package io.everyonecodes.cryptolog.service;
 
+import io.everyonecodes.cryptolog.CoingeckoClient;
+import io.everyonecodes.cryptolog.data.Coin;
 import io.everyonecodes.cryptolog.data.Role;
 import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.repository.RoleRepository;
@@ -16,14 +18,16 @@ public class UserServiceImp implements UserService {
     private final PasswordEncoder encoder;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final CoingeckoClient coingeckoClient;
     
     private final String roleName;
     private final String roleDescription;
 
-    public UserServiceImp(PasswordEncoder encoder, RoleRepository roleRepository, UserRepository userRepository, @Value("${messages.user.userRole.name}") String roleName, @Value("${messages.user.userRole.description}") String roleDescription) {
+    public UserServiceImp(PasswordEncoder encoder, RoleRepository roleRepository, UserRepository userRepository, CoingeckoClient coingeckoClient, @Value("${messages.user.userRole.name}") String roleName, @Value("${messages.user.userRole.description}") String roleDescription) {
         this.encoder = encoder;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.coingeckoClient = coingeckoClient;
         this.roleName = roleName;
         this.roleDescription = roleDescription;
     }
@@ -59,32 +63,41 @@ public class UserServiceImp implements UserService {
         user.setRoles(new HashSet<>(List.of(userRole)));
     }
 
-    public boolean hasTier (User user) {
-        Set<String> userCoins =  user.getCoinIds();
+    public boolean hasAllTier (User user) {
+        Set<String> userCoinIds =  user.getCoinIds();
+        List<Coin> userCoins = coingeckoClient.getCoinsById(userCoinIds);
         List<Integer> userNumbers = new ArrayList<>();
         int numberTwo=0;
-        int numberOne=0;
-        for (String coin : userCoins) {
-            try {
-                int coinNumber = Integer.parseInt(coin);
-                userNumbers.add(coinNumber);
-            }
-            catch (NumberFormatException e) {
-                int coinNumber = 3;
-                userNumbers.add(coinNumber);
-                continue;
-            }
-        }
-        for(int number : userNumbers) {
+        int numberThree=0;
+
+        for(Coin coin : userCoins) {
+            int number = coin.getMarket_cap_rank();
             if(number > 2 && number <=50) {
                 numberTwo++;
             }
             if(number > 50) {
-                numberOne++;
+                numberThree++;
             }
         }
 
-        return (numberOne > 0 && numberTwo >0);
+        return (numberThree > 0 && numberTwo >0);
+    }
+    public boolean hasTierTwo (User user) {
+        Set<String> userCoinIds =  user.getCoinIds();
+        List<Coin> userCoins = coingeckoClient.getCoinsById(userCoinIds);
+        List<Integer> userNumbers = new ArrayList<>();
+        int numberTwo=0;
+        int numberThree=0;
+
+        for(Coin coin : userCoins) {
+            int number = coin.getMarket_cap_rank();
+            if(number > 2 && number <=50) {
+                numberTwo++;
+            }
+
+        }
+
+        return  numberTwo >0 ;
     }
 
     @Override
