@@ -41,6 +41,10 @@ public class SiteController {
 
     @GetMapping("/asset")
     String asset() {
+
+//        If the user selects the Maximalist option, he will be prompted with a popup message with the following text: "Please mind that The Maximalist portfolio allocation only takes into account Bitcoin. If you have multiple coins in your portfolio, these will be ignored for any yield calculation"
+//
+//        If a user selects options 2 or 3, but his portfolio is missing all necessary Tier levels, then an error message should be displayed specifying he needs to continue adding coins to his portfolio in order to select that particular asset allocation.
         return "asset";
     }
 
