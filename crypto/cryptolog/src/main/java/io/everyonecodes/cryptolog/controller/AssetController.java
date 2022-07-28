@@ -59,7 +59,7 @@ public class AssetController {
             boolean tierAll = userServiceImp.hasAllTier(user);
             if (user.getAssetsAllocation().equals("Maximalist")) {
 
-                userService.saveAdmin(user);
+                userService.saveUser(user);
                 model.addAttribute("assetMessage", "Please mind that The Maximalist portfolio allocation only takes into account Bitcoin. If you have multiple coins in your portfolio, these will be ignored for any yield calculation");
             }
             if (user.getAssetsAllocation().equals("Gambler") && !tierAll) {
@@ -67,7 +67,7 @@ public class AssetController {
 
             }
             if (user.getAssetsAllocation().equals("Gambler") && tierAll) {
-                userService.saveAdmin(user);
+                userService.saveUser(user);
 
             }
 
@@ -76,7 +76,7 @@ public class AssetController {
 
             }
             if (user.getAssetsAllocation().equals("Conservative") && tierTwo) {
-                userService.saveAdmin(user);
+                userService.saveUser(user);
 
             }
         }
