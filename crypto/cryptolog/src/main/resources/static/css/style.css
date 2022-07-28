@@ -232,15 +232,22 @@ tr:nth-child(odd) {
 }
 
 .allocation{
+  background-color: inherit;
+  border: none;
   color: black;
   text-decoration: none;
-  background-color: rgba(2,110,120,1);
-  border-radius: 50%;
 }
 
 .box:hover{
   border: 8px solid rgb(3, 86, 86);
   background: radial-gradient(circle, rgba(45,153,164,1) 39%, rgba(161,246,255,1) 100%, rgba(85,185,196,1) 100%);
+}
+
+.allocation:focus{
+  margin-top: 10px;
+  border: 2px solid rgb(67, 255, 57);
+  border-radius: 50px;
+  background: rgb(67, 255, 57);
 }
 
 @media (max-width: 1024px) {
@@ -323,19 +330,6 @@ tr:nth-child(odd) {
     font-size: 1.4em;
     padding: 0.1em;
   }
-}
-
-.allocation:focus{
-    background-color:olive;
-}
-.containerasset {  display: grid;
-  grid-template-columns: 1.3fr 0.7fr;
-  grid-template-rows: 1fr;
-  grid-auto-columns: 1fr;
-  gap: 5px 5px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    "blues chooser";
 }
 
 .blues { grid-area: blues; }
