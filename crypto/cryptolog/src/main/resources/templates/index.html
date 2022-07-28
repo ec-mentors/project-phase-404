@@ -27,7 +27,7 @@
 
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
-                        <li class="nav__item"><a href="/" class="nav__link active-link">Home</a></li>
+                        <li class="nav__item"><a href="/#home" class="nav__link active-link">Home</a></li>
                         <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
                         <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
                         <li class="nav__item"><a href="#menu" class="nav__link">Register</a></li>
@@ -120,7 +120,7 @@
                
             </section>
               <!--========== SERVICES1 ==========-->
-              <section class="services section bd-container" id="services1">
+              <section class="services section bd-container" <!--id="services1"-->>
                 
                 <div class="containertop">
                     <div class="textarea">
@@ -529,6 +529,6 @@
         <script src="https://unpkg.com/scrollreveal"></script>
 
         <!--========== MAIN JS ==========-->
-        <script src="/js/home.js"></script>
+        <script th:src="@{js/home.js}" src="../../static/js/home.js"></script>
     </body>
 </html>
