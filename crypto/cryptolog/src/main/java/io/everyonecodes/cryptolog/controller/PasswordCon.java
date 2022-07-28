@@ -7,6 +7,7 @@ import io.everyonecodes.cryptolog.repository.UserRepository;
 import io.everyonecodes.cryptolog.service.ConfirmationTokenService;
 import io.everyonecodes.cryptolog.service.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,8 +34,12 @@ public class PasswordCon {
 
     PasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public PasswordCon(ConfirmationTokenService confirmationTokenService) {
+    private final String email;
+
+    public PasswordCon(ConfirmationTokenService confirmationTokenService,
+                       @Value("${spring.mail.from.email}") String email) {
         this.confirmationTokenService = confirmationTokenService;
+        this.email = email;
     }
 
     @GetMapping("/forgot-password")
@@ -57,7 +61,7 @@ public class PasswordCon {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(user.getEmail());
             mailMessage.setSubject("Complete Password Reset!");
-            mailMessage.setFrom("raulbodog993@gmail.com");
+            mailMessage.setFrom(email);
             mailMessage.setText("To complete the password reset process, please click here: "
                     +"http://localhost:9200/confirm-reset?token="+confirmationToken.getToken());
 
