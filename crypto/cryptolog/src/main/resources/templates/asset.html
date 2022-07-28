@@ -37,7 +37,7 @@
             <section class="grid-container">
                 <form id="register-form" role="form" autocomplete="off" class="form"
                       th:action="@{/asset}" th:object="${assetUpdateForm}" method="post">
-                    <button type="button" name="Maximalist" form="register-form" th:value="*{assetsAllocation}" value="Maximalist" id="Maximalist" th:field="*{assetsAllocation}" class="allocation">
+                    <button type="button" name="Maximalist" form="register-form" th:value="Maximalist" value="Maximalist" id="Maximalist" th:field="*{assetsAllocation}" class="allocation">
 <!--                        <input type="hidden" form="register-form" th:value="*{assetsAllocation}" value="Maximalist" id="Maximalist" class="submit" th:field="*{assetsAllocation}">-->
                         <div class="box a">
                             <p th:text="maxi">
@@ -49,7 +49,7 @@
                         </div>
 
                     </button>
-                    <button type="button" name="Conservative" form="register-form" th:value="*{assetsAllocation}" value="Conservative" id="Conservative"
+                    <button type="button" name="Conservative" form="register-form" th:value="Conservative" value="Conservative" id="Conservative"
                             th:field="*{assetsAllocation}" class="allocation">
 <!--                        <input type="hidden" form="register-form" th:value="*{assetsAllocation}" value="Conservative" id="Conservative"-->
 <!--                               th:field="*{assetsAllocation}">-->
@@ -62,7 +62,7 @@
 
 
                     </button>
-                    <button type="button" name="Gambler" form="register-form" th:value="*{assetsAllocation}" value="Gambler" id="Gambler" th:field="*{assetsAllocation}" class="allocation">
+                    <button type="button" name="Gambler" form="register-form" th:value="Gambler" value="Gambler" id="Gambler" th:field="*{assetsAllocation}" class="allocation">
 <!--                        <input type="hidden" form="register-form" th:value="*{assetsAllocation}" value="Gambler" id="Gambler" th:field="*{assetsAllocation}">-->
                         <div class="box c">
                             <p th:text="gambler">The <br> Gambler</p>

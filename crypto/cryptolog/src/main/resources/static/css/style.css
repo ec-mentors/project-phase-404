@@ -346,10 +346,10 @@ tr:nth-child(odd) {
 
 #submit{
   grid-area: 2 / 2 / 3 / 3;
-  width: 5rem;
-  height: 2rem;
+  width: 10rem;
+  height: 5rem;
   background: white;
-  text-color: black;
+  color: black;
 }
 
 .assetheadtext h2 {
