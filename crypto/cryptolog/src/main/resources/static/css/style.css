@@ -103,8 +103,40 @@ nav li a:hover:not(.active) {
   opacity: 0.8;
 }
 
+/* For the Search field */
+form.search {
+  float: left;
+  width: 0;
+  display: flex;
+  flex-direction: row;
+  margin-top: 1em;
+}
+
+form.search input {
+  border: none;
+  border-radius: 2em;
+  font-size: 1em;
+  padding: 0 0 0 1em;
+  box-shadow: inset 0 0 3px #0005;
+}
+
+form.search button {
+  background: transparent;
+  border: none;
+  outline: none;
+  margin-left: -2em;
+}
+
+form.search .fa-search {
+  color: darkblue;
+  font-size: 1em;
+  height: 2em;
+  object-fit: cover;
+}
+/* Search field end */
+
 table {
-  clear: both;
+  /* clear: both; */
   border-collapse: collapse;
   table-layout: fixed;
   font-family: Arial, Helvetica, sans-serif;
