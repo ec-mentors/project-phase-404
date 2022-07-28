@@ -1,37 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/fragments/general.html :: head"></head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <body>
 <header th:replace="/fragments/general.html :: header"></header>
 <main>
     <div id="contain">
-        <h1>Yield Calculator</h1>
-        <table>
-            <form id="form" role="form" autocomplete="off" class="form"
-                  th:action="@{/calculator}" method="get">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                        <h3>Monthly Investment Amount</h3>
-                        <input id="monthlyAmount" name="monthlyAmount" th:value="${monthlyAmount}" placeholder="0" class="form-control"  type="number">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                        <h3>Period</h3>
-                        <input id="period" name="period" th:value="${period}" placeholder="0" class="form-control"  type="number">
-                    </div>
+        <form id="form" role="form" autocomplete="off" class="form"
+              th:action="@{/calculator}" method="get">
+            <div class="form-group">
+                <h4>Monthly Investment Amount</h4>
+                <div class="input-group">
+                    <input id="monthlyAmount" name="monthlyAmount" th:value="${monthlyAmount}" placeholder="0" class="form-control"  type="number">
                 </div>
-                <div class="form-group">
-                    <input name="submit" class="btn btn-lg btn-primary btn-block" value="Calculate" type="submit">
+                <h4>Period(Months)</h4>
+                <div class="input-group">
+                    <input id="period" name="period" th:value="${period}" placeholder="0" class="form-control"  type="number">
                 </div>
-                <div class="form-group">
-                    <h3>Total Investment</h3>
-                    <h3 th:text="${finalInvestment}"/>
-                    <h3>Final Profit</h3>
-                    <h3 th:text="${finalProfit}"/>
+                <fieldset>
+                    <input type="radio" id="fiftyMonths" name="months" value="50" th:text="${fiftyMonths}">
+                    <label for="fiftyMonths">50 Days</label>
+                    <input type="radio" id="100days" name="months" value="100">
+                    <label for="100days">100 Days</label>
+                    <input type="radio" id="200days" name="months" value="200">
+                    <label for="200days">200 Days</label>
+                </fieldset>
+            </div>
 
-                </div>
-                <thead>
+            <div class="form-group">
+                <input name="submit" class="btn btn-lg btn-primary btn-block" value="Calculate" type="submit">
+            </div>
+            <div class="form-group">
+                    <tr>
+                        <th>Total Investment</th>
+                        <h3 th:text="${finalInvestment}"></h3>
+                        <th>Final Profit</th>
+                        <h3 th:text="${finalProfit}"></h3>
+                    </tr>
+
+
+            </div>
+
+            <thead>
+            <table>
                 <tr>
                     <th>Coin</th>
                     <th>Accumulated</th>
@@ -39,19 +52,21 @@
                     <th>Forecasted Value</th>
                     <th>Profit</th>
                 </tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
 
-                <tr th:each="yieldData: ${yieldDataList}">
-                    <td th:text="${#strings.toUpperCase(yieldData.coin)}"/>
-                    <td th:text="${yieldData.accumulated}"/>
-                    <td th:text="${yieldData.investedAmount}"/>
-                    <td th:text="${yieldData.forecastedValue}"/>
-                    <td th:text="${yieldData.profit}"/>
-                </tr>
-                </tbody>
-            </form>
-        </table>
+            <tr th:each="yieldData: ${yieldDataList}">
+                <td th:text="${#strings.toUpperCase(yieldData.coin)}"/>
+                <td th:text="${yieldData.accumulated}"/>
+                <td th:text="${yieldData.investedAmount}"/>
+                <td th:text="${yieldData.forecastedValue}"/>
+                <td th:text="${yieldData.profit}"/>
+            </tr>
+            </tbody>
+            </table>
+
+        </form>
+
     </div>
 </main>
 <footer th:replace="/fragments/general.html :: footer"></footer>

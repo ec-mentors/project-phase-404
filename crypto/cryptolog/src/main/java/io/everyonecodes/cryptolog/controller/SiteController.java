@@ -10,7 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.tags.form.RadioButtonTag;
+import org.springframework.web.servlet.tags.form.RadioButtonsTag;
 
+import java.awt.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.Principal;
@@ -50,25 +53,21 @@ public class SiteController {
     String asset() {
         return "asset";
     }
+
     @GetMapping("/calculator")
     public String getYieldResults(Model model,
                                   @RequestParam(required = false) String monthlyAmount,
                                   @RequestParam(required = false) String period,
                                   Principal principal) {
 
+
         List<YieldData> yieldDataList = new ArrayList<>();
         User user = userService.loadLoggedInUser(principal);
         List<Coin> coinList = client.getCoinsById(user.getCoinIds());
-        if (monthlyAmount == null) {
+        if (monthlyAmount == null || monthlyAmount.isBlank()) {
             monthlyAmount = "0";
         }
-        if (monthlyAmount.isBlank()) {
-            monthlyAmount = "0";
-        }
-        if (period == null) {
-            period = "0";
-        }
-        if (period.isBlank()) {
+        if (period == null || period.isBlank()) {
             period = "0";
         }
         if (period.equals("0")) {
@@ -92,6 +91,7 @@ public class SiteController {
             for (YieldData yieldData : yieldDataList) {
                 finalInvestmentAmount = finalInvestmentAmount.add(yieldData.getInvestedAmount());
             }
+
             model.addAttribute("finalProfit", finalProfit.setScale(2, RoundingMode.HALF_UP));
             model.addAttribute("finalInvestment", finalInvestmentAmount.setScale(2, RoundingMode.HALF_UP));
             model.addAttribute(yieldDataList);
@@ -152,7 +152,7 @@ public class SiteController {
             }
             userService.saveUser(user);
         }
-        
+
         String coinString = coinFiveList.stream()
                 .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price() + " USD")
                 .collect(Collectors.joining(" +++ ", "COINS AT DISCOUNT: +++ ", " +++"));
