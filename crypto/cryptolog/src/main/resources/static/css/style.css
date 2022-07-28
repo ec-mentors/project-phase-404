@@ -190,7 +190,7 @@ tr:nth-child(odd) {
   grid-auto-flow: column;
   grid-auto-columns: 1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 1fr 1fr;
   gap: 0px 0px;
   justify-content: center;
   align-content: center;
@@ -249,6 +249,11 @@ tr:nth-child(odd) {
   border-radius: 50px;
   background: rgb(67, 255, 57);
 }
+
+/*.form-group{
+    display: none;
+}*/
+
 
 @media (max-width: 1024px) {
   .grid-container{
@@ -334,7 +339,18 @@ tr:nth-child(odd) {
 
 .blues { grid-area: blues; }
 
-.chooser { grid-area: chooser; }
+.chooser {
+ grid-area: chooser;
+
+ }
+
+#submit{
+  grid-area: 2 / 2 / 3 / 3;
+  width: 5rem;
+  height: 2rem;
+  background: white;
+  text-color: black;
+}
 
 .assetheadtext h2 {
 color: #026e78;

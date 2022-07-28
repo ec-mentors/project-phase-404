@@ -18,7 +18,7 @@ public class AssetsAllocationService {
     public void saveAsset(String assetsAllocation, Principal principal) {
         User user = userService.loadLoggedInUser(principal);
         user.setAssetsAllocation(assetsAllocation);
-         userService.saveAdmin(user);
+         userService.saveUser(user);
     }
 
 }

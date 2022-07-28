@@ -87,7 +87,6 @@ public class UserServiceImp implements UserService {
         List<Coin> userCoins = coingeckoClient.getCoinsById(userCoinIds);
         List<Integer> userNumbers = new ArrayList<>();
         int numberTwo=0;
-        int numberThree=0;
 
         for(Coin coin : userCoins) {
             int number = coin.getMarket_cap_rank();

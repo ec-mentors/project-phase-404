@@ -22,6 +22,7 @@ public class AssetController {
     private final UserServiceImp userServiceImp;
 
     private static List<String> assetsAllocations;
+
     static {
         assetsAllocations = new ArrayList<>();
         assetsAllocations.add("Maximalist");
@@ -35,6 +36,7 @@ public class AssetController {
         this.userService = userService;
         this.userServiceImp = userServiceImp;
     }
+
     @GetMapping("/asset")
     public String display(Model model) {
         final AssetUpdateForm assetUpdateForm = new AssetUpdateForm();
@@ -45,14 +47,13 @@ public class AssetController {
     }
 
 
-        @PostMapping(value = "/asset")
-        public String updateAsset(Principal principal, @ModelAttribute("assetUpdateForm")
-            AssetUpdateForm assetUpdateForm ,Model model  ) {
+    @PostMapping("/asset")
+    public String updateAsset(Principal principal, @ModelAttribute("assetUpdateForm")
+            AssetUpdateForm assetUpdateForm, Model model) {
         User user = userService.loadLoggedInUser(principal);
-        if(user.getCoinIds().isEmpty()) {
+        if (user.getCoinIds().isEmpty()) {
             model.addAttribute("assetMessage", "Missing coins. Please mind that you need to continue adding coins to your portfolio in order to select an asset allocation");
-        }
-        else {
+        } else {
             user.setAssetsAllocation(assetUpdateForm.getAssetsAllocation());
 
             boolean tierTwo = userServiceImp.hasAllTier(user);

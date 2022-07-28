@@ -1,125 +1,164 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-        <head>
-            <meta charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
 
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title th:text="${title != null} ? ${title} : 'CryptoLog'"></title>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
-            <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
-            <script src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-            <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
-            <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-            <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${title != null} ? ${title} : 'CryptoLog'"></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
+    <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
+    <script src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
-        </head>
-    </head>
-    <body>
-        <header th:replace="/fragments/general.html :: header"></header>
-        <main>
-            <section class="assetheadtext">
-                <h2>
-                    Portfolio diversification options
+</head>
+</head>
+<body>
+<header th:replace="/fragments/general.html :: header"></header>
+<main>
+    <section class="assetheadtext">
+        <h2>
+            Portfolio diversification options
 
-                </h2>
-                <h3> Select the portfolio you want to apply to your current assets</h3>
+        </h2>
+        <h3> Select the portfolio you want to apply to your current assets</h3>
 
-            </section>
-
-
-
-            <div class="containerasset">
+    </section>
 
 
+    <div class="containerasset">
 
-            <div class="blues">
+
+        <div class="blues">
+
             <section class="grid-container">
-
-                <button type="button" class="allocation"  id="maxi">
-                    <div class="box a">
-                        <p th:text="maxi">
-                            The <br> Maximalist
-                        </p>
-                        <span>
+                <form id="register-form" role="form" autocomplete="off" class="form"
+                      th:action="@{/asset}" th:object="${assetUpdateForm}" method="post">
+                    <button type="button" name="Maximalist" form="register-form" th:value="*{assetsAllocation}" value="Maximalist" id="Maximalist" th:field="*{assetsAllocation}" class="allocation">
+<!--                        <input type="hidden" form="register-form" th:value="*{assetsAllocation}" value="Maximalist" id="Maximalist" class="submit" th:field="*{assetsAllocation}">-->
+                        <div class="box a">
+                            <p th:text="maxi">
+                                The <br> Maximalist
+                            </p>
+                            <span>
                             100 % Bitcoin
                         </span>
-                    </div>
-                </button>
-                <button type="button" class="allocation" id="conserv">
-                    <div class="box b">
-                        <p th:text = "conserv" >The <br> Conservative</p>
-                        <span>
+                        </div>
+
+                    </button>
+                    <button type="button" name="Conservative" form="register-form" th:value="*{assetsAllocation}" value="Conservative" id="Conservative"
+                            th:field="*{assetsAllocation}" class="allocation">
+<!--                        <input type="hidden" form="register-form" th:value="*{assetsAllocation}" value="Conservative" id="Conservative"-->
+<!--                               th:field="*{assetsAllocation}">-->
+                        <div class="box b">
+                            <p th:text="conserv">The <br> Conservative</p>
+                            <span>
                             80/20
                         </span>
-                    </div>
-                </button>
-                <button type="button" class="allocation"  id="gambler">
-                    <div class="box c">
-                        <p th:text = "gambler">The <br> Gambler</p>
-                        <span>
+                        </div>
+
+
+                    </button>
+                    <button type="button" name="Gambler" form="register-form" th:value="*{assetsAllocation}" value="Gambler" id="Gambler" th:field="*{assetsAllocation}" class="allocation">
+<!--                        <input type="hidden" form="register-form" th:value="*{assetsAllocation}" value="Gambler" id="Gambler" th:field="*{assetsAllocation}">-->
+                        <div class="box c">
+                            <p th:text="gambler">The <br> Gambler</p>
+                            <span>
                             40/30/30
                         </span>
-                    </div>
-                </button>
+                        </div>
+                    </button>
+                    <button th:type="submit" class="btn btn-success" id="submit">Set Asset</button>
+                </form>
             </section>
-            </div>
 
-            <div class="chooser">
-
+        </div>
 
 
-            <section class="selected">
-                <div class="form-gap"></div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 col-md-offset-4">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <div class="text-center">
-                                        <h2 class="text-center">Choose your asset</h2>
+        <!--
 
-                                        <div class="panel-body">
+                        <div class="chooser">
 
-                                            <form id="register-form" role="form" autocomplete="off" class="form"
-                                                  th:action="@{/asset}" th:object="${assetUpdateForm}" method="post">
 
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <select class="custom-select" id="inputGroupSelect04"
-                                                                 th:field="*{assetsAllocation}">
-                                                            <option th:value="'Maximalist'" th:text="Maximalist"></option>
-                                                            <option th:value="'Conservative'" th:text="Conservative"></option>
-                                                            <option th:value="'Gambler'" th:text="Gambler"></option>
-                                                        </select>
+                            <section class="selected">
+                                <div class="form-gap"></div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-4 col-md-offset-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="text-center">
+                                                        <h2 class="text-center">Choose your asset</h2>
 
+                                                        <div class="panel-body">
+
+                                                            <form id="register-form" role="form" autocomplete="off" class="form"
+                                                                  th:action="@{/asset}" th:object="${assetUpdateForm}" method="post">
+
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <div class="custom-select" id="inputGroupSelect04">
+                                                                            <input type="hidden" th:value="*{assetsAllocation}" id="Maximalist" th:field="*{assetsAllocation}">
+                                                                            <input type="hidden" th:value="*{assetsAllocation}" id="Conservative" th:field="*{assetsAllocation}">
+                                                                            <input type="hidden" th:value="*{assetsAllocation}" id="Gambler" th:field="*{assetsAllocation}">
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="input-group-append">
+
+                                                                    <button th:type="submit" class="btn btn-success" id="submit">Add Asset</button>
+                                                                </div>
+
+                                                            </form>
+
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="input-group-append">
-
-                                                    <button type="submit" class="btn btn-success" >Add Asset</button>
-                                                </div>
-
-                                            </form>
-
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 
-
-
-            </section>
+                            </section>
+                        </div>        -->
             </div>
-            </div>
-            <span class="span" th:utext="${assetMessage}"></span>
-        </main>
-        <footer th:replace="/fragments/general.html :: footer"></footer>
 
-    </body>
+        <span class="span" th:utext="${assetMessage}"></span>
+</main>
+<footer th:replace="/fragments/general.html :: footer"></footer>
+
+<script>
+            function maxi() {
+                const submit = document.getElementById("submit")
+                document.getElementById("Maximalist").click;
+                submit.click;
+                alert("It works!!")
+            }
+
+</script>
+<script>
+            function conserv() {
+                const submit = document.getElementById("submit")
+                document.getElementById("Conservative").click;
+                submit.click;
+                alert("It works!!")
+            }
+
+</script>
+<script>
+            function gambler() {
+                const submit = document.getElementById("submit")
+                document.getElementById("Gambler").click;
+                submit.click;
+                alert("It works!!")
+            }
+
+</script>
+</script>
+</body>
 </html>
