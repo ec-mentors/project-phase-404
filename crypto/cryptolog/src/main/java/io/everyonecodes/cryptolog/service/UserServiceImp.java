@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -40,6 +41,7 @@ public class UserServiceImp implements UserService {
             user.setVerified(false);
 
         }
+        user.setAssetsAllocation("none");
         userRepository.save(user);
     }
     @Override
@@ -52,9 +54,16 @@ public class UserServiceImp implements UserService {
         
         userRepository.save(user);
     }
+
+    @Override
+    public void save(User user) {
+
+        userRepository.save(user);
+    }
     
     private void prepareUserDetails(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
+        user.setAssetsAllocation("none");
         Role userRole = roleRepository.findByName(roleName);
         if (userRole == null) {
             userRole = new Role(roleName, roleDescription);
@@ -100,6 +109,10 @@ public class UserServiceImp implements UserService {
         return  numberTwo >0 ;
     }
 
+    public boolean hasRole(User user, String name) {
+        List<String> roles = user.getRoles().stream().map(Role::getName).collect(Collectors.toList());
+        return roles.contains(name);
+    }
     @Override
     public boolean isUserAlreadyPresent(User user) {
         return userRepository.existsByEmail(user.getEmail());

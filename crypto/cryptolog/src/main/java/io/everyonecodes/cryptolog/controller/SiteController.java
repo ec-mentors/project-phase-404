@@ -2,6 +2,7 @@ package io.everyonecodes.cryptolog.controller;
 
 import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Coin;
+import io.everyonecodes.cryptolog.data.Role;
 import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.service.UserService;
 import io.everyonecodes.cryptolog.service.UserServiceImp;
@@ -23,10 +24,12 @@ public class SiteController {
     private final UserService userService;
     private final UserServiceImp userServiceImp;
 
+
     public SiteController(CoingeckoClient client, UserService userService, UserServiceImp userServiceImp) {
         this.client = client;
         this.userService = userService;
         this.userServiceImp = userServiceImp;
+
     }
 
     @GetMapping
@@ -36,9 +39,19 @@ public class SiteController {
 
 
     @GetMapping("/calculator")
-    String calculator() {
-        return "calculator";
+
+    String calculator(Principal principal) {
+        User user = userServiceImp.loadLoggedInUser(principal);
+        var roles = user.getRoles().stream().map(Role::getName).collect(Collectors.toList());
+
+        if(user.getAssetsAllocation().equals("Maximalist") || user.getAssetsAllocation().equals("Gambler")
+        || user.getAssetsAllocation().equals("Conservative")) {
+            return "calculator";
+        }
+        return "calculatorlock";
     }
+
+
 
 
 //    @GetMapping("/home")

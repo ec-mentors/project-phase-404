@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface UserService {
 
     void saveUser(User user);
-
+    void save(User user);
     void saveAdmin(User user);
 
     boolean isUserAlreadyPresent(User user);

@@ -47,6 +47,7 @@ public class SecurityConfiguration {
 
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
                 .antMatchers("/home/**").hasAnyAuthority("SUPER_USER", "ADMIN_USER", "SITE_USER")
+
                 .anyRequest().authenticated()
                 .and()
                 // form login
