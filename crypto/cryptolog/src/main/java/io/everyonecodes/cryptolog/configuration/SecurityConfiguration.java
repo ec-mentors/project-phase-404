@@ -40,7 +40,7 @@ public class SecurityConfiguration {
                 // URLs matching for access rights
 
                 .antMatchers("/").permitAll()
-                .antMatchers("/about").permitAll()
+                .antMatchers("/about", "/chart").permitAll()
 
                 .antMatchers("/login", "/register", "/confirm").permitAll()
                 .antMatchers("/forgot-password", "/reset", "/confirm-reset", "/reset-password","/verification","/loginValidation").permitAll()
