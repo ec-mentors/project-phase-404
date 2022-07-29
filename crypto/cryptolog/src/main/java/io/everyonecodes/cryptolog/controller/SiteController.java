@@ -4,14 +4,17 @@ import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Coin;
 import io.everyonecodes.cryptolog.data.Role;
 import io.everyonecodes.cryptolog.data.User;
+import io.everyonecodes.cryptolog.data.YieldData;
 import io.everyonecodes.cryptolog.service.UserService;
 import io.everyonecodes.cryptolog.service.UserServiceImp;
+import io.everyonecodes.cryptolog.service.YieldCalculatorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,13 +26,15 @@ public class SiteController {
     private final CoingeckoClient client;
     private final UserService userService;
     private final UserServiceImp userServiceImp;
+    private final YieldCalculatorService yieldCalculatorService;
 
 
-    public SiteController(CoingeckoClient client, UserService userService, UserServiceImp userServiceImp) {
+    public SiteController(CoingeckoClient client, UserService userService, UserServiceImp userServiceImp, YieldCalculatorService yieldCalculatorService) {
         this.client = client;
         this.userService = userService;
         this.userServiceImp = userServiceImp;
 
+        this.yieldCalculatorService = yieldCalculatorService;
     }
 
     @GetMapping
@@ -38,18 +43,6 @@ public class SiteController {
     }
 
 
-    @GetMapping("/calculator")
-
-    String calculator(Principal principal) {
-        User user = userServiceImp.loadLoggedInUser(principal);
-        var roles = user.getRoles().stream().map(Role::getName).collect(Collectors.toList());
-
-        if(user.getAssetsAllocation().equals("Maximalist") || user.getAssetsAllocation().equals("Gambler")
-        || user.getAssetsAllocation().equals("Conservative")) {
-            return "calculator";
-        }
-        return "calculatorlock";
-    }
 
 
 
