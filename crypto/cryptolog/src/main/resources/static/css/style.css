@@ -189,6 +189,7 @@ tr:nth-child(odd) {
   height: 50%;
   grid-auto-flow: column;
   grid-auto-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 0px 0px;
@@ -372,7 +373,7 @@ margin: 2rem;
 .span {
 font-size: 2rem;
 color: black;
-border: 7px solid darkcyan;
+border: 7px hidden darkcyan;
 padding: 1rem;
 margin-top: 2rem;
 margin-bottom: 5rem;
