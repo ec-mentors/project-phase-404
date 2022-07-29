@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                 .antMatchers("/").permitAll()
                 .antMatchers("/about", "/chart").permitAll()
 
-                .antMatchers("/login", "/register", "/confirm").permitAll()
+                .antMatchers("/login", "/register", "/confirm", "/calculator").permitAll()
                 .antMatchers("/forgot-password", "/reset", "/confirm-reset", "/reset-password","/verification","/loginValidation").permitAll()
 
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()

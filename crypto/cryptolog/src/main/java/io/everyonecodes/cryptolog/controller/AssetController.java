@@ -4,7 +4,7 @@ import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Role;
 import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.repository.RoleRepository;
-import io.everyonecodes.cryptolog.service.AssetUpdateForm;
+import io.everyonecodes.cryptolog.data.AssetUpdateForm;
 import io.everyonecodes.cryptolog.service.UserService;
 import io.everyonecodes.cryptolog.service.UserServiceImp;
 import org.springframework.beans.factory.annotation.Value;

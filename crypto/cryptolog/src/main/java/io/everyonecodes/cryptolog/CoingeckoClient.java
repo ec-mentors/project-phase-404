@@ -2,6 +2,7 @@ package io.everyonecodes.cryptolog;
 
 import io.everyonecodes.cryptolog.data.Coin;
 import io.everyonecodes.cryptolog.data.SearchDTO;
+import io.everyonecodes.cryptolog.data.SimpleMovingAverageDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -46,12 +47,6 @@ public class CoingeckoClient {
                 .collect(Collectors.toList());
     }
 
-    private String generateURL(String endPoint, Map<String, Object> params) {
-        return params.keySet().stream()
-                .map(key -> key + "={" + key + "}")
-                .collect(Collectors.joining("&", BASE_URL + endPoint + "?", ""));
-    }
-
     public List<Coin> getCoinsById(Set<String> coinIds) {
         Map<String, Object> params = new HashMap<>();
         params.put("vs_currency", "usd");
@@ -85,4 +80,25 @@ public class CoingeckoClient {
         return result;
     }
 
+    public Double getSimpleMovingAverage(String coinId, int days) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("days", days);
+        params.put("vs_currency", "usd");
+        params.put("interval", "daily");
+
+        String url = generateURL("coins/" + coinId + "/market_chart", params);
+
+        var response = restTemplate.getForObject(url, SimpleMovingAverageDTO.class, params);
+
+        return Optional.ofNullable(response).map(
+                smaDTO -> smaDTO.getPrices().stream()
+                        .mapToDouble(prices -> prices.get(1))
+                        .average().orElse(0d)).orElse(null);
+    }
+
+    private String generateURL(String endPoint, Map<String, Object> params) {
+        return params.keySet().stream()
+                .map(key -> key + "={" + key + "}")
+                .collect(Collectors.joining("&", BASE_URL + endPoint + "?", ""));
+    }
 }

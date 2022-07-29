@@ -1,4 +1,4 @@
-package io.everyonecodes.cryptolog.service;
+package io.everyonecodes.cryptolog.data;
 
 public class AssetUpdateForm {
 

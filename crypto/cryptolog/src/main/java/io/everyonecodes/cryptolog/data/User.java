@@ -44,6 +44,8 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> coinIds = new HashSet<>();
 
+    private String assetsAllocation;
+    private String day;
 
     public User(String name, String email, String password) {
         this.name = name;
@@ -52,7 +54,7 @@ public class User {
 
     }
 
-    private String assetsAllocation;
+
     
     public User() {
     }
@@ -136,6 +138,14 @@ public class User {
 
     public void setAssetsAllocation(String assetsAllocation) {
         this.assetsAllocation = assetsAllocation;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 
     @Override
