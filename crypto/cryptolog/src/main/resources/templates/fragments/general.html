@@ -44,7 +44,7 @@
         <table th:fragment="toptable">
             <caption th:text="${tableTitle}"></caption>
             <thead>
-            <tr>
+            <tr th:if="${target == '/home'}">
                 <th>
                     <a th:unless="${sorting == 'rank_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='rank_asc')} : @{/home(sorting='rank_asc',filter=${filter})}">Rank</a>
                     <a th:if="${sorting == 'rank_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='rank_desc')} : @{/home(sorting='rank_desc',filter=${filter})}">Rank</a>
@@ -69,6 +69,15 @@
                     <a th:unless="${sorting == 'portfolio_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='portfolio_asc')} : @{/home(sorting='portfolio_asc',filter=${filter})}">Add to portfolio</a>
                     <a th:if="${sorting == 'portfolio_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='portfolio_desc')} : @{/home(sorting='portfolio_desc',filter=${filter})}">Add to portfolio</a>
                 </th>
+                <th>Tier</th>
+            </tr>
+            <tr th:if="${target == '/portfolio'}">
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Current Price (USD)</th>
+                <th>All-Time High Price</th>
+                <th>&#037; Drop from All-time High Price</th>
+                <th>Add to portfolio</th>
                 <th>Tier</th>
             </tr>
             </thead>
