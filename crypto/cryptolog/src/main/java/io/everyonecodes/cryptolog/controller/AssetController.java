@@ -1,6 +1,5 @@
 package io.everyonecodes.cryptolog.controller;
 
-import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.AssetUpdateForm;
 import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.service.UserService;
@@ -11,29 +10,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class AssetController  {
-    private final CoingeckoClient client;
+
 
     private final UserService userService;
-
-
-    private static List<String> assetsAllocations;
-    static {
-        assetsAllocations = new ArrayList<>();
-        assetsAllocations.add("Maximalist");
-        assetsAllocations.add("Conservative");
-        assetsAllocations.add("Gambler");
-
-    }
-
-    public AssetController(CoingeckoClient client, UserService userService
-                          ) {
-        this.client = client;
-
+    public AssetController( UserService userService) {
         this.userService = userService;
 
     }
