@@ -65,7 +65,7 @@ public class SiteController {
         if (filter != null && !filter.isBlank()) {
             displayList = client.findCoinsFromAll(filter); // do not store in coinList
         } else {
-            if (coinId == null) {
+            if (coinId == null && sorting == null) {
                 coinList = client.getTop100ByMarketCap();
             }
             displayList = coinList;
