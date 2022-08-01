@@ -1,13 +1,10 @@
 package io.everyonecodes.cryptolog.controller;
 
 import io.everyonecodes.cryptolog.CoingeckoClient;
-import io.everyonecodes.cryptolog.data.User;
-import io.everyonecodes.cryptolog.service.UserService;
-import io.everyonecodes.cryptolog.service.UserServiceImp;
+import io.everyonecodes.cryptolog.service.AssetsAllocationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
@@ -16,9 +13,9 @@ import java.util.List;
 
 @Controller
 public class AssetController {
+
     private final CoingeckoClient client;
-    private final UserService userService;
-    private final UserServiceImp userServiceImp;
+    private final AssetsAllocationService assetsAllocationService;
 
     private static List<String> assetsAllocations;
 
@@ -27,55 +24,19 @@ public class AssetController {
         assetsAllocations.add("Maximalist");
         assetsAllocations.add("Conservative");
         assetsAllocations.add("Gambler");
-
     }
 
-    public AssetController(CoingeckoClient client, UserService userService, UserServiceImp userServiceImp) {
+    public AssetController(CoingeckoClient client, AssetsAllocationService assetsAllocationService) {
         this.client = client;
-        this.userService = userService;
-        this.userServiceImp = userServiceImp;
+        this.assetsAllocationService = assetsAllocationService;
     }
 
     @GetMapping("/asset")
-    public String display(@RequestParam(required = false) String assetsAllocation, Model model) {
-        model.addAttribute("assetsAllocation", assetsAllocation);
-        return "asset";
-    }
-
-    @GetMapping("/save-asset")
-    public String updateAsset(Principal principal, @ModelAttribute("assetsAllocation")
-            String assetsAllocation, Model model) {
-        User user = userService.loadLoggedInUser(principal);
-        if (user.getCoinIds().isEmpty()) {
-            model.addAttribute("assetMessage", "Missing coins. Please mind that you need to continue adding coins to your portfolio in order to select an asset allocation");
-        } else {
-            user.setAssetsAllocation(assetsAllocation);
-
-            boolean tierTwo = userServiceImp.hasAllTier(user);
-            boolean tierAll = userServiceImp.hasAllTier(user);
-            if (user.getAssetsAllocation().equals("Maximalist")) {
-
-                userService.saveUser(user);
-                model.addAttribute("assetMessage", "Please mind that The Maximalist portfolio allocation only takes into account Bitcoin. If you have multiple coins in your portfolio, these will be ignored for any yield calculation");
-            }
-            if (user.getAssetsAllocation().equals("Gambler") && !tierAll) {
-                model.addAttribute("assetMessage", "Missing coin from Tier 2 or 3. Please mind that you need to continue adding coins to your portfolio in order to select this particular asset allocation");
-
-            }
-            if (user.getAssetsAllocation().equals("Gambler") && tierAll) {
-                userService.saveUser(user);
-
-            }
-
-            if (user.getAssetsAllocation().equals("Conservative") && !tierTwo) {
-                model.addAttribute("assetMessage", "Missing coin from Tier 2. Please mind that you need to continue adding coins to your portfolio in order to select this particular asset allocation");
-
-            }
-            if (user.getAssetsAllocation().equals("Conservative") && tierTwo) {
-                userService.saveUser(user);
-
-            }
+    public String display(@RequestParam(required = false) String assetsAllocation, Model model, Principal principal) {
+        if (assetsAllocation == null) {
+            return "asset";
         }
+        assetsAllocationService.saveAsset(assetsAllocation, model, principal);
         return "asset";
     }
 }
