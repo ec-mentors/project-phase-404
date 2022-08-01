@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BalanceForm {
-    private Map<String, Integer> values = new HashMap<>();
+    private Map<String, Double> values = new HashMap<>();
 
-    public Map<String, Integer> getValues() {
+    public Map<String, Double> getValues() {
         return values;
     }
 

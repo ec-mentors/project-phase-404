@@ -36,7 +36,7 @@ public class PorfolioBalancingController {
     }
 
     @PostMapping("/portfoliobalance")
-    public String portfoliorebalance(@ModelAttribute("form") BalanceForm balanceForm, Model model, Principal principal) {
+    public String portfoliobalance(@ModelAttribute BalanceForm balanceForm, Model model, Principal principal) {
         System.out.println(balanceForm);
         return "portfoliobalance";
     }

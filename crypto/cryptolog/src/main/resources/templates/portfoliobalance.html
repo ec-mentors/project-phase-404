@@ -25,7 +25,7 @@
                     </td>
                     <td th:text="${coin.current_price}"/>
                     <td>
-                        <input class="accumulated" th:field="*{values['__${coin.id}__']}" placeholder="0" type="text">
+                        <input class="accumulated" th:field="*{values['__${coin.id}__']}" placeholder="0" type="number" step="any" min="0">
                     </td>
                 </tr>
                 </tbody>
