@@ -2,9 +2,7 @@ package io.everyonecodes.cryptolog.controller;
 
 import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Coin;
-import io.everyonecodes.cryptolog.data.Role;
 import io.everyonecodes.cryptolog.data.User;
-import io.everyonecodes.cryptolog.data.YieldData;
 import io.everyonecodes.cryptolog.service.UserService;
 import io.everyonecodes.cryptolog.service.UserServiceImp;
 import io.everyonecodes.cryptolog.service.YieldCalculatorService;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,10 +38,6 @@ public class SiteController {
     String index() {
         return "index";
     }
-
-
-
-
 
 
 //    @GetMapping("/home")
@@ -89,7 +82,8 @@ public class SiteController {
         String coinString = coinList.stream()
                 .sorted(Comparator.comparing(Coin::getAth_change_percentage))
                 .limit(5)
-                .map(data -> data.getName().toUpperCase() + ": " + data.getCurrent_price() + " USD")
+                .map(coin -> coin.getName().toUpperCase() + ": " + coin.getCurrent_price() + " USD – ATH % Drop: "
+                        + String.format("%+.2f", coin.getAth_change_percentage()) + "%")
                 .collect(Collectors.joining(" +++ ", "COINS AT DISCOUNT: +++ ", " +++"));
 
         model.addAttribute("coinString", coinString);
@@ -129,8 +123,8 @@ public class SiteController {
         String coinString = coinList.stream()
                 .sorted(Comparator.comparing(Coin::getPrice_change_percentage_24h).reversed())
                 .limit(3)
-                .map(coin -> coin.getName().toUpperCase() + ": " + coin.getCurrent_price() + " USD "
-                        + (coin.getPrice_change_percentage_24h() >= 0d ? "+" : "") + coin.getPrice_change_percentage_24h() + "%")
+                .map(coin -> coin.getName().toUpperCase() + ": " + coin.getCurrent_price() + " USD – 24h Change: "
+                        + String.format("%+.2f", coin.getPrice_change_percentage_24h()) + "%")
                 .collect(Collectors.joining(" +++ ", "COINS OF THE DAY: +++ ", " +++"));
 
         model.addAttribute("coinString", coinString);
