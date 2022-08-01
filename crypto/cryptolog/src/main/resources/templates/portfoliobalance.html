@@ -5,49 +5,42 @@
 <header th:replace="/fragments/general.html :: header"></header>
 <main>
     <div id="contain">
-        <table>
-            <caption>Portfolio Balancing</caption>
-            <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Current Price (USD)</th>
-                <th>Accumulated</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="coin: ${coinList}">
-                <td th:text="${coin.market_cap_rank > 0} ? ${coin.market_cap_rank} : 'unranked'"/>
-                <td>
-                    <img th:src="${coin.image}">
-                    <span class="name" th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'"/>
-                </td>
-                <td th:text="${coin.current_price}"/>
-                <td>
-                 <input id="accumulated" name="accumulated" th:value="${accumulated}" placeholder="0" class="form-control"  type="text">
-                </td>
-            </tr>
-
-            </tbody>
-        </table>
-    <h4>Select Profile</h4>
-    <div class="form-group">
-        <div class="input-group">
+        <form action="/portfoliobalance" method="post" th:object="${balanceForm}">
+            <table>
+                <caption>Portfolio Balancing</caption>
+                <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Current Price (USD)</th>
+                    <th>Accumulated</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="coin: ${coinList}">
+                    <td th:text="${coin.market_cap_rank > 0} ? ${coin.market_cap_rank} : 'unranked'"/>
+                    <td>
+                        <img th:src="${coin.image}">
+                        <span class="name" th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'"/>
+                    </td>
+                    <td th:text="${coin.current_price}"/>
+                    <td>
+                        <input class="accumulated" th:field="*{values['__${coin.id}__']}" placeholder="0" type="text">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <h4>Select Profile</h4>
             <select class="custom-select" id="inputGroupSelect04">
                 <option value="'Maximalist'">Maximalist</option>
                 <option value="'Conservative'">Conservative</option>
                 <option value="'Gambler'">Gambler</option>
             </select>
-
-        </div>
-    </div>
-        <br>
-        <br>
-        <br>
-    <div class="form-group">
-
-        <input name="submit" class="btn btn-lg btn-primary btn-block" value="Calculate" type="submit">
-    </div>
+            <br>
+            <br>
+            <br>
+            <input name="submit" class="button" value="Calculate" type="submit">
+        </form>
     </div>
 </main>
 <footer th:replace="/fragments/general.html :: footer"></footer>

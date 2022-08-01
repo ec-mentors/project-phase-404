@@ -1,18 +1,18 @@
 package io.everyonecodes.cryptolog.controller;
 
 import io.everyonecodes.cryptolog.CoingeckoClient;
+import io.everyonecodes.cryptolog.data.BalanceForm;
 import io.everyonecodes.cryptolog.data.Coin;
 import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 @Controller
 public class PorfolioBalancingController {
     private final CoingeckoClient client;
@@ -23,18 +23,21 @@ public class PorfolioBalancingController {
     }
 
     @GetMapping("/portfoliobalance")
-    public String portfoliobalance(Model model,
-                            @RequestParam(required = false) String filter,
-                            @RequestParam(required = false) String coinId,
-                            Principal principal) {
+    public String portfoliobalance(Model model, Principal principal) {
 
         User user = userService.loadLoggedInUser(principal);
         List<Coin> coinList = client.getCoinsById(user.getCoinIds());
 
+        BalanceForm balanceForm = new BalanceForm();
+
+        model.addAttribute(balanceForm);
         model.addAttribute(coinList);
-        model.addAttribute("tableTitle", "Portfolio Balancing");
-        model.addAttribute("filter", filter);
-        model.addAttribute("target", "/portfoliobalance");
+        return "portfoliobalance";
+    }
+
+    @PostMapping("/portfoliobalance")
+    public String portfoliorebalance(@ModelAttribute("form") BalanceForm balanceForm, Model model, Principal principal) {
+        System.out.println(balanceForm);
         return "portfoliobalance";
     }
 }
