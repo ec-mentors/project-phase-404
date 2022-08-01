@@ -1,0 +1,60 @@
+package io.everyonecodes.cryptolog.controller;
+
+import io.everyonecodes.cryptolog.data.User;
+import io.everyonecodes.cryptolog.service.UserService;
+import io.everyonecodes.cryptolog.service.YieldCalculatorService;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.ui.Model;
+
+import java.security.Principal;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class YieldCalculatorControllerTest {
+    @Autowired
+    TestRestTemplate restTemplate;
+
+    @MockBean
+     YieldCalculatorService yieldCalculatorService;
+    @MockBean
+    UserService userService;
+    @MockBean
+    SecurityFilterChain securityFilterChain;
+    @MockBean
+    Model model;
+    @MockBean
+    Principal principal;
+    @Test
+    void getYieldResultsNone() {
+
+        String monthlyAmount ="test";
+        String period = "test";
+        String days = "1";
+        String url = "/calculator";
+        User user = new User("test", "test", "test");
+        Mockito.when(userService.loadLoggedInUser(principal)).thenReturn(user);
+        user.setAssetsAllocation("none");
+        restTemplate.getForObject(url, String.class);
+
+    }
+    @Test
+    void getYieldResults() {
+
+        String monthlyAmount ="test";
+        String period = "test";
+
+        String url = "/calculator";
+        User user = new User("test", "test", "test");
+        Mockito.when(userService.loadLoggedInUser(principal)).thenReturn(user);
+        user.setAssetsAllocation("Gambler");
+        restTemplate.getForObject(url, String.class);
+
+
+
+    }
+}

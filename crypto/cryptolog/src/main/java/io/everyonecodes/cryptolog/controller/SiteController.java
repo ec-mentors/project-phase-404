@@ -4,7 +4,6 @@ import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Coin;
 import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.service.UserService;
-import io.everyonecodes.cryptolog.service.UserServiceImp;
 import io.everyonecodes.cryptolog.service.YieldCalculatorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,14 +21,14 @@ public class SiteController {
     private List<Coin> coinList;
     private final CoingeckoClient client;
     private final UserService userService;
-    private final UserServiceImp userServiceImp;
+
     private final YieldCalculatorService yieldCalculatorService;
 
 
-    public SiteController(CoingeckoClient client, UserService userService, UserServiceImp userServiceImp, YieldCalculatorService yieldCalculatorService) {
+    public SiteController(CoingeckoClient client, UserService userService, YieldCalculatorService yieldCalculatorService) {
         this.client = client;
         this.userService = userService;
-        this.userServiceImp = userServiceImp;
+
 
         this.yieldCalculatorService = yieldCalculatorService;
     }

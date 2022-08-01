@@ -1,16 +1,13 @@
 package io.everyonecodes.cryptolog.controller;
 
 import io.everyonecodes.cryptolog.CoingeckoClient;
-import io.everyonecodes.cryptolog.data.*;
+import io.everyonecodes.cryptolog.data.User;
+import io.everyonecodes.cryptolog.data.YieldData;
 import io.everyonecodes.cryptolog.service.UserService;
-import io.everyonecodes.cryptolog.service.UserServiceImp;
 import io.everyonecodes.cryptolog.service.YieldCalculatorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
@@ -19,13 +16,13 @@ import java.util.List;
 
 @Controller
 public class YieldCalculatorController {
-    private final UserServiceImp userServiceImp;
+
     private final YieldCalculatorService yieldCalculatorService;
     private final UserService userService;
     private final CoingeckoClient client;
 
-    public YieldCalculatorController(UserServiceImp userServiceImp, YieldCalculatorService yieldCalculatorService, UserService userService, CoingeckoClient client) {
-        this.userServiceImp = userServiceImp;
+    public YieldCalculatorController( YieldCalculatorService yieldCalculatorService, UserService userService, CoingeckoClient client) {
+
         this.yieldCalculatorService = yieldCalculatorService;
         this.userService = userService;
         this.client = client;

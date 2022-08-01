@@ -57,6 +57,4 @@ messages:
     userRole:
       name: "SITE_USER"
       description: "This user has access to site, after login - normal user"
-    yieldRole:
-      name: "YIELD_USER"
-      description: "This user has access to calculator fields"
+
