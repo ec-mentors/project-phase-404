@@ -84,8 +84,8 @@ public class SiteController {
             switch (sorting) {
                 case "rank_asc" -> displayList.sort(Comparator.comparing(Coin::getMarket_cap_rank));
                 case "rank_desc" -> displayList.sort(Comparator.comparing(Coin::getMarket_cap_rank).reversed());
-                case "name_asc" -> displayList.sort(Comparator.comparing(Coin::getName));
-                case "name_desc" -> displayList.sort(Comparator.comparing(Coin::getName).reversed());
+                case "name_asc" -> displayList.sort(Comparator.comparing(coin -> coin.getName().toLowerCase()));
+                case "name_desc" -> displayList.sort(Comparator.comparing((Coin coin) -> coin.getName().toLowerCase()).reversed());
                 case "price_asc" -> displayList.sort(Comparator.comparing(Coin::getCurrent_price));
                 case "price_desc" -> displayList.sort(Comparator.comparing(Coin::getCurrent_price).reversed());
                 case "ath_asc" -> displayList.sort(Comparator.comparing(Coin::getAth));
