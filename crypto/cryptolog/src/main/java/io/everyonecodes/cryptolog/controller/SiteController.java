@@ -56,6 +56,7 @@ public class SiteController {
     public String filter(Model model,
                          @RequestParam(required = false) String filter,
                          @RequestParam(required = false) String coinId,
+                         @RequestParam(required = false) String sorting,
                          Principal principal) {
 
         User user = userService.loadLoggedInUser(principal);
@@ -79,6 +80,23 @@ public class SiteController {
             userService.saveUser(user);
         }
 
+        if (sorting != null) {
+            switch (sorting) {
+                case "rank_asc" -> displayList.sort(Comparator.comparing(Coin::getMarket_cap_rank));
+                case "rank_desc" -> displayList.sort(Comparator.comparing(Coin::getMarket_cap_rank).reversed());
+                case "name_asc" -> displayList.sort(Comparator.comparing(Coin::getName));
+                case "name_desc" -> displayList.sort(Comparator.comparing(Coin::getName).reversed());
+                case "price_asc" -> displayList.sort(Comparator.comparing(Coin::getCurrent_price));
+                case "price_desc" -> displayList.sort(Comparator.comparing(Coin::getCurrent_price).reversed());
+                case "ath_asc" -> displayList.sort(Comparator.comparing(Coin::getAth));
+                case "ath_desc" -> displayList.sort(Comparator.comparing(Coin::getAth).reversed());
+                case "ath_drop_asc" -> displayList.sort(Comparator.comparing(Coin::getAth_change_percentage));
+                case "ath_drop_desc" -> displayList.sort(Comparator.comparing(Coin::getAth_change_percentage).reversed());
+                case "portfolio_asc" -> displayList.sort(Comparator.comparing(coin -> !user.getCoinIds().contains(coin.getId())));
+                case "portfolio_desc" -> displayList.sort(Comparator.comparing(coin -> user.getCoinIds().contains(coin.getId())));
+            }
+        }
+
         String coinString = coinList.stream()
                 .sorted(Comparator.comparing(Coin::getAth_change_percentage))
                 .limit(5)
@@ -86,6 +104,7 @@ public class SiteController {
                         + String.format("%+.2f", coin.getAth_change_percentage()) + "%")
                 .collect(Collectors.joining(" +++ ", "COINS AT DISCOUNT: +++ ", " +++"));
 
+        model.addAttribute("sorting", sorting);
         model.addAttribute("coinString", coinString);
         model.addAttribute(displayList);
         model.addAttribute("tableTitle", "Top 100 Coins");

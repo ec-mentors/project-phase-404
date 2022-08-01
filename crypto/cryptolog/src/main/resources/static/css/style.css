@@ -161,6 +161,10 @@ table th {
   border-right: 0.3px solid white;
 }
 
+table th a {
+  color: whitesmoke;
+}
+
 table th:last-child {
   border: none;
 }
