@@ -82,7 +82,7 @@ public class SiteController {
         String coinString = coinList.stream()
                 .sorted(Comparator.comparing(Coin::getAth_change_percentage))
                 .limit(5)
-                .map(coin -> coin.getName().toUpperCase() + ": " + coin.getCurrent_price() + " USD – ATH % Drop: "
+                .map(coin -> coin.getName().toUpperCase() + ": " + coin.getCurrent_price() + " USD – ATH Drop: "
                         + String.format("%+.2f", coin.getAth_change_percentage()) + "%")
                 .collect(Collectors.joining(" +++ ", "COINS AT DISCOUNT: +++ ", " +++"));
 
