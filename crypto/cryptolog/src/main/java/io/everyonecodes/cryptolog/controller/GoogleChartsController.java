@@ -15,7 +15,7 @@ public class GoogleChartsController {
     }
     
     @GetMapping("/chart")
-    public String getPieChart(Model model) {
+    String getPieChart(Model model) {
         return googleChartsService.getChart(model);
     }
 }
