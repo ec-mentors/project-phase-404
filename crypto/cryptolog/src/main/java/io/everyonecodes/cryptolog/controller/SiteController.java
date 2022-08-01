@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Controller
 public class SiteController {
 
-    private List<Coin> coinList;
+    private List<Coin> top100CoinList;
     private final CoingeckoClient client;
     private final UserService userService;
     private final UserServiceImp userServiceImp;
@@ -66,9 +66,9 @@ public class SiteController {
             displayList = client.findCoinsFromAll(filter); // do not store in coinList
         } else {
             if (coinId == null && sorting == null) {
-                coinList = client.getTop100ByMarketCap();
+                top100CoinList = List.copyOf(client.getTop100ByMarketCap());
             }
-            displayList = coinList;
+            displayList = top100CoinList;
         }
 
         if (coinId != null) {
@@ -82,22 +82,22 @@ public class SiteController {
 
         if (sorting != null) {
             switch (sorting) {
-                case "rank_asc" -> displayList.sort(Comparator.comparing(Coin::getMarket_cap_rank));
-                case "rank_desc" -> displayList.sort(Comparator.comparing(Coin::getMarket_cap_rank).reversed());
-                case "name_asc" -> displayList.sort(Comparator.comparing(coin -> coin.getName().toLowerCase()));
-                case "name_desc" -> displayList.sort(Comparator.comparing((Coin coin) -> coin.getName().toLowerCase()).reversed());
-                case "price_asc" -> displayList.sort(Comparator.comparing(Coin::getCurrent_price));
-                case "price_desc" -> displayList.sort(Comparator.comparing(Coin::getCurrent_price).reversed());
-                case "ath_asc" -> displayList.sort(Comparator.comparing(Coin::getAth));
-                case "ath_desc" -> displayList.sort(Comparator.comparing(Coin::getAth).reversed());
-                case "ath_drop_asc" -> displayList.sort(Comparator.comparing(Coin::getAth_change_percentage));
-                case "ath_drop_desc" -> displayList.sort(Comparator.comparing(Coin::getAth_change_percentage).reversed());
-                case "portfolio_asc" -> displayList.sort(Comparator.comparing(coin -> !user.getCoinIds().contains(coin.getId())));
-                case "portfolio_desc" -> displayList.sort(Comparator.comparing(coin -> user.getCoinIds().contains(coin.getId())));
+                case "rank_asc" -> displayList = displayList.stream().sorted(Comparator.comparing(Coin::getMarket_cap_rank)).toList();
+                case "rank_desc" -> displayList = displayList.stream().sorted(Comparator.comparing(Coin::getMarket_cap_rank).reversed()).toList();
+                case "name_asc" -> displayList = displayList.stream().sorted(Comparator.comparing(coin -> coin.getName().toLowerCase())).toList();
+                case "name_desc" -> displayList = displayList.stream().sorted(Comparator.comparing((Coin coin) -> coin.getName().toLowerCase()).reversed()).toList();
+                case "price_asc" -> displayList = displayList.stream().sorted(Comparator.comparing(Coin::getCurrent_price)).toList();
+                case "price_desc" -> displayList = displayList.stream().sorted(Comparator.comparing(Coin::getCurrent_price).reversed()).toList();
+                case "ath_asc" -> displayList = displayList.stream().sorted(Comparator.comparing(Coin::getAth)).toList();
+                case "ath_desc" -> displayList = displayList.stream().sorted(Comparator.comparing(Coin::getAth).reversed()).toList();
+                case "ath_drop_asc" -> displayList = displayList.stream().sorted(Comparator.comparing(Coin::getAth_change_percentage)).toList();
+                case "ath_drop_desc" -> displayList = displayList.stream().sorted(Comparator.comparing(Coin::getAth_change_percentage).reversed()).toList();
+                case "portfolio_asc" -> displayList = displayList.stream().sorted(Comparator.comparing(coin -> !user.getCoinIds().contains(coin.getId()))).toList();
+                case "portfolio_desc" -> displayList = displayList.stream().sorted(Comparator.comparing(coin -> user.getCoinIds().contains(coin.getId()))).toList();
             }
         }
 
-        String coinString = coinList.stream()
+        String coinString = top100CoinList.stream()
                 .sorted(Comparator.comparing(Coin::getAth_change_percentage))
                 .limit(5)
                 .map(coin -> coin.getName().toUpperCase() + ": " + coin.getCurrent_price() + " USD – ATH Drop: "
@@ -139,7 +139,7 @@ public class SiteController {
         } else {
             displayList = client.getCoinsById(user.getCoinIds());
         }
-        String coinString = coinList.stream()
+        String coinString = top100CoinList.stream()
                 .sorted(Comparator.comparing(Coin::getPrice_change_percentage_24h).reversed())
                 .limit(3)
                 .map(coin -> coin.getName().toUpperCase() + ": " + coin.getCurrent_price() + " USD – 24h Change: "
