@@ -1,55 +1,46 @@
 package io.everyonecodes.cryptolog.service;
 
-import io.everyonecodes.cryptolog.data.ConfirmationToken;
-import io.everyonecodes.cryptolog.data.User;
-import io.everyonecodes.cryptolog.repository.ConfirmationTokenRepository;
-import io.everyonecodes.cryptolog.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class PasswordService {
 	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private ConfirmationTokenRepository confirmationTokenRepository;
-	
-	@Autowired
-	private EmailSenderService emailSenderService;
-	
+	private final UserService userService;
+	private final ConfirmationTokenRepository confirmationTokenRepository;
+	private final EmailSenderService emailSenderService;
 	private final ConfirmationTokenService confirmationTokenService;
-	
 	PasswordEncoder encoder = new BCryptPasswordEncoder(12);
-	
 	private final String email;
 	
-	public PasswordService(ConfirmationTokenService confirmationTokenService,
-	                   @Value("${spring.mail.from.email}") String email) {
+	
+	public PasswordService(UserService userService, ConfirmationTokenRepository confirmationTokenRepository, EmailSenderService emailSenderService, ConfirmationTokenService confirmationTokenService,
+	                   @Value("${spring.mail.from.email}") String email ) {
+		
+		this.userService = userService;
+		this.confirmationTokenRepository = confirmationTokenRepository;
+		this.emailSenderService = emailSenderService;
 		this.confirmationTokenService = confirmationTokenService;
 		this.email = email;
+		
 	}
 	
-	public ModelAndView showResetPassword(ModelAndView modelAndView, User user) {
-		modelAndView.addObject("user", user);
-		modelAndView.setViewName("forgotPassword");
-		return modelAndView;
+	public ModelAndView displayResetPassword(ModelAndView mav, User user) {
+		mav.addObject("user", user);
+		mav.setViewName("forgotPassword");
+		return mav;
 	}
 	
-	public ModelAndView getForgotUserPassword(ModelAndView modelAndView, User user) {
-		Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+	public ModelAndView forgotUserPassword(ModelAndView mav, User user) {
+		Optional<User> existingUser = userService.findUserByEmail(user.getEmail());
 		if(existingUser.isPresent()) {
-			
-			String token = UUID.randomUUID().toString();
 			User userE = existingUser.get();
 			ConfirmationToken confirmationToken =confirmationTokenService.createToken(userE);
 			
@@ -62,83 +53,57 @@ public class PasswordService {
 			
 			emailSenderService.sendEmail(mailMessage);
 			
-			modelAndView.addObject("message", "Request to reset password received. Check your inbox for the reset link.");
-			modelAndView.setViewName("successForgotPassword");
+			mav.addObject("message", "Request to reset password received. Check your inbox for the reset link.");
+			mav.setViewName("successForgotPassword");
 			
 		} else {
-			modelAndView.addObject("message", "This email does not exist!");
-			modelAndView.setViewName("error");
+			mav.addObject("message", "This email does not exist!");
+			mav.setViewName("error");
 		}
 		
-		return modelAndView;
+		return mav;
 	}
 	
-	public ModelAndView validateToken(ModelAndView modelAndView, String confirmationToken)
+	public ModelAndView validateResetToken(ModelAndView mav, @RequestParam("token")String confirmationToken)
 	{
 		Optional<ConfirmationToken> oToken = confirmationTokenRepository.findByToken(confirmationToken);
 		
 		if(oToken.isPresent()) {
 			ConfirmationToken token = oToken.get();
-			Optional<User> existingUser = userRepository.findByEmail(token.getUser().getEmail());
+			Optional<User> existingUser = userService.findUserByEmail((token.getUser().getEmail()));
 			if (existingUser.isPresent()) {
 				User user = existingUser.get();
 				user.setVerified(true);
-				userRepository.save(user);
-				modelAndView.addObject("user", user);
-				modelAndView.addObject("emailId", user.getEmail());
-				modelAndView.setViewName("resetPassword2");
+				userService.save(user);
+				mav.addObject("user", user);
+				mav.addObject("emailId", user.getEmail());
+				mav.setViewName("resetPassword2");
 			}
 		} else {
-			modelAndView.addObject("message", "The link is invalid or broken!");
-			modelAndView.setViewName("error");
+			mav.addObject("message", "The link is invalid or broken!");
+			mav.setViewName("error");
 		}
-		return modelAndView;
+		return mav;
 	}
 	
-	public ModelAndView getResetUserPassword(ModelAndView modelAndView, User user) {
+	public ModelAndView resetUserPassword(ModelAndView mav, User user) {
 		
 		if(user.getEmail() != null) {
-			Optional<User>  otTokenUser = userRepository.findByEmail(user.getEmail());
+			Optional<User>  otTokenUser = userService.findUserByEmail(user.getEmail());
 			if (otTokenUser.isPresent()){
 				
 				User tokenUser = otTokenUser.get();
 				tokenUser.setPassword(encoder.encode(user.getPassword()));
-				userRepository.save(tokenUser);
-				modelAndView.addObject("message", "Password successfully reset. You can now log in with the new credentials.");
-				modelAndView.setViewName("successResetPassword");
+				userService.save(tokenUser);
+				mav.addObject("message", "Password successfully reset. You can now log in with the new credentials.");
+				mav.setViewName("successResetPassword");
 			}
 		}
-		
 		else {
-			modelAndView.addObject("message","The link is invalid or broken!");
-			modelAndView.setViewName("error");
+			mav.addObject("message","The link is invalid or broken!");
+			mav.setViewName("error");
 		}
 		
-		return modelAndView;
-	}
-	
-	
-	public UserRepository getUserRepository() {
-		return userRepository;
-	}
-	
-	public void setUserRepository(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
-	
-	public ConfirmationTokenRepository getConfirmationTokenRepository() {
-		return confirmationTokenRepository;
-	}
-	
-	public void setConfirmationTokenRepository(ConfirmationTokenRepository confirmationTokenRepository) {
-		this.confirmationTokenRepository = confirmationTokenRepository;
-	}
-	
-	public EmailSenderService getEmailSenderService() {
-		return emailSenderService;
-	}
-	
-	public void setEmailSenderService(EmailSenderService emailSenderService) {
-		this.emailSenderService = emailSenderService;
+		return mav;
 	}
 }

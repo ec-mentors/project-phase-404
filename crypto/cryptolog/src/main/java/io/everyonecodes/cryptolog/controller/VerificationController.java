@@ -1,6 +1,5 @@
 package io.everyonecodes.cryptolog.controller;
 
-import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.service.UserVerificationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +17,11 @@ public class VerificationController {
     
     @GetMapping("/verification")
     public ModelAndView displayVerification(ModelAndView modelAndView, User user) {
-        return verificationService.getDisplayVerification(modelAndView, user);
+        return verificationService.displayVerification(modelAndView, user);
     }
 
     @PostMapping("/verification")
     public ModelAndView resendEmailverification(ModelAndView modelAndView, User user) {
-        return verificationService.getResendEmailVerification(modelAndView, user);
+        return verificationService.resendEmailVerification(modelAndView, user);
     }
 }

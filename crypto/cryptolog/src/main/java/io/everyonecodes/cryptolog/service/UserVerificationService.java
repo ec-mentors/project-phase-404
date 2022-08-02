@@ -21,13 +21,13 @@ public class UserVerificationService {
 		this.emailSenderService = emailSenderService;
 	}
 	
-	public ModelAndView getDisplayVerification(ModelAndView modelAndView, User user) {
+	public ModelAndView displayVerification(ModelAndView modelAndView, User user) {
 		modelAndView.addObject("user", user);
 		modelAndView.setViewName("verification");
 		return modelAndView;
 	}
 	
-	public ModelAndView getResendEmailVerification(ModelAndView modelAndView, User user) {
+	public ModelAndView resendEmailVerification(ModelAndView modelAndView, User user) {
 		Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
 		if (existingUser.isPresent()) {
 			User userE = existingUser.get();

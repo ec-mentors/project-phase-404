@@ -1,6 +1,5 @@
 package io.everyonecodes.cryptolog.controller;
 
-import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.service.RegistrationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +20,11 @@ public class RegistrationController {
     
     @GetMapping("/register")
     String register(Model model) {
-        return registrationService.getRegister(model);
+        return registrationService.register(model);
     }
     
     @PostMapping("/register")
     public String registerUser(@Valid User user, BindingResult bindingResult, Model model) {
-        return registrationService.getRegisterUser(user, bindingResult, model);
+        return registrationService.registerUser(user, bindingResult, model);
     }
 }

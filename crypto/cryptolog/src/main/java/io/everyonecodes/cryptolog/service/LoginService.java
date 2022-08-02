@@ -1,6 +1,5 @@
 package io.everyonecodes.cryptolog.service;
 
-import io.everyonecodes.cryptolog.data.User;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Service;

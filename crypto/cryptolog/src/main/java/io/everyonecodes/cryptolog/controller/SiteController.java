@@ -1,54 +1,43 @@
 package io.everyonecodes.cryptolog.controller;
 
-import io.everyonecodes.cryptolog.data.Coin;
-import io.everyonecodes.cryptolog.data.User;
-import io.everyonecodes.cryptolog.service.SiteService;
+import io.everyonecodes.cryptolog.service.HomeAndPortfolioService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class SiteController {
     
-    private final SiteService siteService;
+    private final HomeAndPortfolioService homeAndPortfolioService;
     
-    public SiteController(SiteService siteService) {
-        this.siteService = siteService;
+    
+    public SiteController(HomeAndPortfolioService homeAndPortfolioService) {
+        this.homeAndPortfolioService = homeAndPortfolioService;
+        
     }
     
     @GetMapping
-    String index() {
-        return siteService.getIndex();
-    }
-
-
-//    @GetMapping("/home")
-//    public String top100(Model model) {
-//       return siteService.getTop100(model);
-//    }
-
-    @GetMapping("/home")
-    public String filter(Model model,
-                         @RequestParam(required = false) String filter,
-                         @RequestParam(required = false) String coinId,
-                         Principal principal) {
-
-        return siteService.getFilter(model, filter, coinId, principal);
-    }
-
-    @GetMapping("/portfolio")
-    public String portfolio(Model model,
-                            @RequestParam(required = false) String filter,
-                            @RequestParam(required = false) String coinId,
-                            Principal principal) {
-
-        return siteService.getPortfolio(model, filter, coinId, principal);
+    public String index() {
+        return "index";
     }
     
+    @GetMapping("/home")
+    public String home(@RequestParam(required = false) String filter,
+                       @RequestParam(required = false) String coinId,
+                       @RequestParam(required = false) String sorting,
+                       Principal principal, Model model) {
+        
+        return homeAndPortfolioService.getHome(filter, coinId, sorting, principal, model);
+    }
+    
+    @GetMapping("/portfolio")
+    public String portfolio(@RequestParam(required = false) String filter,
+                            @RequestParam(required = false) String coinId,
+                            Principal principal, Model model) {
+        
+        return homeAndPortfolioService.getPortfolio(filter, coinId, principal, model);
+    }
 }

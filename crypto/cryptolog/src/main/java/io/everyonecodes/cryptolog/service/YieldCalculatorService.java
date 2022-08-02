@@ -15,12 +15,12 @@ import java.util.List;
 public class YieldCalculatorService {
     private final UserService userService;
     private final CoingeckoClient client;
-
+    
     public YieldCalculatorService(UserService userService, CoingeckoClient client) {
         this.userService = userService;
         this.client = client;
     }
-
+    
     private YieldData calculate(Coin coin, double monthlyInvestment,
                                 double actualPrice, double ath, int investmentPeriod,
                                 Principal principal, User user) {
@@ -30,7 +30,7 @@ public class YieldCalculatorService {
         int tierThree = 0;
         user = userService.loadLoggedInUser(principal);
         List<Coin> coinList = client.getCoinsById(user.getCoinIds());
-
+        
         for (Coin coin1 : coinList) {
             if (coin1.getMarket_cap_rank() <= 2) {
                 tierOne++;
@@ -40,67 +40,94 @@ public class YieldCalculatorService {
                 tierThree++;
             }
         }
-
-
-
-        double investedAmount = 0;
+        
+        
+        double investedAmount;
         if (user.getAssetsAllocation().equals("Conservative")) {
-            if (coin.getMarket_cap_rank()<=2){
-                 investedAmount = monthlyInvestment * investmentPeriod * 0.8 / tierOne;
+            if (coin.getMarket_cap_rank() <= 2) {
+                investedAmount = monthlyInvestment * investmentPeriod * 0.8 / tierOne;
                 accumulated = investedAmount / actualPrice;
-            }else if(coin.getMarket_cap_rank() > 2 && coin.getMarket_cap_rank() <= 49){
-                 investedAmount = monthlyInvestment * investmentPeriod * 0.1 / tierTwo;
+            } else if (coin.getMarket_cap_rank() > 2 && coin.getMarket_cap_rank() <= 49) {
+                investedAmount = monthlyInvestment * investmentPeriod * 0.1 / tierTwo;
                 accumulated = investedAmount / actualPrice;
-
-            }else {
-                 investedAmount = monthlyInvestment * investmentPeriod * 0.1 / tierThree;
+                
+            } else {
+                investedAmount = monthlyInvestment * investmentPeriod * 0.1 / tierThree;
                 accumulated = investedAmount / actualPrice;
-
+                
             }
-
+            
         } else if (user.getAssetsAllocation().equals("Gambler")) {
-
-            if (coin.getMarket_cap_rank()<=2){
+            
+            if (coin.getMarket_cap_rank() <= 2) {
                 investedAmount = monthlyInvestment * investmentPeriod * 0.4 / tierOne;
                 accumulated = investedAmount / actualPrice;
-
-            }else if(coin.getMarket_cap_rank() > 2 && coin.getMarket_cap_rank() <= 49){
+                
+            } else if (coin.getMarket_cap_rank() > 2 && coin.getMarket_cap_rank() <= 49) {
                 investedAmount = monthlyInvestment * investmentPeriod * 0.3 / tierTwo;
                 accumulated = investedAmount / actualPrice;
-
-            }else {
+                
+            } else {
                 investedAmount = monthlyInvestment * investmentPeriod * 0.3 / tierThree;
                 accumulated = investedAmount / actualPrice;
-
+                
             }
-
-        }else{
-
-            if (coin.getMarket_cap_rank()<=2){
+            
+        } else {
+            
+            if (coin.getMarket_cap_rank() == 1) {
                 investedAmount = monthlyInvestment * investmentPeriod;
                 accumulated = investedAmount / actualPrice;
-            }else if(coin.getMarket_cap_rank() > 2 && coin.getMarket_cap_rank() <= 49){
+            } else if (coin.getMarket_cap_rank() > 1 && coin.getMarket_cap_rank() <= 49) {
                 investedAmount = 0;
-            }else {
+            } else {
                 investedAmount = 0;
             }
         }
-
-
-            double potentialProfit = (accumulated * ath) - investedAmount;
-
-            double forecastedValue = investedAmount + potentialProfit;
-
-            return (new YieldData(coin.getId(),
-                    accumulated,
-                    investedAmount,
-                    forecastedValue,
-                    potentialProfit));
-
-
-
-}
-
+        
+        
+        double potentialProfit = (accumulated * ath) - investedAmount;
+        
+        double forecastedValue = investedAmount + potentialProfit;
+        accumulated = formatDecimals(accumulated);
+        investedAmount = formatDecimals(investedAmount);
+        forecastedValue = formatDecimals(forecastedValue);
+        potentialProfit = formatDecimals(potentialProfit);
+        
+        
+        return (new YieldData(coin.getId(),
+                              accumulated,
+                              investedAmount,
+                              forecastedValue,
+                              potentialProfit));
+        
+        
+    }
+    
+    public double formatDecimals(double input) {
+        int index = 0;
+        String accumulatedString = String.valueOf(input);
+        for (int i = 0; i < accumulatedString.length(); i++) {
+            if (accumulatedString.charAt(0) == '0') {
+                if (accumulatedString.charAt(i) != '0' && accumulatedString.charAt(i) != '.') {
+                    index = i;
+                    break;
+                }
+            } else {
+                if (accumulatedString.charAt(i) == '.') {
+                    index = i;
+                    break;
+                }
+                
+            }
+        }
+        if (accumulatedString.length() < index + 3) {
+        } else {
+            accumulatedString = accumulatedString.substring(0, index + 3);
+        }
+        return Double.parseDouble(accumulatedString);
+    }
+    
     public void checkParameters(String monthlyAmount, String period) {
         if (monthlyAmount == null || monthlyAmount.isBlank()) {
             monthlyAmount = "0";
@@ -109,32 +136,49 @@ public class YieldCalculatorService {
             period = "0";
         }
     }
-
+    
     public List<YieldData> getYieldList(Principal principal, String monthlyAmount, String period) {
         User user = userService.loadLoggedInUser(principal);
         List<YieldData> yieldDataList = new ArrayList<>();
-
+        
         List<Coin> coinList = client.getCoinsById(user.getCoinIds());
         for (Coin coin : coinList) {
             yieldDataList.add(calculate(coin,
-                    Double.parseDouble(monthlyAmount),
-                    coin.getCurrent_price(),
-                    coin.getAth(),
-                    Integer.parseInt(period),
-                    principal,user));
-
+                                        Double.parseDouble(monthlyAmount),
+                                        coin.getCurrent_price(),
+                                        coin.getAth(),
+                                        Integer.parseInt(period),
+                                        principal, user));
+            
         }
         return yieldDataList;
     }
-
-    public void setAttributes(String period, String monthlyAmount, Model model,Principal principal) {
-        List<YieldData> yieldDataList = getYieldList(principal,monthlyAmount,period);
+    
+    public List<YieldData> getYieldListWithMovingAverage(Principal principal, String monthlyAmount, String period, int days) {
+        User user = userService.loadLoggedInUser(principal);
+        List<YieldData> yieldDataList = new ArrayList<>();
+        
+        List<Coin> coinList = client.getCoinsById(user.getCoinIds());
+        for (Coin coin : coinList) {
+            yieldDataList.add(calculate(coin,
+                                        Double.parseDouble(monthlyAmount),
+                                        client.getSimpleMovingAverage(coin.getId(), days),
+                                        coin.getAth(),
+                                        Integer.parseInt(period),
+                                        principal, user));
+            
+        }
+        return yieldDataList;
+    }
+    
+    public void setAttributes(String period, String monthlyAmount, Model model, Principal principal) {
+        List<YieldData> yieldDataList = getYieldList(principal, monthlyAmount, period);
         if (period.equals("0")) {
             model.addAttribute("finalProfit", monthlyAmount);
             model.addAttribute("finalInvestment", monthlyAmount);
         } else {
-
-
+            
+            
             double finalProfit = 0;
             for (YieldData yieldData : yieldDataList) {
                 finalProfit = finalProfit + yieldData.getProfit();
@@ -143,7 +187,8 @@ public class YieldCalculatorService {
             for (YieldData yieldData : yieldDataList) {
                 finalInvestmentAmount = finalInvestmentAmount + yieldData.getInvestedAmount();
             }
-
+            finalInvestmentAmount = formatDecimals(finalInvestmentAmount);
+            finalProfit = formatDecimals(finalProfit);
             model.addAttribute("finalProfit", finalProfit);
             model.addAttribute("finalInvestment", finalInvestmentAmount);
             model.addAttribute(yieldDataList);
@@ -157,6 +202,36 @@ public class YieldCalculatorService {
             model.addAttribute("accumulated");
         }
     }
-
-
+    
+    public void setAttributesWithMovingAverage(String period, String monthlyAmount, Model model, Principal principal, int days) {
+        List<YieldData> yieldDataList = getYieldListWithMovingAverage(principal, monthlyAmount, period, days);
+        if (period.equals("0")) {
+            model.addAttribute("finalProfit", monthlyAmount);
+            model.addAttribute("finalInvestment", monthlyAmount);
+        } else {
+            
+            
+            double finalProfit = 0;
+            for (YieldData yieldData : yieldDataList) {
+                finalProfit = finalProfit + yieldData.getProfit();
+            }
+            double finalInvestmentAmount = 0;
+            for (YieldData yieldData : yieldDataList) {
+                finalInvestmentAmount = finalInvestmentAmount + yieldData.getInvestedAmount();
+            }
+            
+            model.addAttribute("finalProfit", finalProfit);
+            model.addAttribute("finalInvestment", finalInvestmentAmount);
+            model.addAttribute(yieldDataList);
+            model.addAttribute("monthlyAmount", monthlyAmount);
+            model.addAttribute("period", period);
+            model.addAttribute("tableTitle", "CryptoLog Forecast");
+            model.addAttribute("coin");
+            model.addAttribute("investedAmount");
+            model.addAttribute("forecastedValue");
+            model.addAttribute("profit");
+            model.addAttribute("accumulated");
+        }
+    }
+    
 }

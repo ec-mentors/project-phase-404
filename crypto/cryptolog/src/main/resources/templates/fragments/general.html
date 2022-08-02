@@ -44,7 +44,34 @@
         <table th:fragment="toptable">
             <caption th:text="${tableTitle}"></caption>
             <thead>
-            <tr>
+            <tr th:if="${target == '/home'}">
+                <th>
+                    <a th:unless="${sorting == 'rank_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='rank_asc')} : @{/home(sorting='rank_asc',filter=${filter})}">Rank</a>
+                    <a th:if="${sorting == 'rank_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='rank_desc')} : @{/home(sorting='rank_desc',filter=${filter})}">Rank</a>
+                </th>
+                <th>
+                    <a th:unless="${sorting == 'name_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='name_asc')} : @{/home(sorting='name_asc',filter=${filter})}">Name</a>
+                    <a th:if="${sorting == 'name_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='name_desc')} : @{/home(sorting='name_desc',filter=${filter})}">Name</a>
+                </th>
+                <th>
+                    <a th:unless="${sorting == 'price_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='price_asc')} : @{/home(sorting='price_asc',filter=${filter})}">Current Price (USD)</a>
+                    <a th:if="${sorting == 'price_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='price_desc')} : @{/home(sorting='price_desc',filter=${filter})}">Current Price (USD)</a>
+                </th>
+                <th>
+                    <a th:unless="${sorting == 'ath_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_asc')} : @{/home(sorting='ath_asc',filter=${filter})}">All-Time High Price</a>
+                    <a th:if="${sorting == 'ath_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_desc')} : @{/home(sorting='ath_desc',filter=${filter})}">All-Time High Price</a>
+                </th>
+                <th>
+                    <a th:unless="${sorting == 'ath_drop_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_drop_asc')} : @{/home(sorting='ath_drop_asc',filter=${filter})}">&#037; Drop from All-time High Price</a>
+                    <a th:if="${sorting == 'ath_drop_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_drop_desc')} : @{/home(sorting='ath_drop_desc',filter=${filter})}">&#037; Drop from All-time High Price</a>
+                </th>
+                <th>
+                    <a th:unless="${sorting == 'portfolio_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='portfolio_asc')} : @{/home(sorting='portfolio_asc',filter=${filter})}">Add to portfolio</a>
+                    <a th:if="${sorting == 'portfolio_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='portfolio_desc')} : @{/home(sorting='portfolio_desc',filter=${filter})}">Add to portfolio</a>
+                </th>
+                <th>Tier</th>
+            </tr>
+            <tr th:if="${target == '/portfolio'}">
                 <th>Rank</th>
                 <th>Name</th>
                 <th>Current Price (USD)</th>
@@ -64,9 +91,14 @@
                 <td th:text="${coin.current_price}"/>
                 <td th:text="${coin.ath}"/>
                 <td th:text="${coin.ath_change_percentage}"/>
-                <td><a th:href="${#strings.isEmpty(filter)} ? @{${target}(coinId=${coin.id})} : @{${target}(coinId=${coin.id},filter=${filter})}" style="color: darkblue; font-size: large; font-weight: bold;"/>
-                    <span th:text="${#lists.contains(portfolio, coin.id)} ? '&#9733;' : '&#9734;'"/>
-                </a></td>
+                <td>
+                    <a th:unless="${sorting}" th:href="${#strings.isEmpty(filter)} ? @{${target}(coinId=${coin.id})} : @{${target}(coinId=${coin.id},filter=${filter})}" style="color: darkblue; font-size: large; font-weight: bold;">
+                        <span th:text="${#lists.contains(portfolio, coin.id)} ? '&#9733;' : '&#9734;'"/>
+                    </a>
+                    <a th:if="${sorting}" th:href="${#strings.isEmpty(filter)} ? @{${target}(coinId=${coin.id},sorting=${sorting})} : @{${target}(coinId=${coin.id},filter=${filter},sorting=${sorting})}" style="color: darkblue; font-size: large; font-weight: bold;">
+                        <span th:text="${#lists.contains(portfolio, coin.id)} ? '&#9733;' : '&#9734;'"/>
+                    </a>
+                </td>
                 <td th:text="${coin.market_cap_rank == 0 || coin.market_cap_rank > 49 ? 3 : coin.market_cap_rank > 2 ? 2 : 1}"/>
             </tr>
             </tbody>

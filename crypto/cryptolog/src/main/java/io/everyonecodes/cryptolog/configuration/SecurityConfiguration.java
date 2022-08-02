@@ -4,7 +4,6 @@ package io.everyonecodes.cryptolog.configuration;
 import io.everyonecodes.cryptolog.CustomLoginFailureHandler;
 import io.everyonecodes.cryptolog.CustomLoginSuccessHandler;
 import io.everyonecodes.cryptolog.UserPrincipal;
-import io.everyonecodes.cryptolog.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

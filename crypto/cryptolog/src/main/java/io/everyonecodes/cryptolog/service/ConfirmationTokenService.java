@@ -1,9 +1,5 @@
 package io.everyonecodes.cryptolog.service;
 
-import io.everyonecodes.cryptolog.data.ConfirmationToken;
-import io.everyonecodes.cryptolog.data.User;
-import io.everyonecodes.cryptolog.repository.ConfirmationTokenRepository;
-import io.everyonecodes.cryptolog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;

@@ -1,11 +1,12 @@
 package io.everyonecodes.cryptolog.service;
 
 
-import io.everyonecodes.cryptolog.data.ConfirmationToken;
 import io.everyonecodes.cryptolog.data.User;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
+import javax.validation.Valid;
 
 @Service
 public class RegistrationService {
@@ -23,13 +24,14 @@ public class RegistrationService {
 		this.confirmationTokenService = confirmationTokenService;
 	}
 	
-	public String getRegister(Model model) {
+	
+	public String register(Model model) {
 		User user = new User();
 		model.addAttribute(user);
 		return "register";
 	}
 	
-	public String getRegisterUser(User user, BindingResult bindingResult, Model model) {
+	public String registerUser(@Valid User user, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("successMessage", "Please write the fields in the right format!");
 			return "register";
@@ -51,9 +53,7 @@ public class RegistrationService {
 			emailSenderService.sendEmail2(user, confirmationToken);
 			
 		}
-		
 		model.addAttribute("user", new User());
-		
 		return "register";
 	}
 }

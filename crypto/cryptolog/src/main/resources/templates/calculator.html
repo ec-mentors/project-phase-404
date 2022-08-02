@@ -28,9 +28,9 @@
                 <h4>Period(Months)</h4>
                 <div class="input-group">
                     <input id="period" name="period" th:value="${period}" placeholder="0" class="form-control"  type="number">
-
                 </div>
-                    <div class="form-group">
+                <h4>Include Pricing Moving Averages</h4>
+                <div class="form-group">
                         <div class="input-group">
                             <select class="custom-select" id="inputGroupSelect04"  name = "days" >
                                 <option value="0">None</option>
@@ -46,10 +46,11 @@
                 <input name="submit" class="btn btn-lg btn-primary btn-block" value="Calculate" type="submit">
             </div>
             <div class="form-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
                 <tr>
                     <th>Total Investment</th>
                     <h3 th:text="${finalInvestment}"></h3>
-                    <th>Final Profit</th>
+                    <th>Final Profit </th>
                     <h3 th:text="${finalProfit}"></h3>
                 </tr>
 

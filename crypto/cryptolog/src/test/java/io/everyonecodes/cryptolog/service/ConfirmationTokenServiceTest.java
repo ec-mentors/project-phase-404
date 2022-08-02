@@ -1,9 +1,5 @@
 package io.everyonecodes.cryptolog.service;
 
-import io.everyonecodes.cryptolog.data.ConfirmationToken;
-import io.everyonecodes.cryptolog.data.User;
-import io.everyonecodes.cryptolog.repository.ConfirmationTokenRepository;
-import io.everyonecodes.cryptolog.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
