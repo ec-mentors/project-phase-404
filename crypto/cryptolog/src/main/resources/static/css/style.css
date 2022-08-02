@@ -5,7 +5,7 @@
   /*========== Colors ==========*/
   --first-color: #06799c;
   --first-color-alt: #045686;
-  --soft-shadow: #0008;
+  --medium-shadow: #0008;
 }
 
 * {
@@ -123,7 +123,7 @@ form.search input {
   border-radius: 2em;
   font-size: 1em;
   padding: 0 0 0 1em;
-  box-shadow: inset 1px 1px 3px var(--soft-shadow);
+  box-shadow: inset 1px 1px 3px var(--medium-shadow);
 }
 
 form.search button {
@@ -156,7 +156,7 @@ table caption {
   font-weight: bold;
   margin: 0.3em;
   padding: 0.3em;
-  text-shadow: 0px 0px 2px var(--soft-shadow);
+  text-shadow: 0px 0px 2px var(--medium-shadow);
 }
 
 table th {
@@ -217,40 +217,82 @@ tr:nth-child(odd) {
   margin: 0 auto;
   width: fit-content;
   width: -webkit-fit-content;
+  text-align: center;
 }
 
 /* START: general form styles */
+form.general .background {
+  margin: 0 auto;
+  width: fit-content;
+  background-color: whitesmoke;
+  padding: 1em 2em;
+  border-radius: 0.3em;
+  text-align: center;
+}
+
+form.general h4 {
+  padding: 0.5em;
+}
+
 form.general input.field {
-  border: none;
-  border-radius: 0.2em;
-  font-size: 1em;
-  padding: 0.2em;
-  box-shadow: inset 1px 1px 2px var(--soft-shadow);
+  /* border: none; */
+  border: 0.3px solid var(--medium-shadow);
+  border-radius: 0.25em;
+  font-size: 0.9em;
+  padding: 0.25em;
+  box-shadow: inset 1px 1px 2px #0004;
 }
 
 form.general select {
-  border: none;
-  margin: 0 calc(50% - 5%);
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 2px groove darkgreen;
   font-size: 1em;
-  padding: 0.5em;
-  /* background-color: #045686;
-  color: white; */
+  background-color: green;
+  color: white;
+  border-radius: 0.3em;
+  margin: 0.5em;
+  padding: 0.3em 2em 0.3em 1em;
+  box-shadow: 1px 1px 3px #0005;
+}
+
+form.general .select {
+  position: relative;
+  display: block;
+}
+
+form.general .select:after {
+  /* content:'<>'; */
+  content: "\f0dc";
+  font-family: 'FontAwesome';
+  color: white;
+  /* -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg); */
+  right: 0.5em; 
+  top: 0.4em;
+  margin: 0.5em;
+  /* border-bottom: 1px solid #ddd; */
+  position: absolute;
+  pointer-events: none;
 }
 
 form.general button.submit {
-  margin: 0 auto;
+  margin: 0.5em auto 0 auto;
   background-color: var(--first-color);
   color: white;
   border: none;
-  border-radius: 0.4em;
+  border-radius: 0.3em;
   font-size: 1em;
-  padding: 0.8em 1em;
+  padding: 0.6em 1.2em;
   cursor: pointer;
 }
 
 form.general button.submit:hover {
   background-color: var(--first-color-alt);
-  transition: 0.2s;
+  transition: 0.4s;
 }
 /* END: general form styles */
 

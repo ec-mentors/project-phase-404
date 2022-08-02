@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/fragments/general.html :: head"></head>
+<head th:replace="/fragments/general.html :: head">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
+    <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+</head>
 <body>
 <header th:replace="/fragments/general.html :: header"></header>
 <main>
@@ -25,25 +29,29 @@
                     </td>
                     <td th:text="${coin.current_price}"/>
                     <td>
-                        <input class="accumulated" th:field="*{values['__${coin.id}__']}" placeholder="0" type="number" step="any" min="0" required>
+                        <input class="field accumulated" th:field="*{values['__${coin.id}__']}" placeholder="0" type="number" step="any" min="0" required>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <h4>Select Profile</h4>
-            <select th:field="*{profile}" class="custom-select" id="profile" >
-                <option value="Maximalist">Maximalist</option>
-                <option value="Conservative">Conservative</option>
-                <option value="Gambler">Gambler</option>
-            </select>
-            <button type="submit" class="submit">Calculate</button>
+            <div class="background">
+                <h4>Select Profile</h4>
+                <label class="select"></label>
+                    <select th:field="*{profile}" class="custom-select" id="profile">
+                        <option value="Maximalist">Maximalist</option>
+                        <option value="Conservative">Conservative</option>
+                        <option value="Gambler">Gambler</option>
+                    </select>
+                </label>
+                <br>
+                <button type="submit" class="submit">Calculate</button>
+            </div>
             <table>
                 <tr>
                     <th>Coin</th>
                 </tr>
                 </thead>
                 <tbody>
-
                 <tr th:object="${results}" th:each="portfolioBalance : ${results}">
                     <td th:text="${portfolioBalance}" />
                 </tr>
