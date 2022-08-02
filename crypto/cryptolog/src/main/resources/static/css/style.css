@@ -265,7 +265,7 @@ form.general select {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  border: 2px groove darkgreen;
+  border: 0.15em groove darkgreen;
   font-size: 1em;
   background-color: green;
   color: white;
