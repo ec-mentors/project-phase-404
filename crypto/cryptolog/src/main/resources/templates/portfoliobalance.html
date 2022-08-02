@@ -40,6 +40,18 @@
             <br>
             <br>
             <input name="submit" class="button" value="Calculate" type="submit">
+            <table>
+                <tr>
+                    <th>Coin</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:object="${results}" th:each="portfolioBalance : ${results}">
+                    <td th:text="${portfolioBalance}" />
+                </tr>
+                </tbody>
+            </table>
         </form>
     </div>
 </main>

@@ -69,7 +69,6 @@ public class YieldCalculatorController {
                 if (period.isBlank()) {
                     period = "0";
                 }
-                portfolioBalanceService.getCoinPrice(Set.of("bitcoin"));
                 yieldCalculatorService.checkParameters(monthlyAmount, period);
                 yieldCalculatorService.setAttributes(period, monthlyAmount, model, principal);
                 return "calculator";
