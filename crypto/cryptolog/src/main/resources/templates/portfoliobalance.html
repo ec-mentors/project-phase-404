@@ -25,16 +25,16 @@
                     </td>
                     <td th:text="${coin.current_price}"/>
                     <td>
-                        <input class="accumulated" th:field="*{values['__${coin.id}__']}" placeholder="0" type="number" step="any" min="0">
+                        <input class="accumulated" th:field="*{values['__${coin.id}__']}" placeholder="0" type="number" step="any" min="0" required>
                     </td>
                 </tr>
                 </tbody>
             </table>
             <h4>Select Profile</h4>
-            <select class="custom-select" id="inputGroupSelect04">
-                <option value="'Maximalist'">Maximalist</option>
-                <option value="'Conservative'">Conservative</option>
-                <option value="'Gambler'">Gambler</option>
+            <select th:field="*{profile}" class="custom-select" id="profile" >
+                <option value="Maximalist">Maximalist</option>
+                <option value="Conservative">Conservative</option>
+                <option value="Gambler">Gambler</option>
             </select>
             <br>
             <br>
