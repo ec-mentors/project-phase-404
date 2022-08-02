@@ -255,7 +255,7 @@ form.general .select:after {
   font-family: 'FontAwesome';
   color: white;
   right: 10%; 
-  align-self: center;
+  /* align-self: center; */
   /* margin: 10%; */
   position: absolute;
   pointer-events: none;
