@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/fragments/general.html :: head"></head>
+<head th:replace="/fragments/general.html :: head">
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+</head>
 <body>
 <header th:replace="/fragments/general.html :: header"></header>
 <main>
     <div id="contain">
-        <form action="/portfoliobalance" method="post" th:object="${balanceForm}">
+        <form action="/portfoliobalance" method="post" th:object="${balanceForm}" class="general">
             <table>
                 <caption>Portfolio Balancing</caption>
                 <thead>
@@ -25,21 +27,19 @@
                     </td>
                     <td th:text="${coin.current_price}"/>
                     <td>
-                        <input class="accumulated" th:field="*{values['__${coin.id}__']}" placeholder="0" type="number" step="any" min="0" required>
+                        <input class="field" th:field="*{values['__${coin.id}__']}" placeholder="0" type="number" step="any" min="0" required>
                     </td>
                 </tr>
                 </tbody>
             </table>
             <h4>Select Profile</h4>
-            <select th:field="*{profile}" class="custom-select" id="profile" >
+            <select th:field="*{profile}" class="custom-select" id="profile" title="Select Profile">
+                <option disabled selected>Select Profile</option>
                 <option value="Maximalist">Maximalist</option>
                 <option value="Conservative">Conservative</option>
                 <option value="Gambler">Gambler</option>
             </select>
-            <br>
-            <br>
-            <br>
-            <input name="submit" class="button" value="Calculate" type="submit">
+            <button type="submit" class="submit">Calculate</button>
         </form>
     </div>
 </main>
