@@ -1,126 +1,89 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-        <head>
-            <meta charset="UTF-8">
 
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title th:text="${title != null} ? ${title} : 'CryptoLog'"></title>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
-            <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
-            <script src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-            <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
-            <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-            <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<head th:replace="fragments/general :: head">
+    <meta charset="UTF-8">
 
-        </head>
-    </head>
-    <body>
-        <header th:replace="/fragments/general.html :: header"></header>
-        <main>
-            <section class="assetheadtext">
-                <h2>
-                    Portfolio diversification options
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${title != null} ? ${title} : 'CryptoLog'"></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+    <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
+    <script src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}" />
 
-                </h2>
-                <h3> Select the portfolio you want to apply to your current assets</h3>
+</head>
+</head>
 
-            </section>
+<body>
+    <header th:replace="/fragments/general.html :: header"></header>
+    <main>
+        <section class="assetheadtext">
+            <h2>
+                Portfolio diversification options
 
+            </h2>
+            <h3> Select the portfolio you want to apply to your current assets</h3>
 
+        </section>
 
-            <div class="containerasset">
-
-
+        <div class="containerasset">
 
             <div class="blues">
-            <section class="grid-container">
+                <section class="grid-container">
 
-                <button type="button" class="allocation"  id="maxi">
-                    <div class="box a">
-                        <p th:text="maxi">
-                            The <br> Maximalist
-                        </p>
-                        <span>
-                            100 % Bitcoin
-                        </span>
-                    </div>
-                </button>
-                <button type="button" class="allocation" id="conserv">
-                    <div class="box b">
-                        <p th:text = "conserv" >The <br> Conservative</p>
-                        <span>
-                            80/20
-                        </span>
-                    </div>
-                </button>
-                <button type="button" class="allocation"  id="gambler">
-                    <div class="box c">
-                        <p th:text = "gambler">The <br> Gambler</p>
-                        <span>
-                            40/30/30
-                        </span>
-                    </div>
-                </button>
-            </section>
+                    <button type="button" class="allocation" id="maxi">
+                        <div class="box a">
+                            <p th:text="maxi">
+                                The <br> Maximalist
+                            </p>
+                            <span>
+                                100 % Bitcoin
+                            </span>
+                        </div>
+                    </button>
+                    <button type="button" class="allocation" id="conserv">
+                        <div class="box b">
+                            <p th:text="conserv">The <br> Conservative</p>
+                            <span>
+                                80/20
+                            </span>
+                        </div>
+                    </button>
+                    <button type="button" class="allocation" id="gambler">
+                        <div class="box c">
+                            <p th:text="gambler">The <br> Gambler</p>
+                            <span>
+                                40/30/30
+                            </span>
+                        </div>
+                    </button>
+                </section>
             </div>
 
             <div class="chooser">
+                <form id="register-form" autocomplete="off" class="general" th:action="@{/asset}"
+                    th:object="${assetUpdateForm}" method="post">
 
-
-
-            <section class="selected">
-                <div class="form-gap"></div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 col-md-offset-4">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <div class="text-center">
-                                        <h2 class="text-center">Choose your asset</h2>
-
-                                        <div class="panel-body">
-
-                                            <form id="register-form" role="form" autocomplete="off" class="form"
-                                                  th:action="@{/asset}" th:object="${assetUpdateForm}" method="post">
-
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <select class="custom-select" id="inputGroupSelect04"
-                                                                 th:field="*{assetsAllocation}">
-                                                            <option th:value="'Maximalist'" th:text="Maximalist"></option>
-                                                            <option th:value="'Conservative'" th:text="Conservative"></option>
-                                                            <option th:value="'Gambler'" th:text="Gambler"></option>
-                                                        </select>
-
-                                                    </div>
-                                                </div>
-                                                <div class="input-group-append">
-
-                                                    <button type="submit" class="btn btn-success" >Add Asset</button>
-                                                </div>
-
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="background">
+                        <h2>Choose your asset</h2>
+                        <div class="select">
+                            <select class="custom-select" th:field="*{assetsAllocation}">
+                                <option th:value="'Maximalist'">Maximalist</option>
+                                <option th:value="'Conservative'">Conservative</option>
+                                <option th:value="'Gambler'">Gambler</option>
+                            </select>
                         </div>
+                        <br>
+                        <button type="submit" class="btn submit">Add Asset</button>
                     </div>
-                </div>
-
-
-
-
-            </section>
+                </form>
             </div>
-            </div>
+        </div>
+    </main>
+    <span class="span" th:utext="${assetMessage}"></span>
 
-        </main>
-        <span class="span" th:utext="${assetMessage}"></span>
-        <footer th:replace="/fragments/general.html :: footer"></footer>
+    <footer th:replace="/fragments/general.html :: footer"></footer>
 
-    </body>
+</body>
 </html>
