@@ -1,10 +1,14 @@
 package io.everyonecodes.cryptolog.controller;
 
 import io.everyonecodes.cryptolog.CoingeckoClient;
+import io.everyonecodes.cryptolog.data.CustomDTO;
+import io.everyonecodes.cryptolog.data.CustomForm;
 import io.everyonecodes.cryptolog.service.AssetsAllocationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
@@ -32,11 +36,26 @@ public class AssetController {
     }
 
     @GetMapping("/asset")
-    public String display(@RequestParam(required = false) String assetsAllocation, Model model, Principal principal) {
+    public String display(@RequestParam(required = false) String assetsAllocation,
+                          Model model, Principal principal) {
+        var coinList = assetsAllocationService.createList(principal, model);
+        CustomForm form = new CustomForm();
+        for (String coin : coinList) {
+            form.addDTO(new CustomDTO(coin));
+        }
+        model.addAttribute("form", form);
         if (assetsAllocation == null) {
             return "asset";
         }
         assetsAllocationService.saveAsset(assetsAllocation, model, principal);
+        return "asset";
+    }
+
+    @PostMapping("/asset/save")
+    String saveCustomAsset(@ModelAttribute("form") CustomForm form,
+                           Principal principal,
+                           Model model) {
+        assetsAllocationService.saveCustomAsset(form, principal, model);
         return "asset";
     }
 }

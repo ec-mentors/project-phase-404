@@ -27,46 +27,79 @@
         <h3> Select the portfolio you want to apply to your current assets</h3>
 
     </section>
-    <div class="containerasset">
-        <div class="blues">
-
-            <section class="grid-container">
-                <a href="/asset" th:href="@{save-asset(assetsAllocation='Maximalist')}" name="Maximalist"
-                   id="Maximalist" class="allocation">
-                    <div class="box a">
-                        <p>
-                            The <br> Maximalist
-                        </p>
-                        <span>
+    <section class="grid-container">
+        <a href="/asset" th:href="@{asset(assetsAllocation='Maximalist')}" name="Maximalist"
+           id="Maximalist" class="allocation">
+            <div class="box a">
+                <p>
+                    The <br> Maximalist
+                </p>
+                <span>
                             100 % Bitcoin
-                        </span>
-                    </div>
-
-                </a>
-                <a href="/asset" th:href="@{save-asset(assetsAllocation='Conservative')}" name="Conservative"
-                   id="Conservative" class="allocation">
-                    <div class="box b">
-                        <p>The <br> Conservative</p>
-                        <span>
+                </span>
+            </div>
+        </a>
+        <a href="/asset" th:href="@{asset(assetsAllocation='Conservative')}" name="Conservative"
+           id="Conservative" class="allocation">
+            <div class="box b">
+                <p>The <br> Conservative</p>
+                <span>
                             80/20
-                        </span>
-                    </div>
-                </a>
-                <a href="/asset" th:href="@{save-asset(assetsAllocation='Gambler')}" name="Gambler" id="Gambler"
-                   class="allocation">
-                    <div class="box c">
-                        <p>The <br> Gambler</p>
-                        <span>
+                </span>
+            </div>
+        </a>
+        <a href="/asset" th:href="@{asset(assetsAllocation='Gambler')}" name="Gambler" id="Gambler"
+           class="allocation">
+            <div class="box c">
+                <p>The <br> Gambler</p>
+                <span>
                             40/30/30
-                        </span>
-                    </div>
-                </a>
-            </section>
-        </div>
-    </div>
+                </span>
+            </div>
+        </a>
+        <button onclick="saveCustom()" name="Custom" id="Custom"
+                class="allocation">
+            <div class="box d custom">
+                <p><br/>Custom</p>
+            </div>
+        </button>
+    </section>
+
+    <section hidden id="customSection">
+        <form role="form" th:object="${form}" th:action="@{/asset/save}" modelAttribute="form" id="form"
+              method="post" onkeydown="return event.key != 'Enter';">
+            <table>
+                <caption>Your Coins</caption>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>&#037; Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="customDTO, itemStat: *{customDTOs}">
+                        <td th:text="${customDTOs[__${itemStat.index}__].name}" th:value="${customDTOs[__${itemStat.index}__].name}"></td>
+                        <td>
+                            <input type="number"  name="percentage" id="Percentage" th:value="0.00"
+                                   value="0.00" step="any" form="form"
+                                   th:field="*{customDTOs[__${itemStat.index}__].percentage}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit" form="form" id="submit">
+                Save
+            </button>
+        </form>
+    </section>
 
     <span class="span" th:utext="${assetMessage}"></span>
 </main>
 <footer th:replace="/fragments/general.html :: footer"></footer>
+<script>
+    function saveCustom() {
+        document.getElementById("customSection").removeAttribute("hidden");
+    }
+</script>
 </body>
 </html>
