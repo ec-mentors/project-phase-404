@@ -29,22 +29,21 @@
                     </td>
                     <td th:text="${coin.current_price}"/>
                     <td>
-                        <input class="field accumulated" th:field="*{values['__${coin.id}__']}" placeholder="0" type="number" step="any" min="0" required>
+                        <input class="field light-innershadow" th:field="*{values['__${coin.id}__']}" placeholder="0" type="number" step="any" min="0" required>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <div class="background">
+            <div class="background bgcol-whitesmoke">
                 <h4>Select Profile</h4>
-                <label class="select">
-                    <select th:field="*{profile}" class="custom-select" id="profile">
+                <label class="select col-white">
+                    <select th:field="*{profile}" class="default-groove" id="profile">
                         <option value="Maximalist">Maximalist</option>
                         <option value="Conservative">Conservative</option>
                         <option value="Gambler">Gambler</option>
                     </select>
                 </label>
-                <br>
-                <button type="submit" class="submit">Calculate</button>
+                <button type="submit" class="submit col-default-trans">Calculate</button>
             </div>
             <table>
                 <tr>

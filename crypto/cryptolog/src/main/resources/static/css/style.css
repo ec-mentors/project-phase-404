@@ -5,6 +5,9 @@
   /*========== Colors ==========*/
   --first-color: #06799c;
   --first-color-alt: #045686;
+  --second-color: #25A;
+  --second-color-alt: #15A;
+  --light-shadow: #00000045;
   --medium-shadow: #0008;
 }
 
@@ -123,7 +126,6 @@ form.search input {
   border-radius: 2em;
   font-size: 1em;
   padding: 0 0 0 1em;
-  box-shadow: inset 1px 1px 3px var(--medium-shadow);
 }
 
 form.search button {
@@ -220,78 +222,136 @@ tr:nth-child(odd) {
   text-align: center;
 }
 
-/* START: general form styles */
-form.general .background {
+/* START: general purpose styles */
+.background {
   margin: 0 auto;
   width: fit-content;
-  background-color: whitesmoke;
   padding: 1em 2em;
   border-radius: 0.3em;
   text-align: center;
 }
 
-form.general h4 {
-  padding: 0.5em;
-}
-
-form.general input.field {
-  /* border: none; */
+.general input.field {
   border: 0.3px solid var(--medium-shadow);
   border-radius: 0.25em;
   font-size: 0.9em;
   padding: 0.25em;
-  box-shadow: inset 1px 1px 2px #0004;
 }
 
-form.general .select {
+.general .select {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-form.general .select:after {
+.general .select:after {
   content: "\f0dc";
   font-family: 'FontAwesome';
-  color: white;
-  right: 10%; 
-  /* align-self: center; */
-  /* margin: 10%; */
+  right: 10%;
   position: absolute;
   pointer-events: none;
 }
 
-form.general select {
+.general select {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  border: 0.15em groove darkgreen;
   font-size: 1em;
-  background-color: green;
-  color: white;
   border-radius: 0.3em;
   margin: 0.5em;
   padding: 0.3em 2em 0.3em 1em;
-  box-shadow: 1px 1px 3px #0005;
 }
 
-form.general button.submit {
-  margin: 0.5em auto 0 auto;
-  background-color: var(--first-color);
-  color: white;
+.general button {
+  margin: 0.5em auto;
   border: none;
   border-radius: 0.3em;
   font-size: 1em;
   padding: 0.6em 1.2em;
   cursor: pointer;
+}
+
+.general a {
+  display: inline-block;
+  margin: 0.5em auto;
+  padding: 0.6em 1.2em;
+  border: none;
+  border-radius: 0.3em;
+  font-size: 1em;
+  text-decoration: none;
+}
+/* END: general purpose styles */
+
+/* START: general form styles */
+form.general h2, h3, h4 {
+  padding: 0.5em;
+}
+/* END: general form styles */
+
+/* START: specific partly styles */
+.default-groove {
+  color: white;
+  background-color: var(--second-color);
+  border: 0.15em groove var(--second-color-alt);
+  box-shadow: 1px 1px 3px var(--light-shadow);
+}
+
+.green-groove {
+  color: white;
+  background-color: green;
+  border: 0.15em groove darkgreen;
+  box-shadow: 1px 1px 3px var(--light-shadow);
+}
+
+/* Colors */
+.col-white {
+  color: white;
+}
+
+.col-whitesmoke {
+  color: whitesmoke;
+}
+
+.col-darkblue {
+  color: darkblue;
+}
+
+/* Background colors */
+.bgcol-white {
+  background-color: white;
+}
+
+.bgcol-whitesmoke {
+  background-color: whitesmoke;
+}
+
+.bgcol-darkblue {
+  background-color: darkblue;
+}
+
+/* Buttons and links */
+.col-default-trans {
+  background-color: var(--first-color);
+  color: white;
   transition: background-color 0.3s;
 }
 
-form.general button.submit:hover {
+.col-default-trans:hover {
   background-color: var(--first-color-alt);
-  transition: 0.3s;
+  color: white;
+  transition: background-color 0.3s;
 }
-/* END: general form styles */
+
+/* Inner shadows */
+.light-innershadow {
+  box-shadow: inset 1px 1px 2px var(--light-shadow);
+}
+
+.medium-innershadow {
+  box-shadow: inset 1px 1px 3px var(--medium-shadow);
+}
+/* END: specific partly styles */
 
 /* --- Grid (Assets Allocation) --- */
 
@@ -452,7 +512,7 @@ form.general button.submit:hover {
 color: #026e78;
 font-size: 2rem;
 padding: 2rem;
-text-decoration:
+text-decoration: none;
 }
 .assetheadtext h3 {
 color: black;
