@@ -48,7 +48,7 @@ public class AssetController {
         return "asset";
     }
 
-    @PostMapping("/asset/save")
+    @PostMapping("/asset")
     String saveCustomAsset(@ModelAttribute("form") CustomForm form,
                            Principal principal,
                            Model model) {

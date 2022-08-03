@@ -137,4 +137,13 @@ public class AssetsAllocationService {
         model.addAttribute("coinList", coinList);
         return coinList;
     }
+
+    public void checkForValues(CustomForm form) {
+        var map = form.getCustomDTOs();
+        for (var key : map.keySet()) {
+            if (map.get(key) == null) {
+                map.replace(key, null, 0.0);
+            }
+        }
+    }
 }
