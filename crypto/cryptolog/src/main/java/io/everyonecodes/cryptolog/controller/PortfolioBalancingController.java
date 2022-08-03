@@ -46,6 +46,7 @@ public class PortfolioBalancingController {
         var values = balanceForm.getValues();
         List<PortfolioBalance> balanceResults = portfolioBalanceService.getBalance(coinList,balanceForm.getProfile(),values);
         model.addAttribute("balanceResults",balanceResults);
+        model.addAttribute("caption",balanceForm.getProfile());
         return "portfoliobalance";
     }
 }

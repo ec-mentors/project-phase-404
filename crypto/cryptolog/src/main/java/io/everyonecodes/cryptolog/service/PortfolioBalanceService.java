@@ -18,6 +18,9 @@ public class PortfolioBalanceService {
         int tierOne = 0;
         int tierTwo = 0;
         int tierThree = 0;
+        double percentage = 0;
+        double percentageBefore = 0;
+
         List<PortfolioBalance> balanceResults = new ArrayList<>();
         double accumulatedCoin = 0;
         double valueOfAllCoins = 0;
@@ -40,37 +43,44 @@ public class PortfolioBalanceService {
             double initialAccumulatedCoin = values.get(coin.getId());
             double investedAmount = valueOfAllCoins;
             double accumulatedPrice = getAccumulatedPrice(coin, values);
+
+            percentageBefore = accumulatedPrice/valueOfAllCoins*100;
+
             if (profile.equals("Conservative")) {
                 if (coin.getMarket_cap_rank() <= 2) {
                     investedAmount = investedAmount * 0.8 / tierOne;
+                    percentage = 80/tierOne;
                 } else if (coin.getMarket_cap_rank() > 2 && coin.getMarket_cap_rank() <= 49) {
                     investedAmount = investedAmount * 0.1 / tierTwo;
-
+                    percentage = 10/tierTwo;
                 } else {
                     investedAmount = investedAmount * 0.1 / tierThree;
+                    percentage = 10/tierThree;
                 }
 
             } else if (profile.equals("Gambler")) {
 
                 if (coin.getMarket_cap_rank() <= 2) {
                     investedAmount = investedAmount * 0.4 / tierOne;
-
+                    percentage = 40/tierOne;
                 } else if (coin.getMarket_cap_rank() > 2 && coin.getMarket_cap_rank() <= 49) {
                     investedAmount = investedAmount * 0.3 / tierTwo;
-
+                    percentage = 30/tierTwo;
                 } else {
                     investedAmount = investedAmount * 0.3 / tierThree;
-
+                    percentage = 30/tierThree;
                 }
 
             } else {
 
                 if (coin.getMarket_cap_rank() == 1) {
-
+                    percentage = 100;
                 } else if (coin.getMarket_cap_rank() > 1 && coin.getMarket_cap_rank() <= 49) {
                     investedAmount = 0;
+                    percentage = 0;
                 } else {
                     investedAmount = 0;
+                    percentage = 0;
                 }
             }
             accumulatedCoin = investedAmount / coin.getCurrent_price();
@@ -84,7 +94,11 @@ public class PortfolioBalanceService {
             } else {
                 result = "Buy " + yieldCalculatorService.formatDecimals(accumulatedCoin - initialAccumulatedCoin) + ", it will cost your roughly: " + yieldCalculatorService.formatDecimals((accumulatedCoin - initialAccumulatedCoin) * coin.getCurrent_price()) + "$";
             }
-            balanceResults.add(new PortfolioBalance(coin.getId(), result));
+            balanceResults.add(new PortfolioBalance(coin.getId(), result,
+                    String.valueOf(yieldCalculatorService.formatDecimals(initialAccumulatedCoin)),
+                    String.valueOf(yieldCalculatorService.formatDecimals(accumulatedCoin)),
+                    String.valueOf(yieldCalculatorService.formatDecimals(percentage)),
+                    String.valueOf(yieldCalculatorService.formatDecimals(percentageBefore))));
         }
 
         return balanceResults;

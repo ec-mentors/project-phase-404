@@ -49,7 +49,7 @@
             <br>
         </form>
         <table th:if="${balanceResults}">
-            <caption>Portfolio Rebalancing</caption>
+            <caption th:text ="'For the '+${caption} + ' profile, following actions are needed:'"></caption>
             <thead>
             <tr>
                 <th>Coin</th>
@@ -60,6 +60,41 @@
             <tr th:each="portfolioBalance: ${balanceResults}">
                 <td th:text="${#strings.toUpperCase(portfolioBalance.coinId)}"/>
                 <td th:text="${portfolioBalance.balance}"/>
+
+            </tr>
+            </tbody>
+        </table>
+        <table th:if="${balanceResults}">
+            <caption>Before Rebalancing</caption>
+            <thead>
+            <tr>
+                <th>Coin</th>
+                <th>Accumulated</th>
+                <th>%</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="portfolioBalance: ${balanceResults}">
+                <td th:text="${#strings.toUpperCase(portfolioBalance.coinId)}"/>
+                <td th:text="${portfolioBalance.accumulatedBefore}"/>
+                <td th:text="${portfolioBalance.percentageBefore}"/>
+            </tr>
+            </tbody>
+        </table>
+        <table th:if="${balanceResults}">
+            <caption>After Rebalancing</caption>
+            <thead>
+            <tr>
+                <th>Coin</th>
+                <th>Accumulated</th>
+                <th>%</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="portfolioBalance: ${balanceResults}">
+                <td th:text="${#strings.toUpperCase(portfolioBalance.coinId)}"/>
+                <td th:text="${portfolioBalance.accumulatedAfter}"/>
+                <td th:text="${portfolioBalance.percentage}"/>
             </tr>
             </tbody>
         </table>
