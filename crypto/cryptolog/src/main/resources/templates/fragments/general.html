@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<!--REAL HEADER-->
+<!--REAL HEAD-->
 <head th:fragment="head">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title th:text="${title} ? ${title} : 'CryptoLog'"></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
-    <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
-    <script src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
-    <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico" th:href="@{/images/favicon.ico}"/>
+
+        <th:block th:fragment="baseHead">
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title th:text="${title} ? ${title} : 'CryptoLog'"></title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
+            <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
+            <script src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+            <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico" th:href="@{/images/favicon.ico}"/>
+        </th:block>
+
 </head>
 
 <body>

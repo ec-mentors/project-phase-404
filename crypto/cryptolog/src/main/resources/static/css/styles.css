@@ -1094,6 +1094,7 @@ color:#06799c;
   
   grid-area: mem1; 
   text-align: center;
+  color: whitesmoke;
 background-color: #305472;
 box-shadow: 0 5px 2px -2px whitesmoke;
 border: #0e0e0e solid 2px;
@@ -1102,40 +1103,47 @@ border: #0e0e0e solid 2px;
 .mem2 { grid-area: mem2; 
   text-align: center;
   background-color:#707070;
+  color: whitesmoke;
   box-shadow: 0 5px 2px -2px gold;
   border: #0e0e0e solid 2px;}
 
-.mem3 { grid-area: mem3; 
+.mem3 { grid-area: mem3;
+color: whitesmoke;
   text-align: center;
   background-color: #305472;
   box-shadow: 0 5px 2px -2px whitesmoke;
   border: #0e0e0e solid 2px;}
 
-.mem4 { grid-area: mem4; 
+.mem4 { grid-area: mem4;
+color: whitesmoke;
   text-align: center;
   background-color: #707070;
   box-shadow: 0 5px 2px -2px gold;
   border: #0e0e0e solid 2px;}
 
-.mem5 { grid-area: mem5; 
+.mem5 { grid-area: mem5;
+color: whitesmoke;
   text-align: center;
   background-color:#707070;
   box-shadow: 0 5px 2px -2px gold;
   border: #0e0e0e solid 2px;}
 
-.mem6 { grid-area: mem6; 
+.mem6 { grid-area: mem6;
+color: whitesmoke;
   text-align: center;
   background-color: #305472;
   box-shadow: 0 5px 2px -2px whitesmoke;
   border: #0e0e0e solid 2px;}
 
-.mem7 { grid-area: mem7; 
+.mem7 { grid-area: mem7;
+color: whitesmoke;
   text-align: center;
   background-color: #707070;
   box-shadow: 0 5px 2px -2px gold;
   border: #0e0e0e solid 2px;}
 
-.mem8 { grid-area: mem8; 
+.mem8 { grid-area: mem8;
+color: whitesmoke;
   text-align: center;
   background-color:  #305472;
   box-shadow: 0 5px 2px -2px whitesmoke;

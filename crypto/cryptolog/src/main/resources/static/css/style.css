@@ -376,7 +376,7 @@ tr:nth-child(odd) {
 color: #026e78;
 font-size: 2rem;
 padding: 2rem;
-text-decoration:
+text-decoration: none;
 }
 .assetheadtext h3 {
 color: black;
