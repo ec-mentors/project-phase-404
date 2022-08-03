@@ -224,7 +224,7 @@ tr:nth-child(odd) {
 }
 
 .tablerow {
-  display: flex;
+  margin: 0 -0.3em 0 -0.3em;
 }
 
 table.actions {
@@ -235,14 +235,9 @@ table.actions caption {
   font-size: 1.5em;
 }
 
-table.column-left {
-  flex: 50%;
-  margin: 0 1em 2rem 0;
-}
-
-table.column-right {
-  flex: 50%;
-  margin: 0 0 2rem 1em;
+table.column {
+  float: left;
+  margin: 0 0.3em 2rem 0.3em;
 }
 /* END: Tables portfolio-balance */
 
