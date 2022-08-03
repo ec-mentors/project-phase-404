@@ -1,28 +1,38 @@
 package io.everyonecodes.cryptolog.data;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CustomForm {
 
-    private List<CustomDTO> customDTOs = new ArrayList<>();
+    private Map<String, Double> customDTOs = new HashMap<>();
+    private List<String> coinList;
 
     public CustomForm() {
     }
 
-    public CustomForm(List<CustomDTO> customDTOs) {
+    public CustomForm(List<String> coinList) {
+        this.coinList = coinList;
+    }
+
+    public CustomForm(Map<String, Double> customDTOs) {
         this.customDTOs = customDTOs;
     }
 
-    public void addDTO(CustomDTO dto) {
-        this.customDTOs.add(dto);
-    }
-
-    public List<CustomDTO> getCustomDTOs() {
+    public Map<String, Double> getCustomDTOs() {
         return customDTOs;
     }
 
-    public void setCustomDTOs(List<CustomDTO> customDTOs) {
+    public void setCustomDTOs(Map<String, Double> customDTOs) {
         this.customDTOs = customDTOs;
+    }
+
+    public List<String> getCoinList() {
+        return coinList;
+    }
+
+    public void setCoinList(List<String> coinList) {
+        this.coinList = coinList;
     }
 }

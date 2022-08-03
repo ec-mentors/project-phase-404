@@ -1,7 +1,6 @@
 package io.everyonecodes.cryptolog.controller;
 
 import io.everyonecodes.cryptolog.CoingeckoClient;
-import io.everyonecodes.cryptolog.data.CustomDTO;
 import io.everyonecodes.cryptolog.data.CustomForm;
 import io.everyonecodes.cryptolog.service.AssetsAllocationService;
 import org.springframework.stereotype.Controller;
@@ -39,10 +38,8 @@ public class AssetController {
     public String display(@RequestParam(required = false) String assetsAllocation,
                           Model model, Principal principal) {
         var coinList = assetsAllocationService.createList(principal, model);
-        CustomForm form = new CustomForm();
-        for (String coin : coinList) {
-            form.addDTO(new CustomDTO(coin));
-        }
+        CustomForm form = new CustomForm(coinList);
+        model.addAttribute("coinList", coinList);
         model.addAttribute("form", form);
         if (assetsAllocation == null) {
             return "asset";

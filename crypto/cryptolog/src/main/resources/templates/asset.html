@@ -66,10 +66,10 @@
     </section>
 
     <section hidden id="customSection">
-        <form role="form" th:object="${form}" th:action="@{/asset/save}" modelAttribute="form" id="form"
+        <form role="form" th:object="${form}" modelAttribute="coinList" th:action="@{/asset/save}" id="form"
               method="post" onkeydown="return event.key != 'Enter';">
             <table>
-                <caption>Your Coins</caption>
+                <caption hidden>Your Coins</caption>
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -77,12 +77,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="customDTO, itemStat: *{customDTOs}">
-                        <td th:text="${customDTOs[__${itemStat.index}__].name}" th:value="${customDTOs[__${itemStat.index}__].name}"></td>
+                    <tr th:each="coin: ${form.coinList}" >
+                        <td th:text="${coin}">
+                        </td>
                         <td>
-                            <input type="number"  name="percentage" id="Percentage" th:value="0.00"
-                                   value="0.00" step="any" form="form"
-                                   th:field="*{customDTOs[__${itemStat.index}__].percentage}">
+                            <input type="number"  name="percentage" id="percentage" value="0.00" th:value="0.00"
+                                   placeholder="0.00" step="any" form="form"
+                                   th:field="*{customDTOs['__${coin}__']}">
                         </td>
                     </tr>
                 </tbody>

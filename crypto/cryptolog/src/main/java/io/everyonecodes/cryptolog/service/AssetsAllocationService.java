@@ -27,6 +27,8 @@ public class AssetsAllocationService {
     private final String maximalistInfo;
     private final String missingCoinsConserv;
     private final String missingCoinsGambler;
+    private final String customError;
+    private final String customSuccess;
 
     public AssetsAllocationService(UserServiceImp userServiceImp,
                                    CustomAssetAllocationRepository repository,
@@ -38,7 +40,9 @@ public class AssetsAllocationService {
                                    @Value("${messages.asset.emptyPortfolio}") String emptyPortfolio,
                                    @Value("${messages.asset.maximalistInfo}") String maximalistInfo,
                                    @Value("${messages.asset.missingCoinsConserv}") String missingCoinsConserv,
-                                   @Value("${messages.asset.missingCoinsGambler}") String missingCoinsGambler) {
+                                   @Value("${messages.asset.missingCoinsGambler}") String missingCoinsGambler,
+                                   @Value("${messages.asset.customError}") String customError,
+                                   @Value("${messages.asset.customSuccess}") String customSuccess) {
         this.userServiceImp = userServiceImp;
         this.repository = repository;
         this.client = client;
@@ -50,6 +54,8 @@ public class AssetsAllocationService {
         this.maximalistInfo = maximalistInfo;
         this.missingCoinsConserv = missingCoinsConserv;
         this.missingCoinsGambler = missingCoinsGambler;
+        this.customError = customError;
+        this.customSuccess = customSuccess;
     }
 
     public void saveAsset(String assetsAllocation, Model model, Principal principal) {
@@ -83,30 +89,37 @@ public class AssetsAllocationService {
         }
     }
 
-    public void saveCustomAsset(CustomForm form, Principal principal, Model model) {
+    // Uses coin.getName() instead of id
+    public String saveCustomAsset(CustomForm form, Principal principal, Model model) {
         var user = userServiceImp.loadLoggedInUser(principal);
-        var coinList = createList(principal, model);
         if (form != null) {
-            user.setAssetsAllocation(custom);
-            var customAllocation = new CustomAssetAllocation();
-            customAllocation.setAllocationName(custom);
-            customAllocation.setInvestedCoins(parseCustomDTOsToString(form));
-            customAllocation.setUser(user);
-            repository.save(customAllocation);
+            var sumOfPercentages = form.getCustomDTOs().values().stream().reduce(0.0, Double::sum);
+            if (sumOfPercentages > 100.0 || sumOfPercentages < 100.0) {
+                model.addAttribute("assetMessage", customError);
+            } else {
+                user.setAssetsAllocation(custom);
+                var customAllocation = new CustomAssetAllocation();
+                customAllocation.setAllocationName(custom);
+                customAllocation.setInvestedCoins(parseCustomDTOsToString(form));
+                customAllocation.setUser(user);
+                repository.save(customAllocation);
+                model.addAttribute("assetMessage", customSuccess);
+            }
         }
-        List<CustomDTO> customDTOs = new ArrayList<>();
-        model.addAttribute("tableTitle", "My Coins");
-        model.addAttribute("portfolio", user.getCoinIds());
-        model.addAttribute("coinList", coinList);
+        model.addAttribute("tableTitle", "My Portfolio");
+        return "asset";
     }
 
     public Set<String> parseCustomDTOsToString(CustomForm form) {
-        return form.getCustomDTOs().stream()
-                .map(customDTO -> customDTO.getName() + ";" + customDTO.getPercentage())
-                .collect(Collectors.toSet());
+        var map = form.getCustomDTOs();
+        Set<String> set = new HashSet<>();
+        for (var key : map.keySet()) {
+            set.add(key + ";" + map.get(key));
+        }
+        return set;
     }
 
-    public Map<String, Double> parseStringToMap(Set<String> investedCoins) {
+    public Map<String, Double> parseCustomDTOsStringToMap(Set<String> investedCoins) {
         Map<String, Double> coins = new HashMap<>();
         investedCoins.forEach(elem -> {
             var list = elem.split(";");
