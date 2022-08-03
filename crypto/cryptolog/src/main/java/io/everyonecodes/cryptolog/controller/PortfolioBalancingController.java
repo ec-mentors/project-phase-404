@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.security.Principal;
 import java.util.List;
 @Controller
-public class PorfolioBalancingController {
+public class PortfolioBalancingController {
     private final CoingeckoClient client;
     private final UserService userService;
     private final PortfolioBalanceService portfolioBalanceService;
-    public PorfolioBalancingController(CoingeckoClient client, UserService userService, PortfolioBalanceService portfolioBalanceService) {
+    public PortfolioBalancingController(CoingeckoClient client, UserService userService, PortfolioBalanceService portfolioBalanceService) {
         this.client = client;
         this.userService = userService;
         this.portfolioBalanceService = portfolioBalanceService;
@@ -35,6 +35,7 @@ public class PorfolioBalancingController {
         BalanceForm balanceForm = new BalanceForm();
         model.addAttribute(balanceForm);
         model.addAttribute(coinList);
+
         return "portfoliobalance";
     }
 
@@ -43,11 +44,8 @@ public class PorfolioBalancingController {
         User user = userService.loadLoggedInUser(principal);
         List<Coin> coinList = client.getCoinsById(user.getCoinIds());
         var values = balanceForm.getValues();
-        List<PortfolioBalance> results = portfolioBalanceService.getBalance(coinList,balanceForm.getProfile(),values);
-        for (PortfolioBalance portfolioBalance:results){
-            System.out.println(portfolioBalance.getCoinId()+portfolioBalance.getBalance());
-        }
-        model.addAttribute(results);
+        List<PortfolioBalance> balanceResults = portfolioBalanceService.getBalance(coinList,balanceForm.getProfile(),values);
+        model.addAttribute("balanceResults",balanceResults);
         return "portfoliobalance";
     }
 }
