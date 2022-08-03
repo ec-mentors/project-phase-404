@@ -284,11 +284,12 @@ form.general button.submit {
   font-size: 1em;
   padding: 0.6em 1.2em;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 form.general button.submit:hover {
   background-color: var(--first-color-alt);
-  transition: 0.4s;
+  transition: 0.3s;
 }
 /* END: general form styles */
 
