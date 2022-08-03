@@ -77,7 +77,7 @@ public class PortfolioBalanceService {
 
             if (initialAccumulatedCoin > accumulatedCoin) {
 
-                result = "Sell " + yieldCalculatorService.formatDecimals(initialAccumulatedCoin - accumulatedCoin) + ", you will get roughly: " + yieldCalculatorService.formatDecimals(((initialAccumulatedCoin - accumulatedCoin))*coin.getCurrent_price()) + "$" ;
+                result = "Sell " + yieldCalculatorService.formatDecimals(initialAccumulatedCoin - accumulatedCoin) + ", you will get roughly: " + yieldCalculatorService.formatDecimals(((initialAccumulatedCoin - accumulatedCoin)) * coin.getCurrent_price()) + "$";
 
             } else if (initialAccumulatedCoin == accumulatedCoin) {
                 result = "Looks perfect!";
