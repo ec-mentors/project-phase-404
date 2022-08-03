@@ -9,7 +9,7 @@
 <header th:replace="/fragments/general.html :: header"></header>
 <main>
     <div id="contain">
-        <form action="/portfoliobalance" method="post" th:object="${balanceForm}" class="general">
+        <form th:if="${coinList}" action="/portfoliobalance" method="post" th:object="${balanceForm}" class="general">
             <table>
                 <caption>Portfolio Rebalancing</caption>
                 <thead>
@@ -45,22 +45,24 @@
                 </label>
                 <button type="submit" class="submit col-default-trans">Calculate</button>
             </div>
-            <thead>
-            <table>
-                <tr>
-                    <th>Coin</th>
-                    <th>To DO</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <tr th:each="portfolioBalance: ${balanceResults}">
-                    <td th:text="${#strings.toUpperCase(portfolioBalance.coinId)}"/>
-                    <td th:text="${portfolioBalance.balance}"/>
-                </tr>
-                </tbody>
-            </table>
+            <br>
+            <br>
         </form>
+        <table th:if="${balanceResults}">
+            <caption>Rebalance:</caption>
+            <thead>
+            <tr>
+                <th>Coin</th>
+                <th>To DO</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="portfolioBalance: ${balanceResults}">
+                <td th:text="${#strings.toUpperCase(portfolioBalance.coinId)}"/>
+                <td th:text="${portfolioBalance.balance}"/>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </main>
 <footer th:replace="/fragments/general.html :: footer"></footer>
