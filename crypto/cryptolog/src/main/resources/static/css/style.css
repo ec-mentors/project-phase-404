@@ -143,6 +143,7 @@ form.search .fa-search {
 }
 /* END: Search field */
 
+/* START: Tables general */
 table {
   /* clear: both; */
   border-collapse: collapse;
@@ -214,6 +215,36 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
   background-color: #91e3f1;
 }
+/* END: Tables general */
+
+/* START: Tables portfolio-balance */
+.balance-results {
+  display: flex;
+  flex-direction: column;
+}
+
+.tablerow {
+  display: flex;
+}
+
+table.actions {
+  margin-bottom: 0;
+}
+
+table.actions caption {
+  font-size: 1.5em;
+}
+
+table.column-left {
+  flex: 50%;
+  margin: 0 1em 2rem 0;
+}
+
+table.column-right {
+  flex: 50%;
+  margin: 0 0 2rem 1em;
+}
+/* END: Tables portfolio-balance */
 
 #contain {
   margin: 0 auto;
