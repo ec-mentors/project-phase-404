@@ -11,7 +11,7 @@
     <div id="contain">
         <form action="/portfoliobalance" method="post" th:object="${balanceForm}" class="general">
             <table>
-                <caption>Portfolio Balancing</caption>
+                <caption>Portfolio Rebalancing</caption>
                 <thead>
                 <tr>
                     <th>Rank</th>
@@ -46,14 +46,18 @@
                 <br>
                 <button type="submit" class="submit">Calculate</button>
             </div>
+            <thead>
             <table>
                 <tr>
                     <th>Coin</th>
+                    <th>To DO</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:object="${results}" th:each="portfolioBalance : ${results}">
-                    <td th:text="${portfolioBalance}" />
+
+                <tr th:each="portfolioBalance: ${balanceResults}">
+                    <td th:text="${#strings.toUpperCase(portfolioBalance.coinId)}"/>
+                    <td th:text="${portfolioBalance.balance}"/>
                 </tr>
                 </tbody>
             </table>

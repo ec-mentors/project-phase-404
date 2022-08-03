@@ -1,6 +1,5 @@
 package io.everyonecodes.cryptolog.service;
 
-import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Coin;
 import io.everyonecodes.cryptolog.data.PortfolioBalance;
 import org.springframework.stereotype.Service;
@@ -9,10 +8,10 @@ import java.util.*;
 
 @Service
 public class PortfolioBalanceService {
-    private final CoingeckoClient client;
+    private final YieldCalculatorService yieldCalculatorService;
 
-    public PortfolioBalanceService(CoingeckoClient client) {
-        this.client = client;
+    public PortfolioBalanceService(YieldCalculatorService yieldCalculatorService) {
+        this.yieldCalculatorService = yieldCalculatorService;
     }
 
     public List<PortfolioBalance> getBalance(List<Coin> coinList, String profile, Map<String, Double> values) {
@@ -78,12 +77,12 @@ public class PortfolioBalanceService {
 
             if (initialAccumulatedCoin > accumulatedCoin) {
 
-                result = ": you need to sell " + (initialAccumulatedCoin - accumulatedCoin) + " you will get roughly : " + ((initialAccumulatedCoin - accumulatedCoin)*coin.getCurrent_price()) ;
+                result = ": you need to sell " + yieldCalculatorService.formatDecimals(initialAccumulatedCoin - accumulatedCoin) + " ,you will get roughly : " + (yieldCalculatorService.formatDecimals(initialAccumulatedCoin - accumulatedCoin))*coin.getCurrent_price() + "$" ;
 
             } else if (initialAccumulatedCoin == accumulatedCoin) {
                 result = ": Looks perfect!";
             } else {
-                result = ": you need to buy " + (accumulatedCoin - initialAccumulatedCoin) + " it will cost your roughly :" +((accumulatedCoin - initialAccumulatedCoin) * coin.getCurrent_price());
+                result = ": Buy " + yieldCalculatorService.formatDecimals(accumulatedCoin - initialAccumulatedCoin) + " ,it will cost your roughly :" + yieldCalculatorService.formatDecimals((accumulatedCoin - initialAccumulatedCoin) * coin.getCurrent_price()) + "$";
             }
             balanceResults.add(new PortfolioBalance(coin.getId(), result));
         }
