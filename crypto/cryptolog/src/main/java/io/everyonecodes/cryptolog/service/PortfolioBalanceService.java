@@ -77,12 +77,12 @@ public class PortfolioBalanceService {
 
             if (initialAccumulatedCoin > accumulatedCoin) {
 
-                result = ": you need to sell " + yieldCalculatorService.formatDecimals(initialAccumulatedCoin - accumulatedCoin) + " ,you will get roughly : " + (yieldCalculatorService.formatDecimals(initialAccumulatedCoin - accumulatedCoin))*coin.getCurrent_price() + "$" ;
+                result = "Sell " + yieldCalculatorService.formatDecimals(initialAccumulatedCoin - accumulatedCoin) + ", you will get roughly: " + yieldCalculatorService.formatDecimals(((initialAccumulatedCoin - accumulatedCoin))*coin.getCurrent_price()) + "$" ;
 
             } else if (initialAccumulatedCoin == accumulatedCoin) {
-                result = ": Looks perfect!";
+                result = "Looks perfect!";
             } else {
-                result = ": Buy " + yieldCalculatorService.formatDecimals(accumulatedCoin - initialAccumulatedCoin) + " ,it will cost your roughly :" + yieldCalculatorService.formatDecimals((accumulatedCoin - initialAccumulatedCoin) * coin.getCurrent_price()) + "$";
+                result = "Buy " + yieldCalculatorService.formatDecimals(accumulatedCoin - initialAccumulatedCoin) + ", it will cost your roughly: " + yieldCalculatorService.formatDecimals((accumulatedCoin - initialAccumulatedCoin) * coin.getCurrent_price()) + "$";
             }
             balanceResults.add(new PortfolioBalance(coin.getId(), result));
         }
