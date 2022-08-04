@@ -97,13 +97,14 @@
         </div>
     </section>
 
-    <span class="span" th:utext="${assetMessage}"></span>
+    <span class="span" th:utext="${assetMessage}" id="messageSpan"></span>
 </main>
 <footer th:replace="/fragments/general.html :: footer"></footer>
 <script>
     function saveCustom() {
         document.getElementById("customSection").removeAttribute("hidden");
     }
+
 </script>
 </body>
 </html>
