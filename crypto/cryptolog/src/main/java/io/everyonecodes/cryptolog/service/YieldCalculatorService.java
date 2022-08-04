@@ -89,22 +89,22 @@ public class YieldCalculatorService {
         double potentialProfit = (accumulated * ath) - investedAmount;
 
         double forecastedValue = investedAmount + potentialProfit;
-        accumulated = formatDecimals(accumulated);
-        investedAmount = formatDecimals(investedAmount);
-        forecastedValue = formatDecimals(forecastedValue);
-        potentialProfit = formatDecimals(potentialProfit);
+//        double accumulated = formatDecimals(accumulated);
+//        double investedAmount = formatDecimals(investedAmount);
+//        double forecastedValue = formatDecimals(forecastedValue);
+//        double potentialProfit = formatDecimals(potentialProfit);
 
 
-        return (new YieldData(coin.getId(),
-                accumulated,
-                investedAmount,
-                forecastedValue,
-                potentialProfit));
-
-
+        return (new YieldData(
+                coin.getId(),
+                formatDecimals(accumulated),
+                formatDecimals(investedAmount),
+                formatDecimals(forecastedValue),
+                formatDecimals(potentialProfit)
+        ));
     }
 
-    public double formatDecimals(double input) {
+    public String formatDecimals(double input) {
         int index = 0;
         String accumulatedString = String.valueOf(input);
         for (int i = 0; i < accumulatedString.length(); i++) {
@@ -118,14 +118,12 @@ public class YieldCalculatorService {
                     index = i;
                     break;
                 }
-
             }
         }
-        if (accumulatedString.length() < index + 3) {
-        } else {
+        if (accumulatedString.length() >= index + 3) {
             accumulatedString = accumulatedString.substring(0, index + 3);
         }
-        return Double.parseDouble(accumulatedString);
+        return accumulatedString;
     }
 
     public void checkParameters(String monthlyAmount, String period) {
@@ -179,18 +177,18 @@ public class YieldCalculatorService {
         } else {
 
 
-            double finalProfit = 0;
+            double finalProfit = 0d;
             for (YieldData yieldData : yieldDataList) {
-                finalProfit = finalProfit + yieldData.getProfit();
+                finalProfit = finalProfit + Double.parseDouble(yieldData.getProfit());
             }
-            double finalInvestmentAmount = 0;
+            double finalInvestmentAmount = 0d;
             for (YieldData yieldData : yieldDataList) {
-                finalInvestmentAmount = finalInvestmentAmount + yieldData.getInvestedAmount();
+                finalInvestmentAmount = finalInvestmentAmount + Double.parseDouble(yieldData.getInvestedAmount());
             }
-            finalInvestmentAmount = formatDecimals(finalInvestmentAmount);
-            finalProfit = formatDecimals(finalProfit);
-            model.addAttribute("finalProfit", finalProfit);
-            model.addAttribute("finalInvestment", finalInvestmentAmount);
+//            finalInvestmentAmount = formatDecimals(finalInvestmentAmount);
+//            finalProfit = formatDecimals(finalProfit);
+            model.addAttribute("finalProfit", formatDecimals(finalProfit));
+            model.addAttribute("finalInvestment", formatDecimals(finalInvestmentAmount));
             model.addAttribute(yieldDataList);
             model.addAttribute("monthlyAmount", monthlyAmount);
             model.addAttribute("period", period);
@@ -213,15 +211,15 @@ public class YieldCalculatorService {
 
             double finalProfit = 0;
             for (YieldData yieldData : yieldDataList) {
-                finalProfit = finalProfit + yieldData.getProfit();
+                finalProfit = finalProfit + Double.parseDouble(yieldData.getProfit());
             }
             double finalInvestmentAmount = 0;
             for (YieldData yieldData : yieldDataList) {
-                finalInvestmentAmount = finalInvestmentAmount + yieldData.getInvestedAmount();
+                finalInvestmentAmount = finalInvestmentAmount + Double.parseDouble(yieldData.getInvestedAmount());
             }
 
-            model.addAttribute("finalProfit", finalProfit);
-            model.addAttribute("finalInvestment", finalInvestmentAmount);
+            model.addAttribute("finalProfit", formatDecimals(finalProfit));
+            model.addAttribute("finalInvestment", formatDecimals(finalInvestmentAmount));
             model.addAttribute(yieldDataList);
             model.addAttribute("monthlyAmount", monthlyAmount);
             model.addAttribute("period", period);
