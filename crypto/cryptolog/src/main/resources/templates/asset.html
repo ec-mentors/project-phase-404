@@ -69,20 +69,21 @@
             <table>
                 <caption hidden>Your Coins</caption>
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>&#037; Percentage</th>
-                    </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>&#037; Percentage</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="coin: ${form.coinList}" >
-                        <td th:text="${coin}">
-                        </td>
-                        <td>
-                            <input type="number" th:field="*{customDTOs['__${coin}__']}" id="percentage" value="0.00" th:value="0.00"
-                                   placeholder="0.00" step="any" form="form">
-                        </td>
-                    </tr>
+                <tr th:each="coin: ${form.coinList}">
+                    <td th:text="${coin}">
+                    </td>
+                    <td>
+                        <input type="number" th:field="*{customDTOs['__${coin}__']}" id="percentage" value="0.00"
+                               th:value="0.00"
+                               placeholder="0.00" step="any" form="form">
+                    </td>
+                </tr>
                 </tbody>
             </table>
             <button type="submit" form="form" id="submit">
@@ -94,13 +95,14 @@
         </form>
     </section>
 
-    <span class="span" th:utext="${assetMessage}"></span>
+    <span class="span" th:utext="${assetMessage}" id="messageSpan"></span>
 </main>
 <footer th:replace="/fragments/general.html :: footer"></footer>
 <script>
     function saveCustom() {
         document.getElementById("customSection").removeAttribute("hidden");
     }
+
 </script>
 </body>
 </html>
