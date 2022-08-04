@@ -373,6 +373,18 @@ form.general h2, h3, h4 {
   transition: background-color 0.3s;
 }
 
+.col-cancel-trans {
+  background-color: darkgrey;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.col-cancel-trans:hover {
+  background-color: gray;
+  color: white;
+  transition: background-color 0.3s;
+}
+
 /* Inner shadows */
 .light-innershadow {
   box-shadow: inset 1px 1px 2px var(--light-shadow);
