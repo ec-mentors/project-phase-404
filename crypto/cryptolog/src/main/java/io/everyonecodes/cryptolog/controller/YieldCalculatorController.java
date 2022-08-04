@@ -16,20 +16,20 @@ import java.util.List;
 
 @Controller
 public class YieldCalculatorController {
-
+    
     private final YieldCalculatorService yieldCalculatorService;
     private final UserService userService;
     private final CoingeckoClient client;
-
+    
     public YieldCalculatorController( YieldCalculatorService yieldCalculatorService, UserService userService, CoingeckoClient client) {
-
+        
         this.yieldCalculatorService = yieldCalculatorService;
         this.userService = userService;
         this.client = client;
     }
-
+    
     private String test;
-
+    
     @GetMapping("/calculator")
     public String getYieldResults(Model model,
                                   @RequestParam(required = false) String monthlyAmount,
@@ -39,11 +39,11 @@ public class YieldCalculatorController {
         if (monthlyAmount == null || period == null || days == null) {
             return "calculator";
         }
-
+        
         List<YieldData> yieldDataList = new ArrayList<>();
         User user = userService.loadLoggedInUser(principal);
-
-
+        
+        
         if (!user.getAssetsAllocation().equals("none")) {
             if (!days.equals("0")) {
                 if (monthlyAmount.isBlank()) {
@@ -52,15 +52,15 @@ public class YieldCalculatorController {
                 if (period.isBlank()) {
                     period = "0";
                 }
-
+                
                 yieldCalculatorService.setAttributesWithMovingAverage(period, monthlyAmount,
-                        model, principal, Integer.parseInt(days));
-
+                                                                      model, principal, Integer.parseInt(days));
+                
                 model.addAttribute("days", days);
-
+                
                 return "calculator";
-
-
+                
+                
             } else {
                 if (monthlyAmount.isBlank()) {
                     monthlyAmount = "0";
@@ -73,7 +73,7 @@ public class YieldCalculatorController {
                 return "calculator";
             }
         }
-
+        
         return "calculatorlock";
     }
 }

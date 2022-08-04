@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 
 @Service
 public class VerificationEmailSenderService {
-
+    
     private final JavaMailSender mailSender;
     
     private final String encoding;
@@ -25,7 +25,7 @@ public class VerificationEmailSenderService {
     private final String confirmText;
     private final String sender;
     private final String failed;
-
+    
     public VerificationEmailSenderService(JavaMailSender mailSender, @Value("${messages.email.verification.encoding}") String encoding, @Value("${messages.email.verification.link}") String link, @Value("${messages.email.verification.datePattern}") String datePattern, @Value("${messages.email.verification.confirmTitle}") String confirmTitle, @Value("${messages.email.verification.confirmText}") String confirmText, @Value("${messages.email.sender}") String sender, @Value("${messages.email.verification.failed}") String failed) {
         this.mailSender = mailSender;
         this.encoding = encoding;
@@ -36,14 +36,14 @@ public class VerificationEmailSenderService {
         this.sender = sender;
         this.failed = failed;
     }
-
+    
     @Async
     public void sendEmail(User user, ConfirmationToken confirmationToken) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, encoding);
             helper.setText(buildEmail(user.getName(), link + confirmationToken.getToken(),
-                    confirmationToken.getExpiresAt().format(DateTimeFormatter.ofPattern(datePattern))), true);
+                                      confirmationToken.getExpiresAt().format(DateTimeFormatter.ofPattern(datePattern))), true);
             helper.setTo(user.getEmail());
             helper.setSubject(confirmTitle);
             helper.setFrom(sender);
@@ -61,7 +61,7 @@ public class VerificationEmailSenderService {
         helper.setFrom(sender);
         mailSender.send(helper);
     }
-
+    
     private String buildEmail(String name, String link, String expiresAt) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
@@ -130,6 +130,6 @@ public class VerificationEmailSenderService {
                 "\n" +
                 "</div></div>";
     }
-
+    
 }
 

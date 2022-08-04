@@ -10,32 +10,32 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LoginAttemptsEmailService {
-
+    
     private final JavaMailSender mailSender;
     
     private final String warningTitle;
     private final String warningText;
     private final String warningFromEmail;
-
+    
     public LoginAttemptsEmailService(JavaMailSender mailSender,
                                      @Value("${messages.email.loginFail.warningTitle}") String warningTitle, @Value(
-                                             "${messages.email.loginFail.warningText}") String warningText,
+            "${messages.email.loginFail.warningText}") String warningText,
                                      @Value("${messages.email.sender}") String warningFromEmail) {
         this.mailSender = mailSender;
         this.warningTitle = warningTitle;
         this.warningText = warningText;
         this.warningFromEmail = warningFromEmail;
     }
-
+    
     @Async
     public void sendEmailLoginFail(User user) {
-
+        
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(user.getEmail());
         simpleMailMessage.setSubject(warningTitle);
         simpleMailMessage.setText(warningText);
         simpleMailMessage.setFrom(warningFromEmail);
         mailSender.send(simpleMailMessage);
-
+        
     }
 }

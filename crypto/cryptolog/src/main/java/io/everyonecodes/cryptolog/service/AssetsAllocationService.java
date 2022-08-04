@@ -13,23 +13,23 @@ import java.util.stream.Collectors;
 
 @Service
 public class AssetsAllocationService {
-
+    
     private final UserService userServiceImp;
     private final CustomAssetAllocationRepository repository;
     private final CoingeckoClient client;
-
+    
     private final String maximalist;
     private final String conservative;
     private final String gambler;
     private final String custom;
-
+    
     private final String emptyPortfolio;
     private final String maximalistInfo;
     private final String missingCoinsConserv;
     private final String missingCoinsGambler;
     private final String customError;
     private final String customSuccess;
-
+    
     public AssetsAllocationService(UserService userServiceImp,
                                    CustomAssetAllocationRepository repository,
                                    CoingeckoClient client,
@@ -57,38 +57,38 @@ public class AssetsAllocationService {
         this.customError = customError;
         this.customSuccess = customSuccess;
     }
-
+    
     public void saveAsset(String assetsAllocation, Model model, Principal principal) {
         User user = userServiceImp.loadLoggedInUser(principal);
         if (user.getCoinIds().isEmpty()) {
             model.addAttribute("assetMessage", emptyPortfolio);
         } else {
             user.setAssetsAllocation(assetsAllocation);
-
+            
             boolean tierTwo = userServiceImp.hasAllTier(user);
             boolean tierAll = userServiceImp.hasAllTier(user);
             if (user.getAssetsAllocation().equals(maximalist)) {
-
-                userServiceImp.save(user);
+                
+                userServiceImp.saveUser(user);
                 model.addAttribute("assetMessage", maximalistInfo);
             }
             if (user.getAssetsAllocation().equals(gambler) && !tierAll) {
                 model.addAttribute("assetMessage", missingCoinsGambler);
             }
             if (user.getAssetsAllocation().equals(gambler) && tierAll) {
-                userServiceImp.save(user);
-
+                userServiceImp.saveUser(user);
+                
             }
             if (user.getAssetsAllocation().equals(conservative) && !tierTwo) {
                 model.addAttribute("assetMessage", missingCoinsConserv);
-
+                
             }
             if (user.getAssetsAllocation().equals(conservative) && tierTwo) {
-                userServiceImp.save(user);
+                userServiceImp.saveUser(user);
             }
         }
     }
-
+    
     // Uses coin.getName() instead of id
     public String saveCustomAsset(CustomForm form, Principal principal, Model model) {
         var user = userServiceImp.loadLoggedInUser(principal);
@@ -118,7 +118,7 @@ public class AssetsAllocationService {
         model.addAttribute("tableTitle", "My Portfolio");
         return "asset";
     }
-
+    
     public Set<String> parseCustomDTOsToString(CustomForm form) {
         var map = form.getCustomDTOs();
         Set<String> set = new HashSet<>();
@@ -127,7 +127,7 @@ public class AssetsAllocationService {
         }
         return set;
     }
-
+    
     public Map<String, Double> parseCustomDTOsStringToMap(Set<String> investedCoins) {
         Map<String, Double> coins = new HashMap<>();
         investedCoins.forEach(elem -> {
@@ -136,22 +136,22 @@ public class AssetsAllocationService {
         });
         return coins;
     }
-
+    
     public List<String> createList(Principal principal, Model model) {
         var user = userServiceImp.loadLoggedInUser(principal);
         if (user.getCoinIds().isEmpty()) {
             model.addAttribute("assetMessage", emptyPortfolio);
         } else {
             var coinList = client.getCoinsById(user.getCoinIds())
-                    .stream()
-                    .map(Coin::getName)
-                    .collect(Collectors.toList());
+                                 .stream()
+                                 .map(Coin::getName)
+                                 .collect(Collectors.toList());
             model.addAttribute("coinList", coinList);
             return coinList;
         }
         return List.of();
     }
-
+    
     public void checkForValues(CustomForm form) {
         var map = form.getCustomDTOs();
         for (var key : map.keySet()) {

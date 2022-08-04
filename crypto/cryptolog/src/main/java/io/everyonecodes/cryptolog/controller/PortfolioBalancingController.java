@@ -25,23 +25,23 @@ public class PortfolioBalancingController {
         this.userService = userService;
         this.portfolioBalanceService = portfolioBalanceService;
     }
-
+    
     @GetMapping("/portfoliobalance")
     public String portfoliobalance(Model model, Principal principal) {
-
+        
         User user = userService.loadLoggedInUser(principal);
         List<Coin> coinList = client.getCoinsById(user.getCoinIds());
-
+        
         BalanceForm balanceForm = new BalanceForm();
         for (var coin : coinList) {
             balanceForm.getValues().put(coin.getId(), 0d);
         }
         model.addAttribute(balanceForm);
         model.addAttribute(coinList);
-
+        
         return "portfoliobalance";
     }
-
+    
     @PostMapping("/portfoliobalance")
     public String portfoliobalance(@ModelAttribute BalanceForm balanceForm, Model model, Principal principal) {
         User user = userService.loadLoggedInUser(principal);
