@@ -96,7 +96,7 @@ public class YieldCalculatorService {
 
 
         return (new YieldData(
-                coin.getId(),
+                coin.getName(),
                 formatDecimals(accumulated),
                 formatDecimals(investedAmount),
                 formatDecimals(forecastedValue),
@@ -118,11 +118,9 @@ public class YieldCalculatorService {
                     index = i;
                     break;
                 }
-
             }
         }
-        if (accumulatedString.length() < index + 3) {
-        } else {
+        if (accumulatedString.length() >= index + 3) {
             accumulatedString = accumulatedString.substring(0, index + 3);
         }
         return accumulatedString;

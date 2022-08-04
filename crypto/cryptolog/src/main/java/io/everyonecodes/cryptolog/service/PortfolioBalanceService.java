@@ -44,31 +44,31 @@ public class PortfolioBalanceService {
             double investedAmount = valueOfAllCoins;
             double accumulatedPrice = getAccumulatedPrice(coin, values);
 
-            percentageBefore = accumulatedPrice/valueOfAllCoins*100;
+            percentageBefore = accumulatedPrice / valueOfAllCoins * 100;
 
             if (profile.equals("Conservative")) {
                 if (coin.getMarket_cap_rank() <= 2) {
                     investedAmount = investedAmount * 0.8 / tierOne;
-                    percentage = 80/tierOne;
+                    percentage = 80d / tierOne;
                 } else if (coin.getMarket_cap_rank() > 2 && coin.getMarket_cap_rank() <= 49) {
                     investedAmount = investedAmount * 0.1 / tierTwo;
-                    percentage = 10/tierTwo;
+                    percentage = 10d / tierTwo;
                 } else {
                     investedAmount = investedAmount * 0.1 / tierThree;
-                    percentage = 10/tierThree;
+                    percentage = 10d / tierThree;
                 }
 
             } else if (profile.equals("Gambler")) {
 
                 if (coin.getMarket_cap_rank() <= 2) {
                     investedAmount = investedAmount * 0.4 / tierOne;
-                    percentage = 40/tierOne;
+                    percentage = 40d / tierOne;
                 } else if (coin.getMarket_cap_rank() > 2 && coin.getMarket_cap_rank() <= 49) {
                     investedAmount = investedAmount * 0.3 / tierTwo;
-                    percentage = 30/tierTwo;
+                    percentage = 30d / tierTwo;
                 } else {
                     investedAmount = investedAmount * 0.3 / tierThree;
-                    percentage = 30/tierThree;
+                    percentage = 30d / tierThree;
                 }
 
             } else {
@@ -94,11 +94,12 @@ public class PortfolioBalanceService {
             } else {
                 result = "Buy " + yieldCalculatorService.formatDecimals(accumulatedCoin - initialAccumulatedCoin) + ", it will cost your roughly: " + yieldCalculatorService.formatDecimals((accumulatedCoin - initialAccumulatedCoin) * coin.getCurrent_price()) + "$";
             }
-            balanceResults.add(new PortfolioBalance(coin.getId(), result,
-                    String.valueOf(yieldCalculatorService.formatDecimals(initialAccumulatedCoin)),
-                    String.valueOf(yieldCalculatorService.formatDecimals(accumulatedCoin)),
-                    String.valueOf(yieldCalculatorService.formatDecimals(percentage)),
-                    String.valueOf(yieldCalculatorService.formatDecimals(percentageBefore))));
+            balanceResults.add(new PortfolioBalance(coin.getName(), result,
+                    yieldCalculatorService.formatDecimals(initialAccumulatedCoin),
+                    yieldCalculatorService.formatDecimals(accumulatedCoin),
+                    yieldCalculatorService.formatDecimals(percentage),
+                    yieldCalculatorService.formatDecimals(percentageBefore)
+            ));
         }
 
         return balanceResults;

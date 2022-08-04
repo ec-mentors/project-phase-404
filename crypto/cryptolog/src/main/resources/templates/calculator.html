@@ -1,86 +1,75 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="fragments/general.html :: head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cryptolog</title>
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
     <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link th:href="@{/css/style.css}" rel="stylesheet"  href="css/style.css"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" href="../../static/css/style.css" />
 
 </head>
+
 <body>
-<header th:replace="/fragments/general.html :: header"></header>
-<main>
-    <div id="contain">
-        <form id="form" role="form" autocomplete="off" class="form"
-              th:action="@{/calculator}" method="get">
-            <div class="form-group">
+    <header th:replace="/fragments/general.html :: header"></header>
+    <main>
+        <div id="contain">
+            <form class="general background bgcol-whitesmoke" th:action="@{/calculator}" method="get">
                 <h4>Monthly Investment Amount</h4>
                 <div class="input-group">
-                    <input id="monthlyAmount" name="monthlyAmount" th:value="${monthlyAmount}" placeholder="0" class="form-control"  type="number">
+                    <input id="monthlyAmount" name="monthlyAmount" th:value="${monthlyAmount}" placeholder="0"
+                        class="field light-innershadow" type="number">
                 </div>
                 <h4>Period(Months)</h4>
                 <div class="input-group">
-                    <input id="period" name="period" th:value="${period}" placeholder="0" class="form-control"  type="number">
+                    <input id="period" name="period" th:value="${period}" placeholder="0"
+                        class="field light-innershadow" type="number">
                 </div>
                 <h4>Include Pricing Moving Averages</h4>
-                <div class="form-group">
-                        <div class="input-group">
-                            <select class="custom-select" id="inputGroupSelect04"  name = "days" >
-                                <option value="0">None</option>
-                                <option value="50">50 Days</option>
-                                <option value="100">100 Days</option>
-                                <option value="200">200 Days</option>
-                            </select>
-                        </div>
-                    </div>
-            </div>
-
-            <div class="form-group">
-                <input name="submit" class="btn btn-lg btn-primary btn-block" value="Calculate" type="submit">
-            </div>
-            <div class="form-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
-                <tr>
+                <div class="select col-white">
+                    <select class="default-groove" id="inputGroupSelect04" name="days">
+                        <option value="0">None</option>
+                        <option value="50">50 Days</option>
+                        <option value="100">100 Days</option>
+                        <option value="200">200 Days</option>
+                    </select>
+                </div>
+                <button name="submit" class="col-default-trans" type="submit">Calculate</button>
+            </form>
+            <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+            <div th:if="${finalInvestment}">
+                <!-- <tr> -->
                     <th>Total Investment</th>
                     <h3 th:text="${finalInvestment}"></h3>
                     <th>Final Profit </th>
                     <h3 th:text="${finalProfit}"></h3>
-                </tr>
-
-
+                <!-- </tr> -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Coin</th>
+                            <th>Accumulated</th>
+                            <th>Invested</th>
+                            <th>Forecasted Value</th>
+                            <th>Profit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="yieldData: ${yieldDataList}">
+                            <td th:text="${yieldData.coin}" />
+                            <td th:text="${yieldData.accumulated}" />
+                            <td th:text="${yieldData.investedAmount}" />
+                            <td th:text="${yieldData.forecastedValue}" />
+                            <td th:text="${yieldData.profit}" />
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
-            <thead>
-            <table>
-                <tr>
-                    <th>Coin</th>
-                    <th>Accumulated</th>
-                    <th>Invested</th>
-                    <th>Forecasted Value</th>
-                    <th>Profit</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <tr th:each="yieldData: ${yieldDataList}">
-                    <td th:text="${#strings.toUpperCase(yieldData.coin)}"/>
-                    <td th:text="${yieldData.accumulated}"/>
-                    <td th:text="${yieldData.investedAmount}"/>
-                    <td th:text="${yieldData.forecastedValue}"/>
-                    <td th:text="${yieldData.profit}"/>
-                </tr>
-                </tbody>
-            </table>
-        </form>
-    </div>
-</main>
-<footer th:replace="/fragments/general.html :: footer">
-    <p>&#169; 2022 404NameNotFound All right reserved</p>
-</footer>
+        </div>
+    </main>
+    <footer th:replace="/fragments/general.html :: footer">
+        <p>&#169; 2022 404NameNotFound All right reserved</p>
+    </footer>

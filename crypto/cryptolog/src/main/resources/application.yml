@@ -53,4 +53,4 @@ messages:
     missingCoinsConserv: "Missing coin from Tier 2. Please mind that you need to continue adding coins to your portfolio in order to select this particular asset allocation"
     missingCoinsGambler: "Missing coin from Tier 2 or 3. Please mind that you need to continue adding coins to your portfolio in order to select this particular asset allocation"
     customError: "Please make sure all your coins add up to 100%"
-    customSuccess: "You have successfully customized your the asset allocation in your portfolio. Go to the yield calculator and see how much you could potentially save by investing in crypto."
+    customSuccess: "You have successfully customized the asset allocation in your portfolio. Go to the yield calculator and see how much you could potentially save by investing in crypto."

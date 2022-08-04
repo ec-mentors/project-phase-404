@@ -1,15 +1,15 @@
 package io.everyonecodes.cryptolog.data;
 
 public class PortfolioBalance {
-    private String coinId;
+    private String coinName;
     private String balance;
     private String accumulatedBefore;
     private String accumulatedAfter;
     private String percentage;
     private String percentageBefore;
 
-    public PortfolioBalance(String coinId, String balance, String accumulatedBefore, String accumulatedAfter, String percentage, String percentageBefore) {
-        this.coinId = coinId;
+    public PortfolioBalance(String coinName, String balance, String accumulatedBefore, String accumulatedAfter, String percentage, String percentageBefore) {
+        this.coinName = coinName;
         this.balance = balance;
         this.accumulatedBefore = accumulatedBefore;
         this.accumulatedAfter = accumulatedAfter;
@@ -49,12 +49,12 @@ public class PortfolioBalance {
         this.accumulatedAfter = accumulatedAfter;
     }
 
-    public String getCoinId() {
-        return coinId;
+    public String getCoinName() {
+        return coinName;
     }
 
-    public void setCoinId(String coinId) {
-        this.coinId = coinId;
+    public void setCoinName(String coinName) {
+        this.coinName = coinName;
     }
 
     public String getBalance() {
