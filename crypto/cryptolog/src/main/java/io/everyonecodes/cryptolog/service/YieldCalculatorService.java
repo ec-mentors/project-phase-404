@@ -118,11 +118,9 @@ public class YieldCalculatorService {
                     index = i;
                     break;
                 }
-
             }
         }
-        if (accumulatedString.length() < index + 3) {
-        } else {
+        if (accumulatedString.length() >= index + 3) {
             accumulatedString = accumulatedString.substring(0, index + 3);
         }
         return accumulatedString;
