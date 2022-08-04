@@ -29,6 +29,9 @@ public class AssetController {
                           Model model, Principal principal) {
         var coinList = assetsAllocationService.createList(principal, model);
         CustomForm form = new CustomForm(coinList);
+        for (var coin : coinList) {
+            form.getCustomDTOs().put(coin, 0d);
+        }
         model.addAttribute("coinList", coinList);
         model.addAttribute("form", form);
         if (assetsAllocation == null || assetsAllocation.equals("custom") ) {
