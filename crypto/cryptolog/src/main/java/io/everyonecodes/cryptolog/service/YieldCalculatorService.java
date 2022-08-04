@@ -96,7 +96,7 @@ public class YieldCalculatorService {
 
 
         return (new YieldData(
-                coin.getId(),
+                coin.getName(),
                 formatDecimals(accumulated),
                 formatDecimals(investedAmount),
                 formatDecimals(forecastedValue),
