@@ -64,35 +64,37 @@
     </section>
 
     <section hidden id="customSection">
-        <form role="form" th:object="${form}" modelAttribute="coinList" th:action="@{/asset}" id="form"
-              method="post" onkeydown="return event.key != 'Enter';">
-            <table>
-                <caption hidden>Your Coins</caption>
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>&#037; Percentage</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="coin: ${form.coinList}">
-                    <td th:text="${coin}">
-                    </td>
-                    <td>
-                        <input type="number" th:field="*{customDTOs['__${coin}__']}" id="percentage" value="0.00"
-                               th:value="0.00"
-                               placeholder="0.00" step="any" form="form">
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <button type="submit" form="form" id="submit">
-                Save
-            </button>
-            <button type="reset" form="form" id="reset">
-                Reset
-            </button>
-        </form>
+        <div id="contain" class="general">
+            <form role="form" th:object="${form}" modelAttribute="coinList" th:action="@{/asset}" id="form"
+            method="post" onkeydown="return event.key != 'Enter';">
+          <table>
+              <caption hidden>Your Coins</caption>
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>&#037; Percentage</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr th:each="coin: ${form.coinList}" >
+                      <td th:text="${coin}">
+                      </td>
+                      <td>
+                          <input type="number"  name="percentage" id="percentage" value="0.0" th:value="0.0"
+                                 placeholder="0.00" step="any" form="form" class="field light-innershadow"
+                                 th:field="*{customDTOs['__${coin}__']}">
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+          <button type="submit" form="form" id="submit" class="col-default-trans">
+              Save
+          </button>
+          <button type="reset" form="form" id="reset" class="col-default-trans">
+              Reset
+          </button>
+      </form>
+        </div>
     </section>
 
     <span class="span" th:utext="${assetMessage}" id="messageSpan"></span>
