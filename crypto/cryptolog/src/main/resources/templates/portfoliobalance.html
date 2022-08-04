@@ -64,7 +64,7 @@
                     </thead>
                     <tbody>
                         <tr th:each="portfolioBalance: ${balanceResults}">
-                            <td th:text="${#strings.toUpperCase(portfolioBalance.coinId)}" />
+                            <td th:text="${portfolioBalance.coinName}" />
                             <td th:text="${portfolioBalance.balance}" />
                         </tr>
                     </tbody>
@@ -81,7 +81,7 @@
                         </thead>
                         <tbody>
                             <tr th:each="portfolioBalance: ${balanceResults}">
-                                <td th:text="${#strings.toUpperCase(portfolioBalance.coinId)}" />
+                                <td th:text="${portfolioBalance.coinName}" />
                                 <td th:text="${portfolioBalance.accumulatedBefore}" />
                                 <td th:text="${portfolioBalance.percentageBefore}" />
                             </tr>
@@ -98,7 +98,7 @@
                         </thead>
                         <tbody>
                             <tr th:each="portfolioBalance: ${balanceResults}">
-                                <td th:text="${#strings.toUpperCase(portfolioBalance.coinId)}" />
+                                <td th:text="${portfolioBalance.coinName}" />
                                 <td th:text="${portfolioBalance.accumulatedAfter}" />
                                 <td th:text="${portfolioBalance.percentage}" />
                             </tr>

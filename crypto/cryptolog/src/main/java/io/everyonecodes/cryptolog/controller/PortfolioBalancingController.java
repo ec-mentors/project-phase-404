@@ -33,6 +33,9 @@ public class PortfolioBalancingController {
         List<Coin> coinList = client.getCoinsById(user.getCoinIds());
 
         BalanceForm balanceForm = new BalanceForm();
+        for (var coin : coinList) {
+            balanceForm.getValues().put(coin.getId(), 0d);
+        }
         model.addAttribute(balanceForm);
         model.addAttribute(coinList);
 
@@ -44,9 +47,9 @@ public class PortfolioBalancingController {
         User user = userService.loadLoggedInUser(principal);
         List<Coin> coinList = client.getCoinsById(user.getCoinIds());
         var values = balanceForm.getValues();
-        List<PortfolioBalance> balanceResults = portfolioBalanceService.getBalance(coinList,balanceForm.getProfile(),values);
-        model.addAttribute("balanceResults",balanceResults);
-        model.addAttribute("caption",balanceForm.getProfile());
+        List<PortfolioBalance> balanceResults = portfolioBalanceService.getBalance(coinList, balanceForm.getProfile(), values);
+        model.addAttribute("balanceResults", balanceResults);
+        model.addAttribute("caption", balanceForm.getProfile());
         return "portfoliobalance";
     }
 }
