@@ -93,17 +93,26 @@ public class AssetsAllocationService {
     public String saveCustomAsset(CustomForm form, Principal principal, Model model) {
         var user = userServiceImp.loadLoggedInUser(principal);
         if (form != null) {
-            var sumOfPercentages = form.getCustomDTOs().values().stream().reduce(0.0, Double::sum);
+            var percentages = form.getCustomDTOs();
+            var sumOfPercentages = percentages.values().stream().reduce(0.0, Double::sum);
             if (sumOfPercentages > 100.0 || sumOfPercentages < 100.0) {
                 model.addAttribute("assetMessage", customError);
             } else {
                 user.setAssetsAllocation(custom);
-                var customAllocation = new CustomAssetAllocation();
-                customAllocation.setAllocationName(custom);
-                customAllocation.setInvestedCoins(parseCustomDTOsToString(form));
-                customAllocation.setUser(user);
-                repository.save(customAllocation);
-                model.addAttribute("assetMessage", customSuccess);
+                var oExistingCustom = repository.findByCustomAllocationNameAndUser(custom, user);
+                if (oExistingCustom.isPresent()) {
+                    var existingCustom = oExistingCustom.get();
+                    existingCustom.setInvestedCoins(parseCustomDTOsToString(form));
+                    repository.save(existingCustom);
+                    model.addAttribute("assetMessage", customSuccess);
+                } else {
+                    var customAllocation = new CustomAssetAllocation();
+                    customAllocation.setAllocationName(custom);
+                    customAllocation.setInvestedCoins(parseCustomDTOsToString(form));
+                    customAllocation.setUser(user);
+                    repository.save(customAllocation);
+                    model.addAttribute("assetMessage", customSuccess);
+                }
             }
         }
         model.addAttribute("tableTitle", "My Portfolio");
@@ -130,12 +139,17 @@ public class AssetsAllocationService {
 
     public List<String> createList(Principal principal, Model model) {
         var user = userServiceImp.loadLoggedInUser(principal);
-        var coinList = client.getCoinsById(user.getCoinIds())
-                .stream()
-                .map(Coin::getName)
-                .collect(Collectors.toList());
-        model.addAttribute("coinList", coinList);
-        return coinList;
+        if (user.getCoinIds().isEmpty()) {
+            model.addAttribute("assetMessage", emptyPortfolio);
+        } else {
+            var coinList = client.getCoinsById(user.getCoinIds())
+                    .stream()
+                    .map(Coin::getName)
+                    .collect(Collectors.toList());
+            model.addAttribute("coinList", coinList);
+            return coinList;
+        }
+        return List.of();
     }
 
     public void checkForValues(CustomForm form) {

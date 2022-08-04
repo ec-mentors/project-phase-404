@@ -79,9 +79,8 @@
                         <td th:text="${coin}">
                         </td>
                         <td>
-                            <input type="number"  name="percentage" id="percentage" value="0.0" th:value="0.0"
-                                   placeholder="0.00" step="any" form="form"
-                                   th:field="*{customDTOs['__${coin}__']}">
+                            <input type="number" th:field="*{customDTOs['__${coin}__']}" id="percentage" value="0.00" th:value="0.00"
+                                   placeholder="0.00" step="any" form="form">
                         </td>
                     </tr>
                 </tbody>
