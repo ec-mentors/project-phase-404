@@ -1,11 +1,14 @@
 package io.everyonecodes.cryptolog.service;
 
+import io.everyonecodes.cryptolog.data.ConfirmationToken;
+import io.everyonecodes.cryptolog.data.User;
+import io.everyonecodes.cryptolog.repository.ConfirmationTokenRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
@@ -19,10 +22,21 @@ public class PasswordService {
 	private final ConfirmationTokenService confirmationTokenService;
 	PasswordEncoder encoder = new BCryptPasswordEncoder(12);
 	private final String email;
-	
+	private final String resetSubject;
+	private final String resetRequestReceived;
+	private final String resetCheckInbox;
+	private final String resetSuccessfully;
+	private final String mailNotExists;
+	private final String brokenLink;
 	
 	public PasswordService(UserService userService, ConfirmationTokenRepository confirmationTokenRepository, EmailSenderService emailSenderService, ConfirmationTokenService confirmationTokenService,
-	                   @Value("${spring.mail.from.email}") String email ) {
+	                       @Value("${spring.mail.username}") String email,
+	                       @Value("${messages.passwordService.resetSubject}") String resetSubject,
+	                       @Value("${messages.passwordService.resetRequestReceived}") String resetRequestReceived,
+	                       @Value("${messages.passwordService.resetCheckInbox}") String resetCheckInbox,
+	                       @Value("${messages.passwordService.resetSuccessfully}") String resetSuccessfully,
+	                       @Value("${messages.passwordService.mailNotExists}") String mailNotExists,
+	                       @Value("${messages.passwordService.brokenLink}") String brokenLink) {
 		
 		this.userService = userService;
 		this.confirmationTokenRepository = confirmationTokenRepository;
@@ -30,6 +44,12 @@ public class PasswordService {
 		this.confirmationTokenService = confirmationTokenService;
 		this.email = email;
 		
+		this.resetSubject = resetSubject;
+		this.resetRequestReceived = resetRequestReceived;
+		this.resetCheckInbox = resetCheckInbox;
+		this.resetSuccessfully = resetSuccessfully;
+		this.mailNotExists = mailNotExists;
+		this.brokenLink = brokenLink;
 	}
 	
 	public ModelAndView displayResetPassword(ModelAndView mav, User user) {
@@ -42,22 +62,21 @@ public class PasswordService {
 		Optional<User> existingUser = userService.findUserByEmail(user.getEmail());
 		if(existingUser.isPresent()) {
 			User userE = existingUser.get();
-			ConfirmationToken confirmationToken =confirmationTokenService.createToken(userE);
+			ConfirmationToken confirmationToken = confirmationTokenService.createToken(userE);
 			
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
 			mailMessage.setTo(user.getEmail());
-			mailMessage.setSubject("Complete Password Reset!");
+			mailMessage.setSubject(resetSubject);
 			mailMessage.setFrom(email);
-			mailMessage.setText("To complete the password reset process, please click here: "
-					                    +"http://localhost:9200/confirm-reset?token="+confirmationToken.getToken());
+			mailMessage.setText(resetRequestReceived + confirmationToken.getToken());
 			
 			emailSenderService.sendEmail(mailMessage);
 			
-			mav.addObject("message", "Request to reset password received. Check your inbox for the reset link.");
+			mav.addObject("message", resetCheckInbox);
 			mav.setViewName("successForgotPassword");
 			
 		} else {
-			mav.addObject("message", "This email does not exist!");
+			mav.addObject("message", mailNotExists);
 			mav.setViewName("error");
 		}
 		
@@ -80,7 +99,7 @@ public class PasswordService {
 				mav.setViewName("resetPassword2");
 			}
 		} else {
-			mav.addObject("message", "The link is invalid or broken!");
+			mav.addObject("message", brokenLink);
 			mav.setViewName("error");
 		}
 		return mav;
@@ -95,12 +114,12 @@ public class PasswordService {
 				User tokenUser = otTokenUser.get();
 				tokenUser.setPassword(encoder.encode(user.getPassword()));
 				userService.save(tokenUser);
-				mav.addObject("message", "Password successfully reset. You can now log in with the new credentials.");
+				mav.addObject("message", resetSuccessfully);
 				mav.setViewName("successResetPassword");
 			}
 		}
 		else {
-			mav.addObject("message","The link is invalid or broken!");
+			mav.addObject("message", brokenLink);
 			mav.setViewName("error");
 		}
 		

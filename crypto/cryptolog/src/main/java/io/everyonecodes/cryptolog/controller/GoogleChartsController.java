@@ -1,6 +1,5 @@
 package io.everyonecodes.cryptolog.controller;
 
-import io.everyonecodes.cryptolog.service.GoogleChartsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,14 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class GoogleChartsController {
     
-    private final GoogleChartsService googleChartsService;
+    private final GoogleChartsController googleChartsController;
     
-    public GoogleChartsController(GoogleChartsService googleChartsService) {
-        this.googleChartsService = googleChartsService;
+    public GoogleChartsController(GoogleChartsController googleChartsController) {
+        this.googleChartsController = googleChartsController;
     }
     
     @GetMapping("/chart")
-    String getPieChart(Model model) {
-        return googleChartsService.getChart(model);
+    public String getPieChart(Model model) {
+        return googleChartsController.getPieChart(model);
     }
 }

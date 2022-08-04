@@ -1,5 +1,8 @@
 package io.everyonecodes.cryptolog.controller;
 
+import io.everyonecodes.cryptolog.data.User;
+import io.everyonecodes.cryptolog.service.UserService;
+import io.everyonecodes.cryptolog.service.YieldCalculatorService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

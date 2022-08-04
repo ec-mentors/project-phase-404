@@ -37,8 +37,6 @@ public class  UserService {
         this.roleDescription = roleDescription;
     }
     
-    
-    
     public void saveUser(User user) {
         if (!isUserAlreadyPresent(user)) {
             
@@ -159,9 +157,3 @@ public class  UserService {
         }
     }
 }
-
-
-
-
-
-

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @Service
 public class GoogleChartsService {
@@ -20,9 +21,7 @@ public class GoogleChartsService {
 	}
 	
 	public String getChart(Model model) {
-		List<Coin> coins = coingeckoClient.getTop100ByMarketCap().stream()
-		                                  .limit(10)
-		                                  .toList();
+		List<Coin> coins = coingeckoClient.getTop100ByMarketCap().stream().limit(10).collect(Collectors.toList());
 		Map<String, Double> graphData = new TreeMap<>();
 		for(Coin coin : coins) {
 			

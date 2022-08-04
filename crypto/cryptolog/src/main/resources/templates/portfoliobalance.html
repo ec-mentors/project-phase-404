@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/fragments/general.html :: head">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+    <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+    <header th:replace="/fragments/general.html :: header"></header>
+    <main>
+        <div id="contain">
+            <form th:if="${coinList}" action="/portfoliobalance" method="post" th:object="${balanceForm}"
+                class="general">
+                <table>
+                    <caption>Portfolio Rebalancing</caption>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Current Price (USD)</th>
+                            <th>Accumulated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="coin: ${coinList}">
+                            <td th:text="${coin.market_cap_rank > 0} ? ${coin.market_cap_rank} : 'unranked'" />
+                            <td>
+                                <img th:src="${coin.image}">
+                                <span class="name"
+                                    th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'" />
+                            </td>
+                            <td th:text="${coin.current_price}" />
+                            <td>
+                                <input class="field light-innershadow" th:field="*{values['__${coin.id}__']}"
+                                    placeholder="0" type="number" step="any" min="0" required>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="background" style="background-color: whitesmoke;">
+                    <h4>Select Profile</h4>
+                    <label class="select" style="color: white;">
+                        <select th:field="*{profile}" class="default-groove" id="profile">
+                            <option value="Maximalist">Maximalist</option>
+                            <option value="Conservative">Conservative</option>
+                            <option value="Gambler">Gambler</option>
+                        </select>
+                    </label>
+                    <button type="submit" class="submit col-default-trans">Calculate</button>
+                </div>
+                <br>
+                <br>
+            </form>
+            <div th:if="${balanceResults}" class="balance-results">
+                <table class="actions">
+                    <caption th:text="'For the ' + ${caption} + ' profile, following actions are needed:'">For the balaba profile, following actions are needed:</caption>
+                    <thead>
+                        <tr>
+                            <th>Coin</th>
+                            <th>To DO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="portfolioBalance: ${balanceResults}">
+                            <td th:text="${portfolioBalance.coinName}" />
+                            <td th:text="${portfolioBalance.balance}" />
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="tablerow">
+                    <table class="column">
+                        <caption>Before Rebalancing</caption>
+                        <thead>
+                            <tr>
+                                <th>Coin</th>
+                                <th>Accumulated</th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="portfolioBalance: ${balanceResults}">
+                                <td th:text="${portfolioBalance.coinName}" />
+                                <td th:text="${portfolioBalance.accumulatedBefore}" />
+                                <td th:text="${portfolioBalance.percentageBefore}" />
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="column">
+                        <caption>After Rebalancing</caption>
+                        <thead>
+                            <tr>
+                                <th>Coin</th>
+                                <th>Accumulated</th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="portfolioBalance: ${balanceResults}">
+                                <td th:text="${portfolioBalance.coinName}" />
+                                <td th:text="${portfolioBalance.accumulatedAfter}" />
+                                <td th:text="${portfolioBalance.percentage}" />
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="/fragments/general.html :: footer"></footer>
+</body>
+
+</html>

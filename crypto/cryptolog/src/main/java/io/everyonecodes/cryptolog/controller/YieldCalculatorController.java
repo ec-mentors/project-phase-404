@@ -1,6 +1,7 @@
 package io.everyonecodes.cryptolog.controller;
 
 import io.everyonecodes.cryptolog.CoingeckoClient;
+import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.data.YieldData;
 import io.everyonecodes.cryptolog.service.UserService;
 import io.everyonecodes.cryptolog.service.YieldCalculatorService;
@@ -58,7 +59,6 @@ public class YieldCalculatorController {
                 model.addAttribute("days", days);
                 
                 return "calculator";
-                
                 
             } else {
                 if (monthlyAmount.isBlank()) {

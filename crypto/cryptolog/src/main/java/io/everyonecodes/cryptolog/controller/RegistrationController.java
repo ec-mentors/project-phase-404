@@ -1,5 +1,6 @@
 package io.everyonecodes.cryptolog.controller;
 
+import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.service.RegistrationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

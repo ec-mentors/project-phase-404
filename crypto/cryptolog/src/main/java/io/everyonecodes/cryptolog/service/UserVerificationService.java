@@ -42,6 +42,7 @@ public class UserVerificationService {
 			modelAndView.addObject("message", "This email does not exist!");
 			modelAndView.setViewName("error");
 		}
+		
 		return modelAndView;
 	}
 }

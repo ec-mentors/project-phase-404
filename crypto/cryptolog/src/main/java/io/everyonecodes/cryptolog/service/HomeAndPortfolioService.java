@@ -1,4 +1,5 @@
 package io.everyonecodes.cryptolog.service;
+
 import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Coin;
 import io.everyonecodes.cryptolog.data.User;
@@ -12,20 +13,20 @@ import java.util.stream.Collectors;
 
 @Service
 public class HomeAndPortfolioService {
-
+    
     private List<Coin> top100CoinList;
     private final UserService userService;
     private final CoingeckoClient client;
-
+    
     public HomeAndPortfolioService(UserService userService, CoingeckoClient client) {
         this.userService = userService;
         this.client = client;
     }
-
+    
     public String getHome(String filter, String coinId, String sorting, Principal principal, Model model) {
-
+        
         User user = userService.loadLoggedInUser(principal);
-
+        
         List<Coin> displayList;
         if (filter != null && !filter.isBlank()) {
             displayList = client.findCoinsFromAll(filter); // do not store in coinList
@@ -35,7 +36,7 @@ public class HomeAndPortfolioService {
             }
             displayList = top100CoinList;
         }
-
+        
         if (coinId != null) {
             if (user.getCoinIds().contains(coinId)) { // add / remove coins to portfolio
                 user.getCoinIds().remove(coinId);
@@ -44,11 +45,11 @@ public class HomeAndPortfolioService {
             }
             userService.saveUser(user);
         }
-
+        
         if (sorting != null) {
             displayList = sortDisplayList(displayList, sorting, user);
         }
-
+        
         model.addAttribute("sorting", sorting);
         model.addAttribute("coinString", getCoinsAtDiscount());
         model.addAttribute(displayList);
@@ -56,14 +57,14 @@ public class HomeAndPortfolioService {
         model.addAttribute("filter", filter);
         model.addAttribute("target", "/home");
         model.addAttribute("portfolio", user.getCoinIds());
-
+        
         return "home";
     }
-
+    
     public String getPortfolio(String filter, String coinId, Principal principal, Model model) {
-
+        
         User user = userService.loadLoggedInUser(principal);
-
+        
         if (coinId != null) { // remove coins from portfolio
             if (user.getCoinIds().contains(coinId)) { // add / remove coins to portfolio
                 user.getCoinIds().remove(coinId);
@@ -75,42 +76,42 @@ public class HomeAndPortfolioService {
         if (user.getCoinIds().isEmpty()) {
             return "portfolio-empty";
         }
-
+        
         List<Coin> displayList;
         if (filter != null && !filter.isBlank()) {  // search all coins
             displayList = client.findCoinsFromAll(filter);
         } else {
             displayList = client.getCoinsById(user.getCoinIds());
         }
-
+        
         model.addAttribute("coinString", getCoinsOfThDay());
         model.addAttribute(displayList);
         model.addAttribute("tableTitle", "My Portfolio");
         model.addAttribute("filter", filter);
         model.addAttribute("portfolio", user.getCoinIds());
         model.addAttribute("target", "/portfolio");
-
+        
         return "home";
     }
-
+    
     private String getCoinsAtDiscount() {
         return top100CoinList.stream()
-                .sorted(Comparator.comparing(Coin::getAth_change_percentage))
-                .limit(5)
-                .map(coin -> coin.getName().toUpperCase() + ": " + coin.getCurrent_price() + " USD – ATH Drop: "
-                        + String.format("%+.2f", coin.getAth_change_percentage()) + "%")
-                .collect(Collectors.joining(" +++ ", "COINS AT DISCOUNT: +++ ", " +++"));
+                             .sorted(Comparator.comparing(Coin::getAth_change_percentage))
+                             .limit(5)
+                             .map(coin -> coin.getName().toUpperCase() + ": " + coin.getCurrent_price() + " USD – ATH Drop: "
+                                     + String.format("%+.2f", coin.getAth_change_percentage()) + "%")
+                             .collect(Collectors.joining(" +++ ", "COINS AT DISCOUNT: +++ ", " +++"));
     }
-
+    
     private String getCoinsOfThDay() {
         return top100CoinList.stream()
-                .sorted(Comparator.comparing(Coin::getPrice_change_percentage_24h).reversed())
-                .limit(3)
-                .map(coin -> coin.getName().toUpperCase() + ": " + coin.getCurrent_price() + " USD – 24h Change: "
-                        + String.format("%+.2f", coin.getPrice_change_percentage_24h()) + "%")
-                .collect(Collectors.joining(" +++ ", "COINS OF THE DAY: +++ ", " +++"));
+                             .sorted(Comparator.comparing(Coin::getPrice_change_percentage_24h).reversed())
+                             .limit(3)
+                             .map(coin -> coin.getName().toUpperCase() + ": " + coin.getCurrent_price() + " USD – 24h Change: "
+                                     + String.format("%+.2f", coin.getPrice_change_percentage_24h()) + "%")
+                             .collect(Collectors.joining(" +++ ", "COINS OF THE DAY: +++ ", " +++"));
     }
-
+    
     private List<Coin> sortDisplayList(List<Coin> displayList, String sorting, User user) {
         switch (sorting) {
             case "rank_asc" -> displayList = displayList.stream().sorted(Comparator.comparing(coin -> coin.getMarket_cap_rank() > 0 ? coin.getMarket_cap_rank() : Integer.MAX_VALUE)).toList();
@@ -128,11 +129,11 @@ public class HomeAndPortfolioService {
         }
         return displayList;
     }
-
+    
     private List<Coin> filterList(List<Coin> coinList, String filter) {
         return coinList.stream().filter(
                 coin -> coin.getName().toLowerCase().contains(filter) ||
                         coin.getSymbol().toLowerCase().contains(filter)
-        ).toList();
+                                       ).toList();
     }
 }

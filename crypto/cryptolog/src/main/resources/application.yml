@@ -18,6 +18,12 @@ security:
   basic:
     enabled: false
 
+assets:
+  maximalist: Maximalist
+  conservative: Conservative
+  gambler: Gambler
+  custom: Custom
+
 messages:
   token:
     nf: token not found
@@ -40,6 +46,27 @@ messages:
     userRole:
       name: "SITE_USER"
       description: "This user has access to site, after login - normal user"
-    yieldRole:
-      name: "YIELD_USER"
-      description: "This user has access to calculator fields"
+  asset:
+    emptyPortfolio: "Missing coins. Please mind that you need to continue adding coins to your portfolio in order to select an asset allocation."
+    maximalistInfo: "Please mind that The Maximalist portfolio allocation only takes into account Bitcoin. If you have multiple coins in your portfolio, these will be ignored for any yield calculation"
+    missingCoinsConserv: "Missing coin from Tier 2. Please mind that you need to continue adding coins to your portfolio in order to select this particular asset allocation"
+    missingCoinsGambler: "Missing coin from Tier 2 or 3. Please mind that you need to continue adding coins to your portfolio in order to select this particular asset allocation"
+    customError: "Please make sure all your coins add up to 100%"
+    customSuccess: "You have successfully customized the asset allocation in your portfolio. Go to the yield calculator and see how much you could potentially save by investing in crypto."
+
+  passwordService:
+    resetSubject: "Complete Password Reset!"
+    resetRequestReceived: "To complete the password reset process, please click here: http://localhost:9200/confirm-reset?token="
+    resetCheckInbox: "Request to reset password received. Check your inbox for the reset link."
+    resetSuccessfully: "Password successfully reset. You can now log in with the new credentials."
+    mailNotExists: "This email does not exist!"
+    brokenLink: "The link is invalid or broken!"
+
+  registration:
+    rightFormat: "Please write the fields in the right format!"
+    registeredButNotVerified: "Account already registered, but the Email is NOT VERIFIED! Please proceed to the login page in order to validate your email."
+    registeredForEmail: "There is already an account registered with CryptoLog for the email"
+    proceedToLogin: "Please proceed to log in."
+    regSuccessVerifyEmail: "User is registered successfully, please verify your email."
+
+
