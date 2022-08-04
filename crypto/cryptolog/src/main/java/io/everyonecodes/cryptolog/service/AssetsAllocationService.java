@@ -69,14 +69,14 @@ public class AssetsAllocationService {
             boolean tierAll = userServiceImp.hasAllTier(user);
             if (user.getAssetsAllocation().equals(maximalist)) {
                 
-                userServiceImp.saveUser(user);
+                userServiceImp.save(user);
                 model.addAttribute("assetMessage", maximalistInfo);
             }
             if (user.getAssetsAllocation().equals(gambler) && !tierAll) {
                 model.addAttribute("assetMessage", missingCoinsGambler);
             }
             if (user.getAssetsAllocation().equals(gambler) && tierAll) {
-                userServiceImp.saveUser(user);
+                userServiceImp.save(user);
                 
             }
             if (user.getAssetsAllocation().equals(conservative) && !tierTwo) {
@@ -84,7 +84,7 @@ public class AssetsAllocationService {
                 
             }
             if (user.getAssetsAllocation().equals(conservative) && tierTwo) {
-                userServiceImp.saveUser(user);
+                userServiceImp.save(user);
             }
         }
     }

@@ -31,7 +31,7 @@ public class AssetController {
         CustomForm form = new CustomForm(coinList);
         model.addAttribute("coinList", coinList);
         model.addAttribute("form", form);
-        if (assetsAllocation == null) {
+        if (assetsAllocation == null || assetsAllocation.equals("custom") ) {
             return "asset";
         }
         assetsAllocationService.saveAsset(assetsAllocation, model, principal);
