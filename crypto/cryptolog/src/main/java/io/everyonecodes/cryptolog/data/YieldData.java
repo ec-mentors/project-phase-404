@@ -2,12 +2,12 @@ package io.everyonecodes.cryptolog.data;
 
 public class YieldData {
     private String coin;
-    private double accumulated;
-    private double investedAmount;
-    private double forecastedValue;
-    private double profit;
+    private String accumulated;
+    private String investedAmount;
+    private String forecastedValue;
+    private String profit;
 
-    public YieldData(String coin, double accumulated, double investedAmount, double forecastedValue, double profit) {
+    public YieldData(String coin, String accumulated, String investedAmount, String forecastedValue, String profit) {
         this.coin = coin;
         this.accumulated = accumulated;
         this.investedAmount = investedAmount;
@@ -23,35 +23,35 @@ public class YieldData {
         this.coin = coin;
     }
 
-    public double getAccumulated() {
+    public String getAccumulated() {
         return accumulated;
     }
 
-    public void setAccumulated(double accumulated) {
+    public void setAccumulated(String accumulated) {
         this.accumulated = accumulated;
     }
 
-    public double getInvestedAmount() {
+    public String getInvestedAmount() {
         return investedAmount;
     }
 
-    public void setInvestedAmount(double investedAmount) {
+    public void setInvestedAmount(String investedAmount) {
         this.investedAmount = investedAmount;
     }
 
-    public double getForecastedValue() {
+    public String getForecastedValue() {
         return forecastedValue;
     }
 
-    public void setForecastedValue(double forecastedValue) {
+    public void setForecastedValue(String forecastedValue) {
         this.forecastedValue = forecastedValue;
     }
 
-    public double getProfit() {
+    public String getProfit() {
         return profit;
     }
 
-    public void setProfit(double profit) {
+    public void setProfit(String profit) {
         this.profit = profit;
     }
 }

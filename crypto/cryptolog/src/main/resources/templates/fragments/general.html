@@ -30,6 +30,7 @@
                 <li><a href="/home" class="nav">Home</a></li>
                 <li><a href="/portfolio" class="nav">Portfolio</a></li>
                 <li><a href="/asset" class="nav">Assests Allocation</a></li>
+                <li><a href="/portfoliobalance" class="nav">Portfolio Rebalancing</a></li>
                 <li><a href="/calculator" class="nav highlight">Yield Calculator</a></li>
                 <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
             </ul>
@@ -40,7 +41,7 @@
     <div id="contain">
 
         <form th:fragment="filter" th:action="${target}" method="get" class="search">
-            <input type="text" placeholder="Search ..." name="filter" th:value="${filter}" autofocus>
+            <input type="text" placeholder="Search ..." name="filter" th:value="${filter}" class="medium-innershadow" autofocus>
             <button type="submit" class="fas fa-search"></button>
         </form>
 
