@@ -18,8 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import static org.springframework.security.config.annotation.web.AbstractRequestMatcherRegistry.RequestMatchers.antMatchers;
-
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @EnableWebSecurity
@@ -39,36 +37,6 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                // URLs matching for access rights
-
-                .antMatchers("/").permitAll()
-                .antMatchers("/about", "/chart").permitAll()
-
-                .antMatchers("/login", "/register", "/confirm").permitAll()
-                .antMatchers("/forgot-password", "/reset", "/confirm-reset", "/reset-password","/verification","/loginValidation").permitAll()
-
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
-                .antMatchers("/home/**").hasAnyAuthority("SUPER_USER", "ADMIN_USER", "SITE_USER")
-
-                .anyRequest().authenticated()
-                .and()
-                // form login
-                .csrf().disable().formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error=true")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .successHandler(customLoginSuccessHandler)
-                .failureHandler(customLoginFailureHandler)
-                .and()
-                // logout
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").and()
-                .exceptionHandling()
-                .accessDeniedPage("/access-denied");
-
-
             // URLs matching for access rights
         
             .antMatchers("/").permitAll()
