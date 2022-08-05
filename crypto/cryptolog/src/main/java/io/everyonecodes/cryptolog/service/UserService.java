@@ -78,7 +78,24 @@ public class  UserService {
     }
     
     public boolean hasAllTier (User user) {
-        return hasTierTwo(user) && hasTierThree(user);
+        return hasTierOne(user) && hasTierTwo(user) && hasTierThree(user);
+    }
+
+    public boolean hasTierOne (User user) {
+        Set<String> userCoinIds =  user.getCoinIds();
+        List<Coin> userCoins = coingeckoClient.getCoinsById(userCoinIds);
+
+        int numberOne = 0;
+
+        for(Coin coin : userCoins) {
+            int number = coin.getMarket_cap_rank();
+            if(number > 0 && number < 3) {
+                numberOne++;
+            }
+
+        }
+
+        return  numberOne > 0 ;
     }
 
     public boolean hasTierTwo (User user) {
@@ -106,7 +123,7 @@ public class  UserService {
 
         for(Coin coin : userCoins) {
             int number = coin.getMarket_cap_rank();
-            if(number > 2 && number <=50) {
+            if(number > 50) {
                 numberThree++;
             }
 
