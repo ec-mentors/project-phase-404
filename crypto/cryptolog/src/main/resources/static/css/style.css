@@ -465,12 +465,15 @@ form.general h2, h3, h4 {
 }
 
 .assetheadtext{
-  background: rgb(164,180,181);
+  /* background: rgb(164,180,181); */
   background: rgb(67, 179, 192);
-  border-left: 8px solid #cef;
+  /* border-left: 8px solid #cef;
   border-top: 8px solid #cef;
   border-bottom: 8px solid #026e78;
-  border-right: 8px solid #026e78;
+  border-right: 8px solid #026e78; */
+  border-radius: 1.5em;
+  box-shadow: 0 1px 5px var(--medium-shadow);
+
   box-shadow: 8px #202020;
   margin: 4.3%;
 }
@@ -603,12 +606,14 @@ form.general h2, h3, h4 {
   }
 
   .assetheadtext{
-    background: rgb(164,180,181);
+    /* background: rgb(164,180,181); */
     background: rgb(67, 179, 192);
-    border-left: 6px solid #cef;
+    /* border-left: 6px solid #cef;
     border-top: 6px solid #cef;
     border-bottom: 6px solid #026e78;
-    border-right: 6px solid #026e78;
+    border-right: 6px solid #026e78; */
+    border-radius: 1.5em;
+    box-shadow: 0 1px 5px var(--medium-shadow);
   }
 
   .assetheadtext h2 {
@@ -667,12 +672,14 @@ form.general h2, h3, h4 {
   }
 
   .assetheadtext{
-    background: rgb(164,180,181);
+    /* background: rgb(164,180,181); */
     background: rgb(67, 179, 192);
-    border-left: 6px solid #cef;
+    border-radius: 1.5em;
+    box-shadow: 0 1px 5px var(--medium-shadow);
+    /* border-left: 6px solid #cef;
     border-top: 6px solid #cef;
     border-bottom: 6px solid #026e78;
-    border-right: 6px solid #026e78;
+    border-right: 6px solid #026e78; */
   }
 
   .assetheadtext h2 {

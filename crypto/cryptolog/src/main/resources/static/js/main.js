@@ -17,5 +17,5 @@ window.onload = function() {
         window.location.replace("/calculate")
     } else {
         window.location.replace("/asset")
-    }*/
-}
+    }
+}*/

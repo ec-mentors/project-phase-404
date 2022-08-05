@@ -3,108 +3,110 @@
 
 <head th:replace="fragments/general :: head">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="${title != null} ? ${title} : 'CryptoLog'"></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
     <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
     <script src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}" />
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 
 <body>
-<header th:replace="/fragments/general.html :: header"></header>
-<main>
-    <section class="assetheadtext">
-        <h2>
-            Portfolio diversification options
+    <header th:replace="/fragments/general.html :: header"></header>
+    <main>
+        <section class="assetheadtext">
+            <h2>
+                Portfolio diversification options
 
-        </h2>
-        <h3> Select the portfolio you want to apply to your current assets</h3>
+            </h2>
+            <h3> Select the portfolio you want to apply to your current assets</h3>
 
-    </section>
-    <span class="span" th:if=${!#strings.isEmpty(assetMessage)} th:utext="${assetMessage}" id="messageSpan"></span>
-    <section class="grid-container">
-        <a href="/asset" th:href="@{asset(assetsAllocation='Maximalist')}" name="Maximalist" id="Maximalist"
-           class="allocation">
-            <div class="box a">
-                <p>
-                    The <br> Maximalist
-                </p>
-                <span>
+        </section>
+        <div class="background bgcol-whitesmoke" th:if=${assetMessage} style="max-width: 90%;">
+            <span class="span_deactivated" th:utext="${assetMessage}" id="messageSpan_deactivated"></span>
+        </div>
+        <section class="grid-container">
+            <a href="/asset" th:href="@{asset(assetsAllocation='Maximalist')}" name="Maximalist" id="Maximalist"
+                class="allocation">
+                <div class="box a">
+                    <p>
+                        The <br> Maximalist
+                    </p>
+                    <span>
                         100 % Bitcoin
                     </span>
-            </div>
-        </a>
-        <a href="/asset" th:href="@{asset(assetsAllocation='Conservative')}" name="Conservative" id="Conservative"
-           class="allocation">
-            <div class="box b">
-                <p>The <br> Conservative</p>
-                <span>
+                </div>
+            </a>
+            <a href="/asset" th:href="@{asset(assetsAllocation='Conservative')}" name="Conservative" id="Conservative"
+                class="allocation">
+                <div class="box b">
+                    <p>The <br> Conservative</p>
+                    <span>
                         80/20
                     </span>
-            </div>
-        </a>
-        <a href="/asset" th:href="@{asset(assetsAllocation='Gambler')}" name="Gambler" id="Gambler"
-           class="allocation">
-            <div class="box c">
-                <p>The <br> Gambler</p>
-                <span>
+                </div>
+            </a>
+            <a href="/asset" th:href="@{asset(assetsAllocation='Gambler')}" name="Gambler" id="Gambler"
+                class="allocation">
+                <div class="box c">
+                    <p>The <br> Gambler</p>
+                    <span>
                         40/30/30
                     </span>
-            </div>
-        </a>
-        <button onclick="saveCustom()" name="Custom" id="Custom" class="allocation">
-            <div class="box d custom">
-                <p><br/>Custom</p>
-            </div>
-        </button>
-    </section>
+                </div>
+            </a>
+            <button onclick="saveCustom()" name="Custom" id="Custom" class="allocation">
+                <div class="box d custom">
+                    <p><br />Custom</p>
+                </div>
+            </button>
+        </section>
 
-    <section hidden id="customSection">
-        <div id="contain" class="general">
-            <form role="form" th:object="${form}" modelAttribute="coinList" th:action="@{/asset}" id="form"
-                  method="post" onkeydown="return event.key != 'Enter';">
-                <table>
-                    <caption hidden>Your Coins</caption>
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>&#037; Percentage</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="coin: ${form.coinList}">
-                        <td th:text="${coin}">
-                        </td>
-                        <td>
-                            <input type="number" name="percentage" id="percentage" value="0.0" th:value="0.0"
-                                   placeholder="0.00" step="any" form="form" class="field light-innershadow"
-                                   th:field="*{customDTOs['__${coin}__']}">
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <button type="reset" form="form" id="reset" class="col-cancel-trans">
-                    Reset
-                </button>
-                <button type="submit" form="form" id="submit" class="col-default-trans">
-                    Save
-                </button>
-            </form>
-        </div>
-    </section>
+        <section hidden id="customSection">
+            <div id="contain" class="general">
+                <form role="form" th:object="${form}" modelAttribute="coinList" th:action="@{/asset}" id="form"
+                    method="post" onkeydown="return event.key != 'Enter';">
+                    <table>
+                        <caption hidden>Your Coins</caption>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>&#037; Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="coin: ${form.coinList}">
+                                <td th:text="${coin}">
+                                </td>
+                                <td>
+                                    <input type="number" name="percentage" id="percentage" value="0.0" th:value="0.0"
+                                        placeholder="0.00" step="any" form="form" class="field light-innershadow"
+                                        th:field="*{customDTOs['__${coin}__']}">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="reset" form="form" id="reset" class="col-cancel-trans">
+                        Reset
+                    </button>
+                    <button type="submit" form="form" id="submit" class="col-default-trans">
+                        Save
+                    </button>
+                </form>
+            </div>
+        </section>
 
-</main>
-<footer th:replace="/fragments/general :: footer"></footer>
-<script>
+    </main>
+    <footer th:replace="/fragments/general :: footer"></footer>
+    <script>
         function saveCustom() {
             document.getElementById("customSection").removeAttribute("hidden");
         }
 
 
-</script>
+    </script>
 </body>
 
 </html>
