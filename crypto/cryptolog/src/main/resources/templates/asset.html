@@ -24,6 +24,7 @@
         <h3> Select the portfolio you want to apply to your current assets</h3>
 
     </section>
+    <span class="span" th:if=${!#strings.isEmpty(assetMessage)} th:utext="${assetMessage}" id="messageSpan"></span>
     <section class="grid-container">
         <a href="/asset" th:href="@{asset(assetsAllocation='Maximalist')}" name="Maximalist" id="Maximalist"
            class="allocation">
@@ -95,7 +96,6 @@
         </div>
     </section>
 
-    <span class="span" th:utext="${assetMessage}" id="messageSpan"></span>
 </main>
 <footer th:replace="/fragments/general :: footer"></footer>
 <script>

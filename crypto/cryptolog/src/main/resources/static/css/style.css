@@ -502,12 +502,15 @@ form.general h2, h3, h4 {
 
 .span {
   text-align: center;
-  font-size: 2rem;
+
+  font-size: 1rem;
   color: black;
+
   border: 7px hidden darkcyan;
   padding: 1rem;
   margin-top: 2rem;
   margin-bottom: 5rem;
+  margin-left: 10rem;
 }
 
 /* --- Custom --- */
@@ -535,7 +538,9 @@ form.general h2, h3, h4 {
 
 #messageSpan {
     display: float;
-  background: rgb(67, 179, 192);
+  background-color: #A3C9C9;
+
+
   width: 90%;
   height: auto;
   position: center;
@@ -545,7 +550,8 @@ form.general h2, h3, h4 {
   border-right-color: #cef;
   border-bottom-color: #cef;
   padding: .5rem;
-  margin: 2rem;
+  margin: 2rem, 2rem, 2rem, 15rem;
+
   position:
 }
 
