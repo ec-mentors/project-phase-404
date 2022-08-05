@@ -78,36 +78,14 @@ public class  UserService {
     }
     
     public boolean hasAllTier (User user) {
-        Set<String> userCoinIds =  user.getCoinIds();
-        List<Coin> userCoins = coingeckoClient.getCoinsById(userCoinIds);
-        
-        int numberTwo=0;
-        int numberThree=0;
-        
-        for(Coin coin : userCoins) {
-            try {
-                int number = coin.getMarket_cap_rank();
-                if (number > 2 && number <= 50) {
-                    numberTwo++;
-                }
-                if (number > 50) {
-                    numberThree++;
-                }
-            }
-            catch (NumberFormatException e) {
-                numberThree++;
-                
-            }
-        }
-        
-        return (numberThree > 0 && numberTwo >0);
+        return hasTierTwo(user) && hasTierThree(user);
     }
+
     public boolean hasTierTwo (User user) {
         Set<String> userCoinIds =  user.getCoinIds();
         List<Coin> userCoins = coingeckoClient.getCoinsById(userCoinIds);
         
         int numberTwo=0;
-        
         
         for(Coin coin : userCoins) {
             int number = coin.getMarket_cap_rank();
@@ -117,7 +95,24 @@ public class  UserService {
             
         }
         
-        return  numberTwo >0 ;
+        return  numberTwo > 0 ;
+    }
+
+    public boolean hasTierThree (User user) {
+        Set<String> userCoinIds =  user.getCoinIds();
+        List<Coin> userCoins = coingeckoClient.getCoinsById(userCoinIds);
+
+        int numberThree = 0;
+
+        for(Coin coin : userCoins) {
+            int number = coin.getMarket_cap_rank();
+            if(number > 2 && number <=50) {
+                numberThree++;
+            }
+
+        }
+
+        return  numberThree > 0 ;
     }
     
     public boolean hasRole(User user, String name) {

@@ -534,7 +534,7 @@ form.general h2, h3, h4 {
 }
 
 #messageSpan {
-    display: float;
+  display: inline;
   background: rgb(67, 179, 192);
   width: 90%;
   height: auto;
@@ -546,7 +546,6 @@ form.general h2, h3, h4 {
   border-bottom-color: #cef;
   padding: .5rem;
   margin: 2rem;
-  position:
 }
 
 .enabled{

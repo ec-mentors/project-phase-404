@@ -66,6 +66,7 @@ public class AssetsAllocationService {
             user.setAssetsAllocation(assetsAllocation);
             
             boolean tierTwo = userServiceImp.hasAllTier(user);
+            boolean tierThree = userServiceImp.hasTierThree(user);
             boolean tierAll = userServiceImp.hasAllTier(user);
             if (user.getAssetsAllocation().equals(maximalist)) {
                 
@@ -79,7 +80,7 @@ public class AssetsAllocationService {
                 userServiceImp.save(user);
                 
             }
-            if (user.getAssetsAllocation().equals(conservative) && !tierTwo) {
+            if (user.getAssetsAllocation().equals(conservative) && !tierTwo && !tierThree) {
                 model.addAttribute("assetMessage", missingCoinsConserv);
                 
             }
@@ -90,7 +91,7 @@ public class AssetsAllocationService {
     }
     
     // Uses coin.getName() instead of id
-    public String saveCustomAsset(CustomForm form, Principal principal, Model model) {
+    public void saveCustomAsset(CustomForm form, Principal principal, Model model) {
         var user = userServiceImp.loadLoggedInUser(principal);
         if (form != null) {
             var percentages = form.getCustomDTOs();
@@ -116,7 +117,6 @@ public class AssetsAllocationService {
             }
         }
         model.addAttribute("tableTitle", "My Portfolio");
-        return "asset";
     }
     
     public Set<String> parseCustomDTOsToString(CustomForm form) {
@@ -150,14 +150,5 @@ public class AssetsAllocationService {
             return coinList;
         }
         return List.of();
-    }
-    
-    public void checkForValues(CustomForm form) {
-        var map = form.getCustomDTOs();
-        for (var key : map.keySet()) {
-            if (map.get(key) == null) {
-                map.replace(key, null, 0.0);
-            }
-        }
     }
 }
