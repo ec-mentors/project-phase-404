@@ -26,6 +26,7 @@ public class AssetsAllocationService {
     private final String emptyPortfolio;
     private final String maximalistInfo;
     private final String missingCoinsConserv;
+    private final String missingTierOneConserv;
     private final String missingCoinsGambler;
     private final String customError;
     private final String customSuccess;
@@ -40,6 +41,7 @@ public class AssetsAllocationService {
                                    @Value("${messages.asset.emptyPortfolio}") String emptyPortfolio,
                                    @Value("${messages.asset.maximalistInfo}") String maximalistInfo,
                                    @Value("${messages.asset.missingCoinsConserv}") String missingCoinsConserv,
+                                   @Value("${messages.asset.missingTierOneConserv}") String missingTierOneConserv,
                                    @Value("${messages.asset.missingCoinsGambler}") String missingCoinsGambler,
                                    @Value("${messages.asset.customError}") String customError,
                                    @Value("${messages.asset.customSuccess}") String customSuccess) {
@@ -53,6 +55,7 @@ public class AssetsAllocationService {
         this.emptyPortfolio = emptyPortfolio;
         this.maximalistInfo = maximalistInfo;
         this.missingCoinsConserv = missingCoinsConserv;
+        this.missingTierOneConserv = missingTierOneConserv;
         this.missingCoinsGambler = missingCoinsGambler;
         this.customError = customError;
         this.customSuccess = customSuccess;
@@ -64,11 +67,12 @@ public class AssetsAllocationService {
             model.addAttribute("assetMessage", emptyPortfolio);
         } else {
             user.setAssetsAllocation(assetsAllocation);
-            
-            boolean tierTwo = userServiceImp.hasAllTier(user);
+
+            boolean tierOne = userServiceImp.hasTierOne(user);
+            boolean tierTwo = userServiceImp.hasTierTwo(user);
+            boolean tierThree = userServiceImp.hasTierThree(user);
             boolean tierAll = userServiceImp.hasAllTier(user);
             if (user.getAssetsAllocation().equals(maximalist)) {
-                
                 userServiceImp.save(user);
                 model.addAttribute("assetMessage", maximalistInfo);
             }
@@ -77,20 +81,21 @@ public class AssetsAllocationService {
             }
             if (user.getAssetsAllocation().equals(gambler) && tierAll) {
                 userServiceImp.save(user);
-                
             }
-            if (user.getAssetsAllocation().equals(conservative) && !tierTwo) {
+            if (user.getAssetsAllocation().equals(conservative) && !tierTwo && !tierThree) {
                 model.addAttribute("assetMessage", missingCoinsConserv);
-                
             }
-            if (user.getAssetsAllocation().equals(conservative) && tierTwo) {
+            if (user.getAssetsAllocation().equals(conservative) && !tierOne) {
+                model.addAttribute("assetMessage", missingTierOneConserv);
+            }
+            if (user.getAssetsAllocation().equals(conservative) && tierOne && (tierTwo || tierThree)) {
                 userServiceImp.save(user);
             }
         }
     }
     
     // Uses coin.getName() instead of id
-    public String saveCustomAsset(CustomForm form, Principal principal, Model model) {
+    public void saveCustomAsset(CustomForm form, Principal principal, Model model) {
         var user = userServiceImp.loadLoggedInUser(principal);
         if (form != null) {
             var percentages = form.getCustomDTOs();
@@ -116,7 +121,6 @@ public class AssetsAllocationService {
             }
         }
         model.addAttribute("tableTitle", "My Portfolio");
-        return "asset";
     }
     
     public Set<String> parseCustomDTOsToString(CustomForm form) {
@@ -150,14 +154,5 @@ public class AssetsAllocationService {
             return coinList;
         }
         return List.of();
-    }
-    
-    public void checkForValues(CustomForm form) {
-        var map = form.getCustomDTOs();
-        for (var key : map.keySet()) {
-            if (map.get(key) == null) {
-                map.replace(key, null, 0.0);
-            }
-        }
     }
 }
