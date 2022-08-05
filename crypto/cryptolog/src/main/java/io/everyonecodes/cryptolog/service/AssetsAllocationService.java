@@ -88,7 +88,7 @@ public class AssetsAllocationService {
             if (user.getAssetsAllocation().equals(conservative) && !tierOne) {
                 model.addAttribute("assetMessage", missingTierOneConserv);
             }
-            if (user.getAssetsAllocation().equals(conservative) && tierOne && tierTwo || tierThree) {
+            if (user.getAssetsAllocation().equals(conservative) && tierOne && (tierTwo || tierThree)) {
                 userServiceImp.save(user);
             }
         }
