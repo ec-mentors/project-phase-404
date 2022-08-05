@@ -537,12 +537,8 @@ form.general h2, h3, h4 {
 }
 
 #messageSpan {
-
-    display: float;
+   display: float;
   background-color: #A3C9C9;
-
-
-
   width: 90%;
   height: auto;
   position: center;
@@ -552,11 +548,7 @@ form.general h2, h3, h4 {
   border-right-color: #cef;
   border-bottom-color: #cef;
   padding: .5rem;
-
   margin: 2rem, 2rem, 2rem, 15rem;
-
-  position:
-
 }
 
 .enabled{
