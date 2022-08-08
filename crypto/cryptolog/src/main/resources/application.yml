@@ -71,3 +71,14 @@ messages:
     registeredForEmail: "There is already an account registered with CryptoLog for the email"
     proceedToLogin: "Please proceed to log in."
     regSuccessVerifyEmail: "User is registered successfully, please verify your email."
+
+  verification:
+    display:
+      name: "user"
+      viewName: "verification"
+    resendEmail:
+      name: "message"
+      successText: "Verification link successfully resent."
+      vnSuccess: "verificationSuccess"
+      errorText: "This email does not exist!"
+      vnError: "error"

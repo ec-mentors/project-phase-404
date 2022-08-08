@@ -18,7 +18,32 @@ public class Coin {
     private double ath_change_percentage;
 
     private String last_updated;
-
+    
+    public Coin() {
+    }
+    
+    public Coin(String name, double ath_change_percentage) {
+        this.name = name;
+        this.ath_change_percentage = ath_change_percentage;
+    }
+    
+    public Coin(String id, String symbol, String name, String image, double current_price, double market_cap,
+                int market_cap_rank, double price_change_24h, double price_change_percentage_24h, double ath,
+                double ath_change_percentage, String last_updated) {
+        this.id = id;
+        this.symbol = symbol;
+        this.name = name;
+        this.image = image;
+        this.current_price = current_price;
+        this.market_cap = market_cap;
+        this.market_cap_rank = market_cap_rank;
+        this.price_change_24h = price_change_24h;
+        this.price_change_percentage_24h = price_change_percentage_24h;
+        this.ath = ath;
+        this.ath_change_percentage = ath_change_percentage;
+        this.last_updated = last_updated;
+    }
+    
     public String getId() {
         return id;
     }
