@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class  UserService {
@@ -26,15 +25,17 @@ public class  UserService {
     
     private final String roleName;
     private final String roleDescription;
+    private final String assetsAllocation;
     
     
-    public UserService(PasswordEncoder encoder, RoleRepository roleRepository, UserRepository userRepository, CoingeckoClient coingeckoClient, @Value("${messages.user.userRole.name}") String roleName, @Value("${messages.user.userRole.description}") String roleDescription) {
+    public UserService(PasswordEncoder encoder, RoleRepository roleRepository, UserRepository userRepository, CoingeckoClient coingeckoClient, @Value("${messages.user.userRole.name}") String roleName, @Value("${messages.user.userRole.description}") String roleDescription, @Value("${messages.user.userRole.assetsAllocation}") String assetsAllocation) {
         this.encoder = encoder;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.coingeckoClient = coingeckoClient;
         this.roleName = roleName;
         this.roleDescription = roleDescription;
+        this.assetsAllocation = assetsAllocation;
     }
     
     
@@ -46,7 +47,7 @@ public class  UserService {
             user.setVerified(false);
             
         }
-        user.setAssetsAllocation("none");
+        user.setAssetsAllocation(assetsAllocation);
         userRepository.save(user);
     }
     
@@ -68,7 +69,7 @@ public class  UserService {
     
     private void prepareUserDetails(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setAssetsAllocation("none");
+        user.setAssetsAllocation(assetsAllocation);
         Role userRole = roleRepository.findByName(roleName);
         if (userRole == null) {
             userRole = new Role(roleName, roleDescription);
@@ -133,7 +134,7 @@ public class  UserService {
     }
     
     public boolean hasRole(User user, String name) {
-        List<String> roles = user.getRoles().stream().map(Role::getName).collect(Collectors.toList());
+        List<String> roles = user.getRoles().stream().map(Role :: getName).toList();
         return roles.contains(name);
     }
     

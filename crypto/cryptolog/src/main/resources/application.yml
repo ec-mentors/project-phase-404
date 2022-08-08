@@ -46,6 +46,7 @@ messages:
     userRole:
       name: "SITE_USER"
       description: "This user has access to site, after login - normal user"
+      assetsAllocation: "none"
   asset:
     successMessage: "You have successfully set the Asset Allocation in your portfolio. Go to the yield calculator and see how much you could potentially save by investing in crypto."
     emptyPortfolio: "Missing coins. Please mind that you need to continue adding coins to your portfolio in order to select an asset allocation."
