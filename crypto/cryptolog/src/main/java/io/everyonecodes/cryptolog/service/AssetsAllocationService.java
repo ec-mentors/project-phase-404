@@ -32,6 +32,7 @@ public class AssetsAllocationService {
     private final String missingTierOneGambler;
     private final String customError;
     private final String customSuccess;
+    private final String title;
     
     public AssetsAllocationService(UserService userServiceImp,
                                    CustomAssetAllocationRepository repository,
@@ -48,7 +49,8 @@ public class AssetsAllocationService {
                                    @Value("${messages.asset.missingCoinsGambler}") String missingCoinsGambler,
                                    @Value("${messages.asset.missingTierOneGambler}") String missingTierOneGambler,
                                    @Value("${messages.asset.customError}") String customError,
-                                   @Value("${messages.asset.customSuccess}") String customSuccess) {
+                                   @Value("${messages.asset.customSuccess}") String customSuccess,
+                                   @Value("${messages.asset.title}") String title) {
         this.userServiceImp = userServiceImp;
         this.repository = repository;
         this.client = client;
@@ -65,12 +67,13 @@ public class AssetsAllocationService {
         this.missingTierOneGambler = missingTierOneGambler;
         this.customError = customError;
         this.customSuccess = customSuccess;
+        this.title = title;
     }
     
     public void saveAsset(String assetsAllocation, Model model, Principal principal) {
         User user = userServiceImp.loadLoggedInUser(principal);
         if (user.getCoinIds().isEmpty()) {
-            model.addAttribute("assetMessage", emptyPortfolio);
+            model.addAttribute(title, emptyPortfolio);
         } else {
             user.setAssetsAllocation(assetsAllocation);
 
@@ -80,27 +83,27 @@ public class AssetsAllocationService {
             boolean tierAll = userServiceImp.hasAllTier(user);
             if (user.getAssetsAllocation().equals(maximalist)) {
                 userServiceImp.save(user);
-                model.addAttribute("assetMessage", successMessage);
-                model.addAttribute("assetMessage", maximalistInfo);
+                model.addAttribute(title, successMessage);
+                model.addAttribute(title, maximalistInfo);
             }
             if (user.getAssetsAllocation().equals(gambler) && (!tierTwo || !tierThree)) {
-                model.addAttribute("assetMessage", missingCoinsGambler);
+                model.addAttribute(title, missingCoinsGambler);
             }
             if (user.getAssetsAllocation().equals(gambler) && !tierOne) {
-                model.addAttribute("assetMessage", missingTierOneGambler);
+                model.addAttribute(title, missingTierOneGambler);
             }
             if (user.getAssetsAllocation().equals(gambler) && tierAll) {
                 userServiceImp.save(user);
-                model.addAttribute("assetMessage", successMessage);
+                model.addAttribute(title, successMessage);
             }
             if (user.getAssetsAllocation().equals(conservative) && !tierTwo && !tierThree) {
-                model.addAttribute("assetMessage", missingCoinsConserv);
+                model.addAttribute(title, missingCoinsConserv);
             }
             if (user.getAssetsAllocation().equals(conservative) && !tierOne) {
-                model.addAttribute("assetMessage", missingTierOneConserv);
+                model.addAttribute(title, missingTierOneConserv);
             }
             if (user.getAssetsAllocation().equals(conservative) && tierOne && (tierTwo || tierThree)) {
-                model.addAttribute("assetMessage", successMessage);
+                model.addAttribute(title, successMessage);
                 userServiceImp.save(user);
             }
         }
@@ -113,7 +116,7 @@ public class AssetsAllocationService {
             var percentages = form.getCustomDTOs();
             var sumOfPercentages = percentages.values().stream().reduce(0.0, Double::sum);
             if (sumOfPercentages > 100.0 || sumOfPercentages < 100.0) {
-                model.addAttribute("assetMessage", customError);
+                model.addAttribute(title, customError);
             } else {
                 user.setAssetsAllocation(custom);
                 var oExistingCustom = repository.findByCustomAllocationNameAndUser(custom, user);
@@ -121,14 +124,14 @@ public class AssetsAllocationService {
                     var existingCustom = oExistingCustom.get();
                     existingCustom.setInvestedCoins(parseCustomDTOsToString(form));
                     repository.save(existingCustom);
-                    model.addAttribute("assetMessage", customSuccess);
+                    model.addAttribute(title, customSuccess);
                 } else {
                     var customAllocation = new CustomAssetAllocation();
                     customAllocation.setAllocationName(custom);
                     customAllocation.setInvestedCoins(parseCustomDTOsToString(form));
                     customAllocation.setUser(user);
                     repository.save(customAllocation);
-                    model.addAttribute("assetMessage", customSuccess);
+                    model.addAttribute(title, customSuccess);
                 }
             }
         }
@@ -156,7 +159,7 @@ public class AssetsAllocationService {
     public List<String> createList(Principal principal, Model model) {
         var user = userServiceImp.loadLoggedInUser(principal);
         if (user.getCoinIds().isEmpty()) {
-            model.addAttribute("assetMessage", emptyPortfolio);
+            model.addAttribute(title, emptyPortfolio);
         } else {
             var coinList = client.getCoinsById(user.getCoinIds())
                                  .stream()

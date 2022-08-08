@@ -48,6 +48,7 @@ messages:
       description: "This user has access to site, after login - normal user"
       assetsAllocation: "none"
   asset:
+    title: "assetMessage"
     successMessage: "You have successfully set the Asset Allocation in your portfolio. Go to the yield calculator and see how much you could potentially save by investing in crypto."
     emptyPortfolio: "Missing coins. Please mind that you need to continue adding coins to your portfolio in order to select an asset allocation."
     maximalistInfo: "Successfully set Asset Allocation. Please mind that The Maximalist portfolio allocation only takes into account Bitcoin. If you have multiple coins in your portfolio, these will be ignored for any yield calculation"
