@@ -1,10 +1,10 @@
 package io.everyonecodes.cryptolog.controller;
 
-import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.data.YieldData;
 import io.everyonecodes.cryptolog.service.UserService;
 import io.everyonecodes.cryptolog.service.YieldCalculatorService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +19,13 @@ public class YieldCalculatorController {
 
     private final YieldCalculatorService yieldCalculatorService;
     private final UserService userService;
-
-    public YieldCalculatorController( YieldCalculatorService yieldCalculatorService, UserService userService) {
+    private final String errorMessage;
+    public YieldCalculatorController(YieldCalculatorService yieldCalculatorService, UserService userService,
+                                     @Value("${messages.yieldcalculator.noprofile}")String errorMessage) {
 
         this.yieldCalculatorService = yieldCalculatorService;
         this.userService = userService;
+        this.errorMessage = errorMessage;
     }
 
     @GetMapping("/calculator")
@@ -69,7 +71,7 @@ public class YieldCalculatorController {
                 return "calculator";
             }
         }
-
-        return "calculatorlock";
+        model.addAttribute("yieldcalculator",errorMessage);
+        return "calculator";
     }
 }

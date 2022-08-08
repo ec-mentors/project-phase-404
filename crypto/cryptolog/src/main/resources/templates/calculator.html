@@ -16,6 +16,12 @@
 <body>
     <header th:replace="/fragments/general.html :: header"></header>
     <main>
+        <div class="panel-body">
+            </section>
+            <div class="background bgcol-whitesmoke" th:if=${yieldcalculator} style="max-width: 90%;">
+                <span class="span_deactivated" th:utext="${yieldcalculator}" id="messageSpan_deactivated"></span>
+            </div>
+        </div>
         <div id="contain">
             <form class="general background bgcol-whitesmoke" th:action="@{/calculator}" method="get">
                 <h4>Monthly Investment Amount</h4>

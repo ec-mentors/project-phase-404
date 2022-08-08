@@ -74,6 +74,9 @@ messages:
     proceedToLogin: "Please proceed to log in."
     regSuccessVerifyEmail: "User is registered successfully, please verify your email."
 
+  yieldcalculator:
+   noprofile: "You have to select a profile in order to make the calculations."
+
   verification:
     display:
       name: "user"
