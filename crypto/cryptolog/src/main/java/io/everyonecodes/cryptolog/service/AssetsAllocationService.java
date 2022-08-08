@@ -22,12 +22,14 @@ public class AssetsAllocationService {
     private final String conservative;
     private final String gambler;
     private final String custom;
-    
+
+    private final String successMessage;
     private final String emptyPortfolio;
     private final String maximalistInfo;
     private final String missingCoinsConserv;
     private final String missingTierOneConserv;
     private final String missingCoinsGambler;
+    private final String missingTierOneGambler;
     private final String customError;
     private final String customSuccess;
     
@@ -38,11 +40,13 @@ public class AssetsAllocationService {
                                    @Value("${assets.conservative}") String conservative,
                                    @Value("${assets.gambler}") String gambler,
                                    @Value("${assets.custom}") String custom,
+                                   @Value("${messages.asset.successMessage}") String successMessage,
                                    @Value("${messages.asset.emptyPortfolio}") String emptyPortfolio,
                                    @Value("${messages.asset.maximalistInfo}") String maximalistInfo,
                                    @Value("${messages.asset.missingCoinsConserv}") String missingCoinsConserv,
                                    @Value("${messages.asset.missingTierOneConserv}") String missingTierOneConserv,
                                    @Value("${messages.asset.missingCoinsGambler}") String missingCoinsGambler,
+                                   @Value("${messages.asset.missingTierOneGambler}") String missingTierOneGambler,
                                    @Value("${messages.asset.customError}") String customError,
                                    @Value("${messages.asset.customSuccess}") String customSuccess) {
         this.userServiceImp = userServiceImp;
@@ -52,11 +56,13 @@ public class AssetsAllocationService {
         this.conservative = conservative;
         this.gambler = gambler;
         this.custom = custom;
+        this.successMessage = successMessage;
         this.emptyPortfolio = emptyPortfolio;
         this.maximalistInfo = maximalistInfo;
         this.missingCoinsConserv = missingCoinsConserv;
         this.missingTierOneConserv = missingTierOneConserv;
         this.missingCoinsGambler = missingCoinsGambler;
+        this.missingTierOneGambler = missingTierOneGambler;
         this.customError = customError;
         this.customSuccess = customSuccess;
     }
@@ -74,13 +80,18 @@ public class AssetsAllocationService {
             boolean tierAll = userServiceImp.hasAllTier(user);
             if (user.getAssetsAllocation().equals(maximalist)) {
                 userServiceImp.save(user);
+                model.addAttribute("assetMessage", successMessage);
                 model.addAttribute("assetMessage", maximalistInfo);
             }
-            if (user.getAssetsAllocation().equals(gambler) && !tierAll) {
+            if (user.getAssetsAllocation().equals(gambler) && (!tierTwo || !tierThree)) {
                 model.addAttribute("assetMessage", missingCoinsGambler);
+            }
+            if (user.getAssetsAllocation().equals(gambler) && !tierOne) {
+                model.addAttribute("assetMessage", missingTierOneGambler);
             }
             if (user.getAssetsAllocation().equals(gambler) && tierAll) {
                 userServiceImp.save(user);
+                model.addAttribute("assetMessage", successMessage);
             }
             if (user.getAssetsAllocation().equals(conservative) && !tierTwo && !tierThree) {
                 model.addAttribute("assetMessage", missingCoinsConserv);
@@ -89,6 +100,7 @@ public class AssetsAllocationService {
                 model.addAttribute("assetMessage", missingTierOneConserv);
             }
             if (user.getAssetsAllocation().equals(conservative) && tierOne && (tierTwo || tierThree)) {
+                model.addAttribute("assetMessage", successMessage);
                 userServiceImp.save(user);
             }
         }
