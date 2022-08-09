@@ -246,6 +246,10 @@ table.column {
 /* END: Tables portfolio-balance */
 
 /* START: Table error-page */
+table.error {
+  margin-bottom: 0;
+}
+
 table.error td {
   vertical-align: top;
 }
