@@ -41,14 +41,15 @@ public class YieldCalculatorController {
         List<YieldData> yieldDataList = new ArrayList<>();
         User user = userService.loadLoggedInUser(principal);
 
+        var zero = "0";
 
         if (!user.getAssetsAllocation().equals("none")) {
-            if (!days.equals("0")) {
+            if (!days.equals(zero)) {
                 if (monthlyAmount.isBlank()) {
-                    monthlyAmount = "0";
+                    monthlyAmount = zero;
                 }
                 if (period.isBlank()) {
-                    period = "0";
+                    period = zero;
                 }
 
                 yieldCalculatorService.setAttributesWithMovingAverage(period, monthlyAmount,
@@ -61,10 +62,10 @@ public class YieldCalculatorController {
 
             } else {
                 if (monthlyAmount.isBlank()) {
-                    monthlyAmount = "0";
+                    monthlyAmount = zero;
                 }
                 if (period.isBlank()) {
-                    period = "0";
+                    period = zero;
                 }
                 yieldCalculatorService.checkParameters(monthlyAmount, period);
                 yieldCalculatorService.setAttributes(period, monthlyAmount, model, principal);
