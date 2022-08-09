@@ -250,6 +250,10 @@ table.error {
   margin-bottom: 0;
 }
 
+table.error caption {
+  text-align: left;
+}
+
 table.error td {
   vertical-align: top;
 }
