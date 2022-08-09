@@ -245,6 +245,22 @@ table.column {
 }
 /* END: Tables portfolio-balance */
 
+/* START: Table error-page */
+table.error td {
+  vertical-align: top;
+}
+
+table.error pre {
+  background-color: #cef;
+  border: 0.5px solid grey;
+  border-radius: 0.3em;
+  padding: 0.75em;
+  margin: 0 0 10px;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+/* END: Table error-page */
+
 #contain {
   margin: 0 auto;
   width: fit-content;

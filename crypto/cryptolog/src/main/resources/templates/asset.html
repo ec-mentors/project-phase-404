@@ -81,9 +81,8 @@
                                 <td th:text="${coin}">
                                 </td>
                                 <td>
-                                    <input type="number" name="percentage" id="percentage" value="0.0" th:value="0.0"
-                                        placeholder="0.00" step="any" form="form" class="field light-innershadow"
-                                        th:field="*{customDTOs['__${coin}__']}">
+                                    <input type="number" name="percentage" id="percentage" placeholder="0.00"
+                                           step="any" form="form" class="field light-innershadow" th:field="*{customDTOs['__${coin}__']}">
                                 </td>
                             </tr>
                         </tbody>
@@ -104,8 +103,6 @@
         function saveCustom() {
             document.getElementById("customSection").removeAttribute("hidden");
         }
-
-
     </script>
 </body>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragments/general :: head">
     <title>CryptoLog Error</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -8,48 +8,56 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
     table td {
-        vertical-align:top;
-        border:solid 1px #888;
-        padding:10px;
+        vertical-align: top;
+        border: solid 1px #888;
+        padding: 10px;
     }
     </style>
 </head>
 <body>
-<h1>Error Page</h1>
-<table>
-    <tr>
-        <td>Date</td>
-        <td th:text="${timestamp}"/>
-    </tr>
-    <tr>
-        <td>Path</td>
-        <td th:text="${path}"/>
-    </tr>
-    <tr>
-        <td>Error</td>
-        <td th:text="${error}"/>
-    </tr>
-    <tr>
-        <td>Status</td>
-        <td th:text="${status}"/>
-    </tr>
-    <tr>
-        <td>Message</td>
-        <td th:text="${message}"/>
-    </tr>
-    <tr>
-        <td>Exception</td>
-        <td th:text="${exception}"/>
-    </tr>
-    <tr>
-        <td>Trace</td>
-        <td>
-            <pre th:text="${trace}"/>
-        </td>
-    </tr>
-</table>
+<header th:replace="${#authentication.name != 'anonymousUser'} ? ~{fragments/general :: header} : _"></header>
+<div id="contain">
+    <table class = "error">
+        <caption th:text="${#strings.startsWith(message,'429 Too Many Requests:')} ? 'Too Many Requests - please wait 1 minute before trying again!' : 'An Error occured ...'"></caption>
+        <tr>
+            <td>Date</td>
+            <td th:text="${timestamp}"/>
+        </tr>
+        <tr>
+            <td>Path</td>
+            <td th:text="${path}"/>
+        </tr>
+        <tr>
+            <td>Error</td>
+            <td th:text="${error}"/>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td th:text="${status}"/>
+        </tr>
+        <tr>
+            <td>Message</td>
+            <td th:text="${message}"/>
+        </tr>
+        <tr>
+            <td>Exception</td>
+            <td th:text="${exception}"/>
+        </tr>
+        <tr>
+            <td>Trace</td>
+            <td>
+                <pre th:text="${trace}"/>
+            </td>
+        </tr>
+    </table>
+    <div th:if="${#authentication.name == 'anonymousUser'}" class="general">
+        <button onclick="history.back();" class="col-cancel-trans">Go Back</button>
+        <br>
+        <br>
+    </div>
+</div>
 </body>
-<footer>
+<footer th:replace="/fragments/general :: footer">
     <p>&#169; 2022 404NameNotFound All rights reserved.</p>
 </footer>
 </html>
