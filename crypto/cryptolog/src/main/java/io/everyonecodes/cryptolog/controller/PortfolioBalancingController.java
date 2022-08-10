@@ -47,7 +47,7 @@ public class PortfolioBalancingController {
         User user = userService.loadLoggedInUser(principal);
         List<Coin> coinList = client.getCoinsById(user.getCoinIds());
         var values = balanceForm.getValues();
-        List<PortfolioBalance> balanceResults = portfolioBalanceService.getBalance(coinList, balanceForm.getProfile(), values);
+        List<PortfolioBalance> balanceResults = portfolioBalanceService.getBalance(coinList, balanceForm.getProfile(), values,model);
         model.addAttribute("balanceResults", balanceResults);
         model.addAttribute("caption", balanceForm.getProfile());
         return "portfoliobalance";
