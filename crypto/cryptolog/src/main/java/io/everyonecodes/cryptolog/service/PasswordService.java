@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Optional;
 
@@ -24,19 +25,21 @@ public class PasswordService {
 	private final String email;
 	private final String resetSubject;
 	private final String resetRequestReceived;
+	private final String resetRequestURL;
 	private final String resetCheckInbox;
 	private final String resetSuccessfully;
 	private final String mailNotExists;
 	private final String brokenLink;
 	
 	public PasswordService(UserService userService, ConfirmationTokenRepository confirmationTokenRepository, EmailSenderService emailSenderService, ConfirmationTokenService confirmationTokenService,
-	                       @Value("${spring.mail.username}") String email,
-	                       @Value("${messages.passwordService.resetSubject}") String resetSubject,
-	                       @Value("${messages.passwordService.resetRequestReceived}") String resetRequestReceived,
-	                       @Value("${messages.passwordService.resetCheckInbox}") String resetCheckInbox,
-	                       @Value("${messages.passwordService.resetSuccessfully}") String resetSuccessfully,
-	                       @Value("${messages.passwordService.mailNotExists}") String mailNotExists,
-	                       @Value("${messages.passwordService.brokenLink}") String brokenLink) {
+						   @Value("${spring.mail.username}") String email,
+						   @Value("${messages.passwordService.resetSubject}") String resetSubject,
+						   @Value("${messages.passwordService.resetRequestReceived}") String resetRequestReceived,
+						   @Value("${messages.passwordService.resetRequestURL}") String resetRequestURL,
+						   @Value("${messages.passwordService.resetCheckInbox}") String resetCheckInbox,
+						   @Value("${messages.passwordService.resetSuccessfully}") String resetSuccessfully,
+						   @Value("${messages.passwordService.mailNotExists}") String mailNotExists,
+						   @Value("${messages.passwordService.brokenLink}") String brokenLink) {
 		
 		this.userService = userService;
 		this.confirmationTokenRepository = confirmationTokenRepository;
@@ -46,6 +49,7 @@ public class PasswordService {
 		
 		this.resetSubject = resetSubject;
 		this.resetRequestReceived = resetRequestReceived;
+		this.resetRequestURL = resetRequestURL;
 		this.resetCheckInbox = resetCheckInbox;
 		this.resetSuccessfully = resetSuccessfully;
 		this.mailNotExists = mailNotExists;
@@ -61,6 +65,11 @@ public class PasswordService {
 	public ModelAndView forgotUserPassword(ModelAndView mav, User user) {
 		Optional<User> existingUser = userService.findUserByEmail(user.getEmail());
 		if(existingUser.isPresent()) {
+			String baseURL = ServletUriComponentsBuilder.fromCurrentContextPath()
+					.replacePath(null)
+					.build()
+					.toUriString();
+
 			User userE = existingUser.get();
 			ConfirmationToken confirmationToken = confirmationTokenService.createToken(userE);
 			
@@ -68,7 +77,7 @@ public class PasswordService {
 			mailMessage.setTo(user.getEmail());
 			mailMessage.setSubject(resetSubject);
 			mailMessage.setFrom(email);
-			mailMessage.setText(resetRequestReceived + confirmationToken.getToken());
+			mailMessage.setText(resetRequestReceived + baseURL + resetRequestURL + confirmationToken.getToken());
 			
 			emailSenderService.sendEmail(mailMessage);
 			

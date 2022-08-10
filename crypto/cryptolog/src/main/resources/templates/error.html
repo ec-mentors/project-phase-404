@@ -18,7 +18,7 @@
 <header th:replace="${#authentication.name != 'anonymousUser'} ? ~{fragments/general :: header} : _"></header>
 <div id="contain">
     <table class = "error">
-        <caption th:text="${#strings.startsWith(message,'429 Too Many Requests:')} ? 'Too Many Requests - please wait 1 minute before trying again!' : 'An Error occured ...'"></caption>
+        <caption th:text="${#strings.startsWith(message,'429 Too Many Requests:')} ? 'Too Many Requests: please wait 1 minute before trying again!' : 'An Error occured ...'"></caption>
         <tr>
             <td>Date</td>
             <td th:text="${timestamp}"/>
