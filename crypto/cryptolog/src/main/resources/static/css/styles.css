@@ -94,7 +94,6 @@ body{
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
   background-image: radial-gradient( black, white, #4c5058);
-  /* background-color: var(--body-color); */
   color: var(--text-color);
   line-height: 1.6;
 }
@@ -262,12 +261,6 @@ img{
   font-size: 1.8rem;
   color: var(--body-color);
 }
-
-/* Show scrolltop */
-/* .show-scroll{
-  visibility: visible;
-  bottom: 1.5rem;
-} */
 
 /*========== HOME ==========*/
 .home__container{
@@ -784,6 +777,10 @@ width: 100%;
   margin: .25rem 0 var(--mb-3);
 }
 
+#footer__description{
+    color: white;
+}
+
 .footer__social{
   font-size: 1.5rem;
   color: var(--title-color);
@@ -804,6 +801,10 @@ width: 100%;
 
 .footer__link:hover{
   color: var(--first-color);
+}
+
+#address {
+    color: var(--text-color);
 }
 
 .footer__copy{
