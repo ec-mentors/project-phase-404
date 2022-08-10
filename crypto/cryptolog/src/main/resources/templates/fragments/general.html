@@ -64,35 +64,27 @@
                         </th>
                         <th>
                             <a th:unless="${sorting == 'price_asc'}"
-                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='price_asc')} : @{/home(sorting='price_asc',filter=${filter})}">Current
-                                Price (USD)</a>
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='price_asc')} : @{/home(sorting='price_asc',filter=${filter})}">Current Price (USD)</a>
                             <a th:if="${sorting == 'price_asc'}"
-                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='price_desc')} : @{/home(sorting='price_desc',filter=${filter})}">Current
-                                Price (USD)</a>
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='price_desc')} : @{/home(sorting='price_desc',filter=${filter})}">Current Price (USD)</a>
                         </th>
                         <th>
                             <a th:unless="${sorting == 'ath_asc'}"
-                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_asc')} : @{/home(sorting='ath_asc',filter=${filter})}">All-Time
-                                High Price</a>
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_asc')} : @{/home(sorting='ath_asc',filter=${filter})}">All-Time High Price</a>
                             <a th:if="${sorting == 'ath_asc'}"
-                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_desc')} : @{/home(sorting='ath_desc',filter=${filter})}">All-Time
-                                High Price</a>
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_desc')} : @{/home(sorting='ath_desc',filter=${filter})}">All-Time High Price</a>
                         </th>
                         <th>
                             <a th:unless="${sorting == 'ath_drop_asc'}"
-                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_drop_asc')} : @{/home(sorting='ath_drop_asc',filter=${filter})}">&#037;
-                                Drop from All-time High Price</a>
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_drop_asc')} : @{/home(sorting='ath_drop_asc',filter=${filter})}">&#037; Drop from All-time High Price</a>
                             <a th:if="${sorting == 'ath_drop_asc'}"
-                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_drop_desc')} : @{/home(sorting='ath_drop_desc',filter=${filter})}">&#037;
-                                Drop from All-time High Price</a>
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_drop_desc')} : @{/home(sorting='ath_drop_desc',filter=${filter})}">&#037; Drop from All-time High Price</a>
                         </th>
                         <th>
                             <a th:unless="${sorting == 'portfolio_asc'}"
-                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='portfolio_asc')} : @{/home(sorting='portfolio_asc',filter=${filter})}">Add
-                                to portfolio</a>
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='portfolio_asc')} : @{/home(sorting='portfolio_asc',filter=${filter})}">Add to portfolio</a>
                             <a th:if="${sorting == 'portfolio_asc'}"
-                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='portfolio_desc')} : @{/home(sorting='portfolio_desc',filter=${filter})}">Add
-                                to portfolio</a>
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='portfolio_desc')} : @{/home(sorting='portfolio_desc',filter=${filter})}">Add to portfolio</a>
                         </th>
                         <th>Tier</th>
                     </tr>
@@ -143,5 +135,4 @@
     </footer>
 
 </body>
-
 </html>
