@@ -34,6 +34,7 @@ messages:
       warningText: Someone is trying to log in on your CryptoLog account!
     verification:
       encoding: "utf-8"
+      link: "http://localhost:9200/confirm?token="
       datePattern: "yyyy-MM-dd HH:mm"
       confirmTitle: Confirm your email
       confirmText: "Please confirm your email by clicking on the following link: "
@@ -57,7 +58,17 @@ messages:
     customSuccess: "You have successfully customized the Asset Allocation in your portfolio. Go to the yield calculator and see how much you could potentially save by investing in crypto."
 
   passwordService:
+    u: user
+    title: message
+    er: error
+    emId: emailId
+    resetPw: resetPassword2
+    successRPw: successResetPassword
+    forgotPw: forgotPassword
+    successFPw: successForgotPassword
     resetSubject: "Complete Password Reset!"
+    resetRequestReceived: "To complete the password reset process, please click here: http://localhost:9200/confirm-reset?token="
+    resetCheckInbox: "Request to reset password received. Check your inbox for the reset link. Please also check your Spam folder"
     resetRequestReceived: "To complete the password reset process, please click here: "
     resetRequestURL: "/confirm-reset?token="
     resetCheckInbox: "Request to reset password received. Check your inbox for the reset link."
@@ -70,7 +81,7 @@ messages:
     registeredButNotVerified: "Account already registered, but the Email is NOT VERIFIED! Please proceed to the login page in order to validate your email."
     registeredForEmail: "There is already an account registered with CryptoLog for the email"
     proceedToLogin: "Please proceed to log in."
-    regSuccessVerifyEmail: "User is registered successfully, please verify your email."
+    regSuccessVerifyEmail: "User is registered successfully, please verify your email. Please also check your Spam folder"
 
   yieldcalculator:
    noprofile: "You have to select a profile in order to make the calculations."
@@ -81,7 +92,7 @@ messages:
       viewName: "verification"
     resendEmail:
       name: "message"
-      successText: "Verification link successfully resent."
+      successText: "Verification link successfully resent. Please also check your Spam folder"
       vnSuccess: "verificationSuccess"
       errorText: "This email does not exist!"
       vnError: "error"
