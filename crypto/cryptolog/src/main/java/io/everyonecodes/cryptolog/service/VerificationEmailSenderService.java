@@ -48,8 +48,8 @@ public class VerificationEmailSenderService {
     @Async
     public void sendEmail(User user, ConfirmationToken confirmationToken) {
         try {
-            String baseURL = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .replacePath(null)
+            String baseURL = ServletUriComponentsBuilder.fromCurrentContextPath() // Maybe could be on a more central place
+                    .replacePath(null)  // NOTE: Only works, when called from some kind of Request (but also in Service, etc.)
                     .build()
                     .toUriString();
 
@@ -67,8 +67,8 @@ public class VerificationEmailSenderService {
     }
     @Async
     public void sendEmail2(User user, ConfirmationToken confirmationToken) {
-        String baseURL = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .replacePath(null)
+        String baseURL = ServletUriComponentsBuilder.fromCurrentContextPath() // Maybe could be on a more central place
+                .replacePath(null)  // NOTE: Only works, when called from some kind of Request (but also in Service, etc.)
                 .build()
                 .toUriString();
 

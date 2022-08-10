@@ -67,11 +67,9 @@ messages:
     forgotPw: forgotPassword
     successFPw: successForgotPassword
     resetSubject: "Complete Password Reset!"
-    resetRequestReceived: "To complete the password reset process, please click here: http://localhost:9200/confirm-reset?token="
-    resetCheckInbox: "Request to reset password received. Check your inbox for the reset link. Please also check your Spam folder"
     resetRequestReceived: "To complete the password reset process, please click here: "
     resetRequestURL: "/confirm-reset?token="
-    resetCheckInbox: "Request to reset password received. Check your inbox for the reset link."
+    resetCheckInbox: "Request to reset password received. Check your inbox for the reset link. Please also check your Spam folder"
     resetSuccessfully: "Password successfully reset. You can now log in with the new credentials."
     mailNotExists: "This email does not exist!"
     brokenLink: "The link is invalid or broken!"

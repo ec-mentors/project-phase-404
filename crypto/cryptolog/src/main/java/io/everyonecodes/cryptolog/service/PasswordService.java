@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Optional;
 
@@ -39,21 +40,22 @@ public class PasswordService {
 	private final String successFPw;
 
 	public PasswordService(UserService userService, ConfirmationTokenRepository confirmationTokenRepository, EmailSenderService emailSenderService, ConfirmationTokenService confirmationTokenService,
-	                       @Value("${spring.mail.username}") String email,
-	                       @Value("${messages.passwordService.resetSubject}") String resetSubject,
-	                       @Value("${messages.passwordService.resetRequestReceived}") String resetRequestReceived,
-	                       @Value("${messages.passwordService.resetCheckInbox}") String resetCheckInbox,
-	                       @Value("${messages.passwordService.resetSuccessfully}") String resetSuccessfully,
-	                       @Value("${messages.passwordService.mailNotExists}") String mailNotExists,
-	                       @Value("${messages.passwordService.brokenLink}") String brokenLink,
-	                       @Value("${messages.passwordService.u}") String u,
-	                       @Value("${messages.passwordService.title}") String title,
-	                       @Value("${messages.passwordService.er}") String er,
-	                       @Value("${messages.passwordService.emId}") String emId,
-	                       @Value("${messages.passwordService.resetPw}") String resetPw,
-	                       @Value("${messages.passwordService.successRPw}") String successRPw,
-	                       @Value("${messages.passwordService.forgotPw}") String forgotPw,
-	                       @Value("${messages.passwordService.successFPw}") String successFPw)
+						   @Value("${spring.mail.username}") String email,
+						   @Value("${messages.passwordService.resetSubject}") String resetSubject,
+						   @Value("${messages.passwordService.resetRequestReceived}") String resetRequestReceived,
+						   @Value("${messages.passwordService.resetRequestURL}") String resetRequestURL,
+						   @Value("${messages.passwordService.resetCheckInbox}") String resetCheckInbox,
+						   @Value("${messages.passwordService.resetSuccessfully}") String resetSuccessfully,
+						   @Value("${messages.passwordService.mailNotExists}") String mailNotExists,
+						   @Value("${messages.passwordService.brokenLink}") String brokenLink,
+						   @Value("${messages.passwordService.u}") String u,
+						   @Value("${messages.passwordService.title}") String title,
+						   @Value("${messages.passwordService.er}") String er,
+						   @Value("${messages.passwordService.emId}") String emId,
+						   @Value("${messages.passwordService.resetPw}") String resetPw,
+						   @Value("${messages.passwordService.successRPw}") String successRPw,
+						   @Value("${messages.passwordService.forgotPw}") String forgotPw,
+						   @Value("${messages.passwordService.successFPw}") String successFPw)
 			{
 		
 		this.userService = userService;
@@ -64,6 +66,7 @@ public class PasswordService {
 		
 		this.resetSubject = resetSubject;
 		this.resetRequestReceived = resetRequestReceived;
+		this.resetRequestURL = resetRequestURL;
 		this.resetCheckInbox = resetCheckInbox;
 		this.resetSuccessfully = resetSuccessfully;
 		this.mailNotExists = mailNotExists;
@@ -89,12 +92,17 @@ public class PasswordService {
 		if(existingUser.isPresent()) {
 			User userE = existingUser.get();
 			ConfirmationToken confirmationToken = confirmationTokenService.createToken(userE);
+
+			String baseURL = ServletUriComponentsBuilder.fromCurrentContextPath() // Maybe could be on a more central place
+					.replacePath(null)  // NOTE: Only works, when called from some kind of Request (but also in Service, etc.)
+					.build()
+					.toUriString();
 			
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
 			mailMessage.setTo(user.getEmail());
 			mailMessage.setSubject(resetSubject);
 			mailMessage.setFrom(email);
-			mailMessage.setText(resetRequestReceived + confirmationToken.getToken());
+			mailMessage.setText(resetRequestReceived + baseURL + resetRequestURL + confirmationToken.getToken());
 			
 			emailSenderService.sendEmail(mailMessage);
 			
