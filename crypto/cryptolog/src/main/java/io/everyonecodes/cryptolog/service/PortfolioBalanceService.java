@@ -2,17 +2,28 @@ package io.everyonecodes.cryptolog.service;
 
 import io.everyonecodes.cryptolog.data.Coin;
 import io.everyonecodes.cryptolog.data.PortfolioBalance;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class PortfolioBalanceService {
     private final YieldCalculatorService yieldCalculatorService;
+    
+    private final String conservative;
+    private final String gambler;
+    
 
-    public PortfolioBalanceService(YieldCalculatorService yieldCalculatorService) {
+    public PortfolioBalanceService(YieldCalculatorService yieldCalculatorService,
+                                   @Value("${assets.conservative}") String conservative,
+                                   @Value("${assets.gambler}") String gambler) {
         this.yieldCalculatorService = yieldCalculatorService;
+        this.conservative = conservative;
+        this.gambler = gambler;
     }
 
     public List<PortfolioBalance> getBalance(List<Coin> coinList, String profile, Map<String, Double> values, Model model) {
@@ -49,7 +60,7 @@ public class PortfolioBalanceService {
 
             percentageBefore = accumulatedPrice / valueOfAllCoins * 100;
 
-            if (profile.equals("Conservative")) {
+            if (profile.equals(conservative)) {
                 if (tierOne == 0 || tierTwo == 0 || tierThree == 0) {
                     model.addAttribute("errorMessage", "You don't have all three types of coin tiers in your portfolio!");
                     break;
@@ -65,7 +76,7 @@ public class PortfolioBalanceService {
                     percentage = 10d / tierThree;
                 }
 
-            } else if (profile.equals("Gambler")) {
+            } else if (profile.equals(gambler)) {
                 if (tierOne == 0 || tierTwo == 0 || tierThree == 0) {
                     model.addAttribute("errorMessage", "You don't have all three types of coin tiers in your portfolio!");
                     break;
@@ -82,13 +93,10 @@ public class PortfolioBalanceService {
 
             } else {
                 if (!hasRankOneCoin){
-                    model.addAttribute("errorMessage", "You have no rank 1 coin in your porfolio!");
+                    model.addAttribute("errorMessage", "You have no rank 1 coin in your portfolio!");
                     break;
-                }else  if (coin.getMarket_cap_rank() == 1) {
-                    investedAmount = investedAmount;
-
-                }else {
-                    investedAmount=0;
+                } else if (coin.getMarket_cap_rank() != 1) {
+                    investedAmount = 0;
                 }
 
             }

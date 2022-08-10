@@ -103,3 +103,5 @@ messages:
       errMess: errorMessage
       disabled: User is disabled
       login: login
+
+  portfolioBalance:
