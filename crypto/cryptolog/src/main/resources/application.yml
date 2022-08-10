@@ -60,6 +60,14 @@ messages:
     customSuccess: "You have successfully customized the Asset Allocation in your portfolio. Go to the yield calculator and see how much you could potentially save by investing in crypto."
 
   passwordService:
+    u: user
+    title: message
+    er: error
+    emId: emailId
+    resetPw: resetPassword2
+    successRPw: successResetPassword
+    forgotPw: forgotPassword
+    successFPw: successForgotPassword
     resetSubject: "Complete Password Reset!"
     resetRequestReceived: "To complete the password reset process, please click here: http://localhost:9200/confirm-reset?token="
     resetCheckInbox: "Request to reset password received. Check your inbox for the reset link."
