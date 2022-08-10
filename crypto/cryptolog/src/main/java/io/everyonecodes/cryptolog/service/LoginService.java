@@ -19,19 +19,31 @@ public class LoginService {
 	private final String adminPassword;
 	private final String incorrectPassword;
 	private final String emailNotValidated;
+	private final String badCred;
+	private final String errMess;
+	private final String disabled;
+	private final String login;
 	
 	public LoginService(UserService userService,
-						@Value("${admin.username}") String admin,
-						@Value("${admin.email}") String adminEmail,
-						@Value("${admin.password}") String adminPassword,
-						@Value("${messages.login.incorrectPassword}") String incorrectPassword,
-						@Value("${messages.login.emailNotValidated}") String emailNotValidated) {
+	                    @Value("${admin.username}") String admin,
+	                    @Value("${admin.email}") String adminEmail,
+	                    @Value("${admin.password}") String adminPassword,
+	                    @Value("${messages.login.incorrectPassword}") String incorrectPassword,
+	                    @Value("${messages.login.emailNotValidated}") String emailNotValidated,
+	                    @Value("${messages.login.getLoggedIn.badCred}") String badCred,
+	                    @Value("${messages.login.getLoggedIn.errMess}") String errMess,
+	                    @Value("${messages.login.getLoggedIn.disabled}") String disabled,
+	                    @Value("${messages.login.getLoggedIn.login}") String login) {
 		this.userService = userService;
 		this.admin = admin;
 		this.adminEmail = adminEmail;
 		this.adminPassword = adminPassword;
 		this.incorrectPassword = incorrectPassword;
 		this.emailNotValidated = emailNotValidated;
+		this.badCred = badCred;
+		this.errMess = errMess;
+		this.disabled = disabled;
+		this.login = login;
 	}
 	
 	public String getLoggedIn(HttpServletRequest request, Model model) {
@@ -49,20 +61,20 @@ public class LoginService {
 			}
 		}
 		if (errorMessage != null) {
-			if (errorMessage.equals("Bad credentials")) {
+			if (errorMessage.equals(badCred)) {
 				
-				model.addAttribute("errorMessage", incorrectPassword);
+				model.addAttribute(errMess, incorrectPassword);
 				
-			} else if (errorMessage.equals("User is disabled")) {
+			} else if (errorMessage.equals(disabled)) {
 				
-				model.addAttribute("errorMessage", emailNotValidated);
+				model.addAttribute(errMess, emailNotValidated);
 				
 			} else {
-				model.addAttribute("errorMessage", errorMessage);
+				model.addAttribute(errMess, errorMessage);
 				
 			}
 		}
 		
-		return "login";
+		return login;
 	}
 }

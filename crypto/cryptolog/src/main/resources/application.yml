@@ -98,3 +98,8 @@ messages:
   login:
     incorrectPassword: "Your email or password is incorrect. Please try again!"
     emailNotValidated: "Your email is not validated! Resend <a href=\"/verification\">Verification Link</a>?"
+    getLoggedIn:
+      badCred: Bad credentials
+      errMess: errorMessage
+      disabled: User is disabled
+      login: login
