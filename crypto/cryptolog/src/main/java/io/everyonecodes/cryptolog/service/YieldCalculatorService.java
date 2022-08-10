@@ -35,10 +35,12 @@ public class YieldCalculatorService {
         User user = userService.loadLoggedInUser(principal);
         List<Coin> coinList = client.getCoinsById(user.getCoinIds());
         var oCustomAssetAllocation = customAssetAllocationRepository.findByCustomAllocationNameAndUser("Custom", user);
-        var customAssetAllocation = oCustomAssetAllocation.get();
-        var valuesMap = assetsAllocationService.parseCustomDTOsStringToMap(customAssetAllocation.getInvestedCoins());
-        double percentage = valuesMap.get(coin.getName());
-
+        double percentage = 0;
+        if(oCustomAssetAllocation.isPresent()) {
+            var customAssetAllocation = oCustomAssetAllocation.get();
+            var valuesMap = assetsAllocationService.parseCustomDTOsStringToMap(customAssetAllocation.getInvestedCoins());
+             percentage = valuesMap.get(coin.getName());
+        }
 
         for (Coin coin1 : coinList) {
             if (coin1.getMarket_cap_rank() <= 2) {
