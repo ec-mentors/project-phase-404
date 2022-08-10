@@ -11,10 +11,7 @@
     <header th:replace="/fragments/general.html :: header"></header>
     <main>
         <div id="contain">
-            </section>
-            <div class="background bgcol-whitesmoke" th:if=${yieldcalculator} style="max-width: 90%;">
-                <span class="span_deactivated" th:utext="${yieldcalculator}" id="messageSpan_deactivated"></span>
-            </div>
+
             <form th:if="${coinList}" action="/portfoliobalance" method="post" th:object="${balanceForm}"
                 class="general">
                 <table>
@@ -57,7 +54,11 @@
                 <br>
                 <br>
             </form>
-            <div th:if="${balanceResults}" class="balance-results">
+            </section>
+            <div class="background bgcol-whitesmoke" th:if=${errorMessage} style="max-width: 90%;">
+                <span class="span_deactivated" th:utext="${errorMessage}" id="messageSpan_deactivated"></span>
+            </div>
+            <div th:unless="${#lists.isEmpty(balanceResults)}" class="balance-results">
                 <table class="actions">
                     <caption th:text="'For the ' + ${caption} + ' profile, following actions are needed:'">For the balaba profile, following actions are needed:</caption>
                     <thead>
