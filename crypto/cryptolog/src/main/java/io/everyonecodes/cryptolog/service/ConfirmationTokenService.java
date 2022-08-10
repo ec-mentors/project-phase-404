@@ -17,13 +17,17 @@ import java.util.UUID;
 public class ConfirmationTokenService {
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final UserRepository userRepository;
-    
     private final String tokenNotFound;
     private final String alreadyConfirmed;
     private final String expired;
     private final String confirmed;
-
-    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository, UserRepository userRepository, @Value("${messages.token.nf}") String tokenNotFound, @Value("${messages.token.ac}") String alreadyConfirmed, @Value("${messages.token.ex}") String expired, @Value("${messages.token.co}") String confirmed) {
+    
+    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository,
+                                    UserRepository userRepository,
+                                    @Value("${messages.token.nf}") String tokenNotFound,
+                                    @Value("${messages.token.ac}") String alreadyConfirmed,
+                                    @Value("${messages.token.ex}") String expired,
+                                    @Value("${messages.token.co}") String confirmed) {
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.userRepository = userRepository;
         this.tokenNotFound = tokenNotFound;

@@ -6,7 +6,7 @@
 
         <!--========== BOX ICONS ==========-->
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
-        <title th:text="${title != null} ? ${title} : 'CryptoLog'"></title>
+        <title th:text="${title}">CryptoLog</title>
         <!--========== CSS ==========-->
         <link rel="stylesheet" th:href="@{/css/styles.css}" href="../../static/css/styles.css">
         <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
@@ -23,14 +23,14 @@
       
         <header class="l-header" id="header">
             <nav class="nav bd-container">
-                <a href="/#" class="nav__logo"> <img src="../images/cryptologo_cyan.svg" alt="" class="home__img"></a>
+                <a href="/#" class="nav__logo"> <img src="../images/cryptologo_cyan.svg" alt="" class=""></a>
 
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <li class="nav__item"><a href="/#home" class="nav__link active-link">Home</a></li>
                         <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
                         <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
-                        <li class="nav__item"><a href="#menu" class="nav__link">Register</a></li>
+                        <li class="nav__item"><a href="/register" class="nav__link">Register</a></li>
                         <li class="nav__item"><a href="#contact" class="nav__link">Contact us</a></li>
 
                         <li><i class='bx bx-moon change-theme' id="theme-button"></i></li>
@@ -120,7 +120,7 @@
                
             </section>
               <!--========== SERVICES1 ==========-->
-              <section class="services section bd-container" <!--id="services1"-->>
+              <section class="services section bd-container" >
                 
                 <div class="containertop">
                     <div class="textarea">
@@ -184,7 +184,7 @@
                       
                             <div class="servpic2"><i class="fa-solid fa-envelope"></i>
                                 <h3 class="services__title">2 Account Verification</h3>
-                                <p class="services__description">Performed via email, security is top priority by us</p></div>
+                                <p class="services__description">Performed via email, your security is top priority</p></div>
                       
                             <div class="servpic3"> <i class="fa-solid fa-chart-line"></i>
                                 <h3 class="services__title">3 Research Crypto Stats</h3>
@@ -192,8 +192,8 @@
                                     cryptocurrencies</p></div>
                       
                             <div class="servpic4"> <i class="fa-brands fa-bitcoin"></i>
-                                <h3 class="services__title">4 Select a portofolio</h3>
-                                <p class="services__description">choose a portofolio 
+                                <h3 class="services__title">4 Select a portfolio</h3>
+                                <p class="services__description">choose a portfolio
                                     diversification option</p></div>
                     </div>
                    
@@ -222,7 +222,8 @@
           <figure class="snip1533">
             <figcaption>
               <blockquote>
-                <p>I'm killing time while I wait for life to shower me with meaning and happiness.</p>
+                <p>I enjoyed the sprint- and developer-meetings very much,
+                    it was a great scrum-insight and experience of value to work with such a competent and passionate team. 🙂 <3</p>
               </blockquote>
               <h3>Laura</h3>
             
@@ -231,7 +232,7 @@
           <figure class="snip1533">
             <figcaption>
               <blockquote>
-                <p>Boxes, boxes everywhere! </p>
+                <p>Test run of our skills in a safe environment - thx for this chance! I hope, I will always be that lucky and have teams like ours!</p>
               </blockquote>
               <h3>Kriszta</h3>
            
@@ -526,7 +527,7 @@
                 </div>
             </div>
 
-            <p class="footer__copy">&#169; 2022 404NameNotFound All right reserved</p>
+            <p class="footer__copy">&#169; 2022 404NameNotFound All rights reserved</p>
         </footer>
 
         <!--========== SCROLL REVEAL ==========-->

@@ -15,20 +15,20 @@ import java.io.IOException;
 
 @Component
 public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-
+    
     private final UserRepository userRepository;
     private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
+    
     public CustomLoginSuccessHandler(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
-
+    
+    
     private void resetFailedLoginAttempts(User user) {
         user.setLoginAttempts(0);
         userRepository.save(user);
     }
-
+    
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
@@ -39,10 +39,10 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             if (user.getLoginAttempts() > 0) {
                 resetFailedLoginAttempts(user);
             }
-
+            
         }
         redirectStrategy.sendRedirect(request,response,"/home");
     }
-
-
+    
+    
 }

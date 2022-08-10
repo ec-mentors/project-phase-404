@@ -4,32 +4,43 @@ import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Coin;
 import io.everyonecodes.cryptolog.data.User;
 import io.everyonecodes.cryptolog.data.YieldData;
+import io.everyonecodes.cryptolog.repository.CustomAssetAllocationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class YieldCalculatorService {
     private final UserService userService;
     private final CoingeckoClient client;
+    private final CustomAssetAllocationRepository customAssetAllocationRepository;
+    private final AssetsAllocationService assetsAllocationService;
 
-    public YieldCalculatorService(UserService userService, CoingeckoClient client) {
+    public YieldCalculatorService(UserService userService, CoingeckoClient client, CustomAssetAllocationRepository customAssetAllocationRepository, AssetsAllocationService assetsAllocationService) {
         this.userService = userService;
         this.client = client;
+        this.customAssetAllocationRepository = customAssetAllocationRepository;
+        this.assetsAllocationService = assetsAllocationService;
     }
 
     private YieldData calculate(Coin coin, double monthlyInvestment,
                                 double actualPrice, double ath, int investmentPeriod,
-                                Principal principal, User user) {
+                                Principal principal) {
         double accumulated = 0;
         int tierOne = 0;
         int tierTwo = 0;
         int tierThree = 0;
-        user = userService.loadLoggedInUser(principal);
+        User user = userService.loadLoggedInUser(principal);
         List<Coin> coinList = client.getCoinsById(user.getCoinIds());
+        var oCustomAssetAllocation = customAssetAllocationRepository.findByCustomAllocationNameAndUser("Custom", user);
+        double percentage = 0;
+        if(oCustomAssetAllocation.isPresent()) {
+            var customAssetAllocation = oCustomAssetAllocation.get();
+            var valuesMap = assetsAllocationService.parseCustomDTOsStringToMap(customAssetAllocation.getInvestedCoins());
+             percentage = valuesMap.get(coin.getName());
+        }
 
         for (Coin coin1 : coinList) {
             if (coin1.getMarket_cap_rank() <= 2) {
@@ -43,57 +54,60 @@ public class YieldCalculatorService {
 
 
         double investedAmount;
-        if (user.getAssetsAllocation().equals("Conservative")) {
-            if (coin.getMarket_cap_rank() <= 2) {
-                investedAmount = monthlyInvestment * investmentPeriod * 0.8 / tierOne;
+        switch (user.getAssetsAllocation()) {
+            case "Conservative":
+                if (coin.getMarket_cap_rank() <= 2) {
+                    investedAmount = monthlyInvestment * investmentPeriod * 0.8 / tierOne;
+                    accumulated = investedAmount / actualPrice;
+                } else if (coin.getMarket_cap_rank() > 2 && coin.getMarket_cap_rank() <= 49) {
+                    investedAmount = monthlyInvestment * investmentPeriod * 0.1 / tierTwo;
+                    accumulated = investedAmount / actualPrice;
+
+                } else {
+                    investedAmount = monthlyInvestment * investmentPeriod * 0.1 / tierThree;
+                    accumulated = investedAmount / actualPrice;
+
+                }
+
+                break;
+            case "Gambler":
+
+                if (coin.getMarket_cap_rank() <= 2) {
+                    investedAmount = monthlyInvestment * investmentPeriod * 0.4 / tierOne;
+                    accumulated = investedAmount / actualPrice;
+
+                } else if (coin.getMarket_cap_rank() > 2 && coin.getMarket_cap_rank() <= 49) {
+                    investedAmount = monthlyInvestment * investmentPeriod * 0.3 / tierTwo;
+                    accumulated = investedAmount / actualPrice;
+
+                } else {
+                    investedAmount = monthlyInvestment * investmentPeriod * 0.3 / tierThree;
+                    accumulated = investedAmount / actualPrice;
+
+                }
+
+                break;
+            case "Custom":
+
+                investedAmount = monthlyInvestment * investmentPeriod * percentage / 100;
                 accumulated = investedAmount / actualPrice;
-            } else if (coin.getMarket_cap_rank() > 2 && coin.getMarket_cap_rank() <= 49) {
-                investedAmount = monthlyInvestment * investmentPeriod * 0.1 / tierTwo;
-                accumulated = investedAmount / actualPrice;
 
-            } else {
-                investedAmount = monthlyInvestment * investmentPeriod * 0.1 / tierThree;
-                accumulated = investedAmount / actualPrice;
+                break;
+            default:
 
-            }
-
-        } else if (user.getAssetsAllocation().equals("Gambler")) {
-
-            if (coin.getMarket_cap_rank() <= 2) {
-                investedAmount = monthlyInvestment * investmentPeriod * 0.4 / tierOne;
-                accumulated = investedAmount / actualPrice;
-
-            } else if (coin.getMarket_cap_rank() > 2 && coin.getMarket_cap_rank() <= 49) {
-                investedAmount = monthlyInvestment * investmentPeriod * 0.3 / tierTwo;
-                accumulated = investedAmount / actualPrice;
-
-            } else {
-                investedAmount = monthlyInvestment * investmentPeriod * 0.3 / tierThree;
-                accumulated = investedAmount / actualPrice;
-
-            }
-
-        } else {
-
-            if (coin.getMarket_cap_rank() == 1) {
-                investedAmount = monthlyInvestment * investmentPeriod;
-                accumulated = investedAmount / actualPrice;
-            } else if (coin.getMarket_cap_rank() > 1 && coin.getMarket_cap_rank() <= 49) {
-                investedAmount = 0;
-            } else {
-                investedAmount = 0;
-            }
+                if (coin.getMarket_cap_rank() == 1) {
+                    investedAmount = monthlyInvestment * investmentPeriod;
+                    accumulated = investedAmount / actualPrice;
+                } else {
+                    investedAmount = 0;
+                }
+                break;
         }
 
 
         double potentialProfit = (accumulated * ath) - investedAmount;
 
         double forecastedValue = investedAmount + potentialProfit;
-//        double accumulated = formatDecimals(accumulated);
-//        double investedAmount = formatDecimals(investedAmount);
-//        double forecastedValue = formatDecimals(forecastedValue);
-//        double potentialProfit = formatDecimals(potentialProfit);
-
 
         return (new YieldData(
                 coin.getName(),
@@ -146,7 +160,7 @@ public class YieldCalculatorService {
                     coin.getCurrent_price(),
                     coin.getAth(),
                     Integer.parseInt(period),
-                    principal, user));
+                    principal));
 
         }
         return yieldDataList;
@@ -163,7 +177,7 @@ public class YieldCalculatorService {
                     client.getSimpleMovingAverage(coin.getId(), days),
                     coin.getAth(),
                     Integer.parseInt(period),
-                    principal, user));
+                    principal));
 
         }
         return yieldDataList;
@@ -177,16 +191,15 @@ public class YieldCalculatorService {
         } else {
 
 
-            double finalProfit = 0d;
+            double finalProfit = 0;
             for (YieldData yieldData : yieldDataList) {
                 finalProfit = finalProfit + Double.parseDouble(yieldData.getProfit());
             }
-            double finalInvestmentAmount = 0d;
+            double finalInvestmentAmount = 0;
             for (YieldData yieldData : yieldDataList) {
                 finalInvestmentAmount = finalInvestmentAmount + Double.parseDouble(yieldData.getInvestedAmount());
             }
-//            finalInvestmentAmount = formatDecimals(finalInvestmentAmount);
-//            finalProfit = formatDecimals(finalProfit);
+
             model.addAttribute("finalProfit", formatDecimals(finalProfit));
             model.addAttribute("finalInvestment", formatDecimals(finalInvestmentAmount));
             model.addAttribute(yieldDataList);

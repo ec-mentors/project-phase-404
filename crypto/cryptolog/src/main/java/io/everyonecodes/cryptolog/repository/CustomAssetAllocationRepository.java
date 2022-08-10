@@ -10,4 +10,5 @@ import java.util.Optional;
 @Configuration
 public interface CustomAssetAllocationRepository extends JpaRepository<CustomAssetAllocation, Long> {
     Optional<CustomAssetAllocation> findByCustomAllocationNameAndUser(String allocation, User user);
+    Optional<CustomAssetAllocation> findByCustomAllocationId(Long customAllocationId);
 }

@@ -24,6 +24,9 @@
             <h3> Select the portfolio you want to apply to your current assets</h3>
 
         </section>
+        <div class="background bgcol-whitesmoke" th:if=${assetMessage} style="max-width: 90%;">
+            <span class="span_deactivated" th:utext="${assetMessage}" id="messageSpan_deactivated"></span>
+        </div>
         <section class="grid-container">
             <a href="/asset" th:href="@{asset(assetsAllocation='Maximalist')}" name="Maximalist" id="Maximalist"
                 class="allocation">
@@ -78,9 +81,8 @@
                                 <td th:text="${coin}">
                                 </td>
                                 <td>
-                                    <input type="number" name="percentage" id="percentage" value="0.0" th:value="0.0"
-                                        placeholder="0.00" step="any" form="form" class="field light-innershadow"
-                                        th:field="*{customDTOs['__${coin}__']}">
+                                    <input type="number" name="percentage" id="percentage" placeholder="0.00"
+                                           step="any" form="form" class="field light-innershadow" th:field="*{customDTOs['__${coin}__']}">
                                 </td>
                             </tr>
                         </tbody>
@@ -95,14 +97,12 @@
             </div>
         </section>
 
-        <span class="span" th:utext="${assetMessage}" id="messageSpan"></span>
     </main>
     <footer th:replace="/fragments/general :: footer"></footer>
     <script>
         function saveCustom() {
             document.getElementById("customSection").removeAttribute("hidden");
         }
-
     </script>
 </body>
 
