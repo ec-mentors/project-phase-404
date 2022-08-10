@@ -62,8 +62,8 @@ public class RegistrationService {
 			model.addAttribute("successMessage",regSuccessVerifyEmail );
 			
 			ConfirmationToken confirmationToken = confirmationTokenService.createToken(user);
-			emailSenderService.sendEmail2(user, confirmationToken);
-			
+//			emailSenderService.sendEmail2(user, confirmationToken);
+			emailSenderService.sendEmail(user,confirmationToken);
 		}
 		
 		model.addAttribute("user", new User());
