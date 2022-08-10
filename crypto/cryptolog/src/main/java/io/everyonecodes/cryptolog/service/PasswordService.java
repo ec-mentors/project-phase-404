@@ -28,6 +28,14 @@ public class PasswordService {
 	private final String resetSuccessfully;
 	private final String mailNotExists;
 	private final String brokenLink;
+	private final String u;
+	private final String title;
+	private final String er;
+	private final String emId;
+	private final String resetPw;
+	private final String successRPw;
+	private final String forgotPw;
+	private final String successFPw;
 	
 	public PasswordService(UserService userService, ConfirmationTokenRepository confirmationTokenRepository, EmailSenderService emailSenderService, ConfirmationTokenService confirmationTokenService,
 	                       @Value("${spring.mail.username}") String email,
@@ -36,7 +44,16 @@ public class PasswordService {
 	                       @Value("${messages.passwordService.resetCheckInbox}") String resetCheckInbox,
 	                       @Value("${messages.passwordService.resetSuccessfully}") String resetSuccessfully,
 	                       @Value("${messages.passwordService.mailNotExists}") String mailNotExists,
-	                       @Value("${messages.passwordService.brokenLink}") String brokenLink) {
+	                       @Value("${messages.passwordService.brokenLink}") String brokenLink,
+	                       @Value("${messages.passwordService.u}") String u,
+	                       @Value("${messages.passwordService.title}") String title,
+	                       @Value("${messages.passwordService.er}") String er,
+	                       @Value("${messages.passwordService.emId}") String emId,
+	                       @Value("${messages.passwordService.resetPw}") String resetPw,
+	                       @Value("${messages.passwordService.successRPw}") String successRPw,
+	                       @Value("${messages.passwordService.forgotPw}") String forgotPw,
+	                       @Value("${messages.passwordService.successFPw}") String successFPw)
+			{
 		
 		this.userService = userService;
 		this.confirmationTokenRepository = confirmationTokenRepository;
@@ -50,11 +67,19 @@ public class PasswordService {
 		this.resetSuccessfully = resetSuccessfully;
 		this.mailNotExists = mailNotExists;
 		this.brokenLink = brokenLink;
+		this.u = u;
+		this.title = title;
+		this.er = er;
+		this.emId = emId;
+		this.resetPw = resetPw;
+		this.successRPw = successRPw;
+		this.forgotPw = forgotPw;
+		this.successFPw = successFPw;
 	}
 	
 	public ModelAndView displayResetPassword(ModelAndView mav, User user) {
-		mav.addObject("user", user);
-		mav.setViewName("forgotPassword");
+		mav.addObject(u, user);
+		mav.setViewName(forgotPw);
 		return mav;
 	}
 	
@@ -72,12 +97,11 @@ public class PasswordService {
 			
 			emailSenderService.sendEmail(mailMessage);
 			
-			mav.addObject("message", resetCheckInbox);
-			mav.setViewName("successForgotPassword");
-			
+			mav.addObject(title, resetCheckInbox);
+			mav.setViewName(successFPw);
 		} else {
-			mav.addObject("message", mailNotExists);
-			mav.setViewName("error");
+			mav.addObject(title, mailNotExists);
+			mav.setViewName(er);
 		}
 		
 		return mav;
@@ -94,14 +118,15 @@ public class PasswordService {
 				User user = existingUser.get();
 				user.setVerified(true);
 				userService.save(user);
-				mav.addObject("user", user);
-				mav.addObject("emailId", user.getEmail());
-				mav.setViewName("resetPassword2");
+				mav.addObject(u, user);
+				mav.addObject(emId, user.getEmail());
+				mav.setViewName(resetPw);
 			}
 		} else {
-			mav.addObject("message", brokenLink);
-			mav.setViewName("error");
+			mav.addObject(title, brokenLink);
+			mav.setViewName(er);
 		}
+		
 		return mav;
 	}
 	
@@ -114,13 +139,12 @@ public class PasswordService {
 				User tokenUser = otTokenUser.get();
 				tokenUser.setPassword(encoder.encode(user.getPassword()));
 				userService.save(tokenUser);
-				mav.addObject("message", resetSuccessfully);
-				mav.setViewName("successResetPassword");
+				mav.addObject(title, resetSuccessfully);
+				mav.setViewName(successRPw);
 			}
-		}
-		else {
-			mav.addObject("message", brokenLink);
-			mav.setViewName("error");
+		} else {
+			mav.addObject(title, brokenLink);
+			mav.setViewName(er);
 		}
 		
 		return mav;
