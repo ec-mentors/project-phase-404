@@ -555,8 +555,8 @@ form.general h2, h3, h4 {
   align-content: center;
 }
 
-.customSection>table{
-  align-content: center;
+#customSection>div{
+  margin-bottom: 5rem;
 }
 
 .submit, .reset{

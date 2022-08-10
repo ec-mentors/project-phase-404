@@ -3,117 +3,145 @@
 
 <!--REAL HEAD-->
 <head th:fragment="head">
-
-        <th:block th:fragment="baseHead">
-            <meta charset="UTF-8"/>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-            <title th:text="${title}">CryptoLog</title>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
-            <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
-            <script src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-            <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
-            <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico" th:href="@{/images/favicon.ico}"/>
-        </th:block>
+    <th:block th:fragment="baseHead">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${title}">CryptoLog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+    <script src="https://kit.fontawesome.com/510c92cedb.js" crossorigin="anonymous"></script>
+    <script src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}" />
+    <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico" th:href="@{/images/favicon.ico}" />
+    </th:block>
 </head>
 
 <body>
-<header th:fragment="header">
-    <div class="container">
-        <nav class="pre-nav">
-            <a href="#" class="logo">
-                <img id="logo" src="../../static/images/cryptologo_cyan.svg" th:src="@{images/cryptologo_cyan.svg}" alt="CryptoLog logo" width="60%" height="60%"/>
-            </a>
-        </nav>
-        <nav>
-            <ul>
-                <li><a href="/home" class="nav">Home</a></li>
-                <li><a href="/portfolio" class="nav">Portfolio</a></li>
-                <li><a href="/asset" class="nav">Assets Allocation</a></li>
-                <li><a href="/portfoliobalance" class="nav">Portfolio Rebalancing</a></li>
-                <li><a href="/calculator" class="nav highlight">Yield Calculator</a></li>
-                <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-<main>
-    <div id="contain">
+    <header th:fragment="header">
+        <div class="container">
+            <nav class="pre-nav">
+                <a href="#" class="logo">
+                    <img id="logo" src="../../static/images/cryptologo_cyan.svg" th:src="@{images/cryptologo_cyan.svg}"
+                        alt="CryptoLog logo" width="60%" height="60%" />
+                </a>
+            </nav>
+            <nav>
+                <ul>
+                    <li><a href="/home" class="nav">Home</a></li>
+                    <li><a href="/portfolio" class="nav">Portfolio</a></li>
+                    <li><a href="/asset" class="nav">Assets Allocation</a></li>
+                    <li><a href="/portfoliobalance" class="nav">Portfolio Rebalancing</a></li>
+                    <li><a href="/calculator" class="nav highlight">Yield Calculator</a></li>
+                    <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div id="contain">
 
-        <form th:fragment="filter" th:action="${target}" method="get" class="search">
-            <input type="text" placeholder="Search ..." name="filter" th:value="${filter}" class="medium-innershadow" autofocus>
-            <button type="submit" class="fas fa-search"></button>
-        </form>
+            <form th:fragment="filter" th:action="${target}" method="get" class="search">
+                <input type="text" placeholder="Search ..." name="filter" th:value="${filter}"
+                    class="medium-innershadow" autofocus>
+                <button type="submit" class="fas fa-search"></button>
+            </form>
 
-        <table th:fragment="toptable">
-            <caption th:text="${tableTitle}"></caption>
-            <thead>
-            <tr th:if="${target == '/home'}">
-                <th>
-                    <a th:unless="${sorting == 'rank_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='rank_asc')} : @{/home(sorting='rank_asc',filter=${filter})}">Rank</a>
-                    <a th:if="${sorting == 'rank_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='rank_desc')} : @{/home(sorting='rank_desc',filter=${filter})}">Rank</a>
-                </th>
-                <th>
-                    <a th:unless="${sorting == 'name_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='name_asc')} : @{/home(sorting='name_asc',filter=${filter})}">Name</a>
-                    <a th:if="${sorting == 'name_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='name_desc')} : @{/home(sorting='name_desc',filter=${filter})}">Name</a>
-                </th>
-                <th>
-                    <a th:unless="${sorting == 'price_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='price_asc')} : @{/home(sorting='price_asc',filter=${filter})}">Current Price (USD)</a>
-                    <a th:if="${sorting == 'price_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='price_desc')} : @{/home(sorting='price_desc',filter=${filter})}">Current Price (USD)</a>
-                </th>
-                <th>
-                    <a th:unless="${sorting == 'ath_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_asc')} : @{/home(sorting='ath_asc',filter=${filter})}">All-Time High Price</a>
-                    <a th:if="${sorting == 'ath_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_desc')} : @{/home(sorting='ath_desc',filter=${filter})}">All-Time High Price</a>
-                </th>
-                <th>
-                    <a th:unless="${sorting == 'ath_drop_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_drop_asc')} : @{/home(sorting='ath_drop_asc',filter=${filter})}">&#037; Drop from All-time High Price</a>
-                    <a th:if="${sorting == 'ath_drop_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_drop_desc')} : @{/home(sorting='ath_drop_desc',filter=${filter})}">&#037; Drop from All-time High Price</a>
-                </th>
-                <th>
-                    <a th:unless="${sorting == 'portfolio_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='portfolio_asc')} : @{/home(sorting='portfolio_asc',filter=${filter})}">Add to portfolio</a>
-                    <a th:if="${sorting == 'portfolio_asc'}" th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='portfolio_desc')} : @{/home(sorting='portfolio_desc',filter=${filter})}">Add to portfolio</a>
-                </th>
-                <th>Tier</th>
-            </tr>
-            <tr th:if="${target == '/portfolio'}">
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Current Price (USD)</th>
-                <th>All-Time High Price</th>
-                <th>&#037; Drop from All-time High Price</th>
-                <th>Add to portfolio</th>
-                <th>Tier</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="coin: ${coinList}">
-                <td th:text="${coin.market_cap_rank > 0} ? ${coin.market_cap_rank} : 'unranked'"/>
-                <td>
-                    <img th:src="${coin.image}">
-                    <span class="name" th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'"/>
-                </td>
-                <td th:text="${coin.current_price}"/>
-                <td th:text="${coin.ath}"/>
-                <td th:text="${coin.ath_change_percentage}"/>
-                <td>
-                    <a th:unless="${sorting}" th:href="${#strings.isEmpty(filter)} ? @{${target}(coinId=${coin.id})} : @{${target}(coinId=${coin.id},filter=${filter})}" style="color: darkblue; font-size: large; font-weight: bold;">
-                        <span th:text="${#lists.contains(portfolio, coin.id)} ? '&#9733;' : '&#9734;'"/>
-                    </a>
-                    <a th:if="${sorting}" th:href="${#strings.isEmpty(filter)} ? @{${target}(coinId=${coin.id},sorting=${sorting})} : @{${target}(coinId=${coin.id},filter=${filter},sorting=${sorting})}" style="color: darkblue; font-size: large; font-weight: bold;">
-                        <span th:text="${#lists.contains(portfolio, coin.id)} ? '&#9733;' : '&#9734;'"/>
-                    </a>
-                </td>
-                <td th:text="${coin.market_cap_rank == 0 || coin.market_cap_rank > 49 ? 3 : coin.market_cap_rank > 2 ? 2 : 1}"/>
-            </tr>
-            </tbody>
-        </table>
+            <table th:fragment="toptable">
+                <caption th:text="${tableTitle}"></caption>
+                <thead>
+                    <tr th:if="${target == '/home'}">
+                        <th>
+                            <a th:unless="${sorting == 'rank_asc'}"
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='rank_asc')} : @{/home(sorting='rank_asc',filter=${filter})}">Rank</a>
+                            <a th:if="${sorting == 'rank_asc'}"
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='rank_desc')} : @{/home(sorting='rank_desc',filter=${filter})}">Rank</a>
+                        </th>
+                        <th>
+                            <a th:unless="${sorting == 'name_asc'}"
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='name_asc')} : @{/home(sorting='name_asc',filter=${filter})}">Name</a>
+                            <a th:if="${sorting == 'name_asc'}"
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='name_desc')} : @{/home(sorting='name_desc',filter=${filter})}">Name</a>
+                        </th>
+                        <th>
+                            <a th:unless="${sorting == 'price_asc'}"
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='price_asc')} : @{/home(sorting='price_asc',filter=${filter})}">Current
+                                Price (USD)</a>
+                            <a th:if="${sorting == 'price_asc'}"
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='price_desc')} : @{/home(sorting='price_desc',filter=${filter})}">Current
+                                Price (USD)</a>
+                        </th>
+                        <th>
+                            <a th:unless="${sorting == 'ath_asc'}"
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_asc')} : @{/home(sorting='ath_asc',filter=${filter})}">All-Time
+                                High Price</a>
+                            <a th:if="${sorting == 'ath_asc'}"
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_desc')} : @{/home(sorting='ath_desc',filter=${filter})}">All-Time
+                                High Price</a>
+                        </th>
+                        <th>
+                            <a th:unless="${sorting == 'ath_drop_asc'}"
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_drop_asc')} : @{/home(sorting='ath_drop_asc',filter=${filter})}">&#037;
+                                Drop from All-time High Price</a>
+                            <a th:if="${sorting == 'ath_drop_asc'}"
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='ath_drop_desc')} : @{/home(sorting='ath_drop_desc',filter=${filter})}">&#037;
+                                Drop from All-time High Price</a>
+                        </th>
+                        <th>
+                            <a th:unless="${sorting == 'portfolio_asc'}"
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='portfolio_asc')} : @{/home(sorting='portfolio_asc',filter=${filter})}">Add
+                                to portfolio</a>
+                            <a th:if="${sorting == 'portfolio_asc'}"
+                                th:href="${#strings.isEmpty(filter)} ? @{/home(sorting='portfolio_desc')} : @{/home(sorting='portfolio_desc',filter=${filter})}">Add
+                                to portfolio</a>
+                        </th>
+                        <th>Tier</th>
+                    </tr>
+                    <tr th:if="${target == '/portfolio'}">
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Current Price (USD)</th>
+                        <th>All-Time High Price</th>
+                        <th>&#037; Drop from All-time High Price</th>
+                        <th>Add to portfolio</th>
+                        <th>Tier</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="coin: ${coinList}">
+                        <td th:text="${coin.market_cap_rank > 0} ? ${coin.market_cap_rank} : 'unranked'" />
+                        <td>
+                            <img th:src="${coin.image}">
+                            <span class="name"
+                                th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'" />
+                        </td>
+                        <td th:text="${coin.current_price}" />
+                        <td th:text="${coin.ath}" />
+                        <td th:text="${coin.ath_change_percentage}" />
+                        <td>
+                            <a th:unless="${sorting}"
+                                th:href="${#strings.isEmpty(filter)} ? @{${target}(coinId=${coin.id})} : @{${target}(coinId=${coin.id},filter=${filter})}"
+                                style="color: darkblue; font-size: large; font-weight: bold;">
+                                <span th:text="${#lists.contains(portfolio, coin.id)} ? '&#9733;' : '&#9734;'" />
+                            </a>
+                            <a th:if="${sorting}"
+                                th:href="${#strings.isEmpty(filter)} ? @{${target}(coinId=${coin.id},sorting=${sorting})} : @{${target}(coinId=${coin.id},filter=${filter},sorting=${sorting})}"
+                                style="color: darkblue; font-size: large; font-weight: bold;">
+                                <span th:text="${#lists.contains(portfolio, coin.id)} ? '&#9733;' : '&#9734;'" />
+                            </a>
+                        </td>
+                        <td
+                            th:text="${coin.market_cap_rank == 0 || coin.market_cap_rank > 49 ? 3 : coin.market_cap_rank > 2 ? 2 : 1}" />
+                    </tr>
+                </tbody>
+            </table>
 
-    </div>
-</main>
+        </div>
+    </main>
 
-<footer th:fragment="footer" id="footer">
-    <p>&copy; 2022 404NameNotFound All rights reserved</p>
-</footer>
+    <footer th:fragment="footer" id="footer">
+        <p>&copy; 2022 404NameNotFound All rights reserved</p>
+    </footer>
 
 </body>
+
 </html>
