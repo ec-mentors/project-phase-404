@@ -8,6 +8,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -19,17 +20,24 @@ public class VerificationEmailSenderService {
     private final JavaMailSender mailSender;
     
     private final String encoding;
-    private final String link;
+    private final String confirmRequestURL;
     private final String datePattern;
     private final String confirmTitle;
     private final String confirmText;
     private final String sender;
     private final String failed;
     
-    public VerificationEmailSenderService(JavaMailSender mailSender, @Value("${messages.email.verification.encoding}") String encoding, @Value("${messages.email.verification.link}") String link, @Value("${messages.email.verification.datePattern}") String datePattern, @Value("${messages.email.verification.confirmTitle}") String confirmTitle, @Value("${messages.email.verification.confirmText}") String confirmText, @Value("${messages.email.sender}") String sender, @Value("${messages.email.verification.failed}") String failed) {
+    public VerificationEmailSenderService(JavaMailSender mailSender,
+                                          @Value("${messages.email.verification.encoding}") String encoding,
+                                          @Value("${messages.email.verification.confirmRequestURL}") String confirmRequestURL,
+                                          @Value("${messages.email.verification.datePattern}") String datePattern,
+                                          @Value("${messages.email.verification.confirmTitle}") String confirmTitle,
+                                          @Value("${messages.email.verification.confirmText}") String confirmText,
+                                          @Value("${messages.email.sender}") String sender,
+                                          @Value("${messages.email.verification.failed}") String failed) {
         this.mailSender = mailSender;
         this.encoding = encoding;
-        this.link = link;
+        this.confirmRequestURL = confirmRequestURL;
         this.datePattern = datePattern;
         this.confirmTitle = confirmTitle;
         this.confirmText = confirmText;
@@ -40,9 +48,14 @@ public class VerificationEmailSenderService {
     @Async
     public void sendEmail(User user, ConfirmationToken confirmationToken) {
         try {
+            String baseURL = ServletUriComponentsBuilder.fromCurrentContextPath() // Maybe could be on a more central place
+                    .replacePath(null)  // NOTE: Only works, when called from some kind of Request (but also in Service, etc.)
+                    .build()
+                    .toUriString();
+
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, encoding);
-            helper.setText(buildEmail(user.getName(), link + confirmationToken.getToken(),
+            helper.setText(buildEmail(user.getName(), baseURL + confirmRequestURL + confirmationToken.getToken(),
                                       confirmationToken.getExpiresAt().format(DateTimeFormatter.ofPattern(datePattern))), true);
             helper.setTo(user.getEmail());
             helper.setSubject(confirmTitle);
@@ -54,8 +67,13 @@ public class VerificationEmailSenderService {
     }
     @Async
     public void sendEmail2(User user, ConfirmationToken confirmationToken) {
+        String baseURL = ServletUriComponentsBuilder.fromCurrentContextPath() // Maybe could be on a more central place
+                .replacePath(null)  // NOTE: Only works, when called from some kind of Request (but also in Service, etc.)
+                .build()
+                .toUriString();
+
         SimpleMailMessage helper = new SimpleMailMessage();
-        helper.setText(confirmText + confirmationToken.getToken());
+        helper.setText(confirmText + baseURL + confirmRequestURL + confirmationToken.getToken());
         helper.setTo(user.getEmail());
         helper.setSubject(confirmTitle);
         helper.setFrom(sender);
