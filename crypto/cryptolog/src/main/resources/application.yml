@@ -96,5 +96,5 @@ messages:
       vnError: "error"
 
   login:
-    incorrectPassword: "Your email or password is incorrect. Please try again"
+    incorrectPassword: "Your email or password is incorrect. Please try again!"
     emailNotValidated: "Your email is not validated! Resend <a href=\"/verification\">Verification Link</a>?"
