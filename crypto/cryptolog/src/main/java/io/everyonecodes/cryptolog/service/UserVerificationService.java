@@ -24,7 +24,9 @@ public class UserVerificationService {
 	private final String errorText;
 	private final String vnError;
 	
-	public UserVerificationService(UserRepository userRepository, ConfirmationTokenService confirmationTokenService, VerificationEmailSenderService emailSenderService,
+	public UserVerificationService(UserRepository userRepository,
+								   ConfirmationTokenService confirmationTokenService,
+								   VerificationEmailSenderService emailSenderService,
 	                               @Value("${messages.verification.display.name}") String displayName,
 	                               @Value("${messages.verification.display.viewName}") String viewName,
 	                               @Value("${messages.verification.resendEmail.name}") String resendName,

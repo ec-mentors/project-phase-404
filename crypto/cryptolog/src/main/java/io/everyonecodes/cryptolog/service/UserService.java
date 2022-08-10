@@ -28,7 +28,13 @@ public class  UserService {
     private final String assetsAllocation;
     
     
-    public UserService(PasswordEncoder encoder, RoleRepository roleRepository, UserRepository userRepository, CoingeckoClient coingeckoClient, @Value("${messages.user.userRole.name}") String roleName, @Value("${messages.user.userRole.description}") String roleDescription, @Value("${messages.user.userRole.assetsAllocation}") String assetsAllocation) {
+    public UserService(PasswordEncoder encoder,
+                       RoleRepository roleRepository,
+                       UserRepository userRepository,
+                       CoingeckoClient coingeckoClient,
+                       @Value("${messages.user.userRole.name}") String roleName,
+                       @Value("${messages.user.userRole.description}") String roleDescription,
+                       @Value("${messages.user.userRole.assetsAllocation}") String assetsAllocation) {
         this.encoder = encoder;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
