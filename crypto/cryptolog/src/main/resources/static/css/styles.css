@@ -758,7 +758,6 @@ width: 100%;
 
 .footer{
   background-color: #24252b;
-
 }
 .footer__container{
 
@@ -767,7 +766,7 @@ width: 100%;
 }
 
 .footer__logo{
-  font-size: var(--h2-font-size);
+  font-size: var(--h1-font-size);
   color: var(--first-color);
   font-weight: var(--font-semi-bold);
 }
