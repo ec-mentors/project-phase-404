@@ -26,6 +26,11 @@
             </tr>
             </tbody>
         </table>
+        <section>
+            <div class="background bgcol-whitesmoke" th:if=${errorMessage} style="max-width: 90%;">
+                <span class="span_deactivated" utext="${errorMessage}" id="messageSpan_deactivated"></span>
+            </div>
+        </section>
     </div>
 </main>
 <footer th:replace="/fragments/general.html :: footer"></footer>
