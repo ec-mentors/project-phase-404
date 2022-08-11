@@ -48,6 +48,9 @@ public class CoingeckoClient {
     }
     
     public List<Coin> getCoinsById(Set<String> coinIds) {
+        if (coinIds.isEmpty()) {
+            return List.of();
+        }
         Map<String, Object> params = new HashMap<>();
         params.put("vs_currency", "usd");
         params.put("ids", String.join(",", coinIds));
@@ -55,9 +58,11 @@ public class CoingeckoClient {
         String url = generateURL("coins/markets", params);
         
         var response = restTemplate.getForObject(url, Coin[].class, params);
-        
-        return Arrays.stream(response != null ? response : new Coin[0])
-                     .collect(Collectors.toList());
+
+
+            return Arrays.stream(response != null ? response : new Coin[0])
+                    .collect(Collectors.toList());
+
     }
     
     public List<Coin> findCoinsFromAll(String search) {

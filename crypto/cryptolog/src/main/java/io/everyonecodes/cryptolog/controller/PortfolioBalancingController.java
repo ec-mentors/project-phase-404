@@ -31,7 +31,9 @@ public class PortfolioBalancingController {
         
         User user = userService.loadLoggedInUser(principal);
         List<Coin> coinList = client.getCoinsById(user.getCoinIds());
-        
+       if (coinList.isEmpty()){
+           model.addAttribute("errorMessage","You have no coins in your Portfolio.");
+       }
         BalanceForm balanceForm = new BalanceForm();
         for (var coin : coinList) {
             balanceForm.getValues().put(coin.getId(), 0d);
