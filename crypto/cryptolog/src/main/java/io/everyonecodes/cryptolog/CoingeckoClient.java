@@ -59,10 +59,8 @@ public class CoingeckoClient {
         
         var response = restTemplate.getForObject(url, Coin[].class, params);
 
-
-            return Arrays.stream(response != null ? response : new Coin[0])
-                    .collect(Collectors.toList());
-
+        return Arrays.stream(response != null ? response : new Coin[0])
+                .collect(Collectors.toList());
     }
     
     public List<Coin> findCoinsFromAll(String search) {
