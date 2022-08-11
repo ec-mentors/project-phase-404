@@ -3,6 +3,7 @@ package io.everyonecodes.cryptolog.service;
 import io.everyonecodes.cryptolog.CoingeckoClient;
 import io.everyonecodes.cryptolog.data.Coin;
 import io.everyonecodes.cryptolog.data.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -17,10 +18,19 @@ public class HomeAndPortfolioService {
     private List<Coin> top100CoinList;
     private final UserService userService;
     private final CoingeckoClient client;
+
+    private final String empty;
+    private final String title;
     
-    public HomeAndPortfolioService(UserService userService, CoingeckoClient client) {
+    public HomeAndPortfolioService(UserService userService,
+                                   CoingeckoClient client,
+                                   @Value("${messages.portfolio.empty}") String empty,
+                                   @Value("${messages.portfolio.title}") String title
+                                   ) {
         this.userService = userService;
         this.client = client;
+        this.empty = empty;
+        this.title = title;
     }
     
     public String getHome(String filter, String coinId, String sorting, Principal principal, Model model) {
@@ -74,7 +84,8 @@ public class HomeAndPortfolioService {
             userService.saveUser(user);
         }
         if (user.getCoinIds().isEmpty()) {
-            return "portfolio-empty";
+            model.addAttribute(title, empty);
+            return "portfolio";
         }
         
         List<Coin> displayList;

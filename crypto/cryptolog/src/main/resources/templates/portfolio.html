@@ -5,7 +5,10 @@
 <header th:replace="/fragments/general.html :: header"></header>
 <main>
     <div id="contain">
-        <table>
+        <div class="background bgcol-whitesmoke" th:if=${errorMessage} style="max-width: 90%;">
+            <span class="span_deactivated" th:utext="${errorMessage}" id="messageSpan_deactivated"></span>
+        </div>
+        <table th:unless="${errorMessage}">
             <caption>Top 100 coins</caption>
             <thead>
             <tr>

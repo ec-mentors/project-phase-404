@@ -104,4 +104,8 @@ messages:
       disabled: User is disabled
       login: login
 
+  portfolio:
+    title: errorMessage
+    empty: "There are currently no coins added to your portfolio. Please add coins from the available list."
+
   portfolioBalance:
