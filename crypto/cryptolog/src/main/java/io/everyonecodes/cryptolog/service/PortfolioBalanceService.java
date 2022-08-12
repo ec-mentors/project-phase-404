@@ -13,10 +13,10 @@ import java.util.Map;
 @Service
 public class PortfolioBalanceService {
     private final YieldCalculatorService yieldCalculatorService;
-    
+
     private final String conservative;
     private final String gambler;
-    
+
 
     public PortfolioBalanceService(YieldCalculatorService yieldCalculatorService,
                                    @Value("${assets.conservative}") String conservative,
@@ -92,10 +92,13 @@ public class PortfolioBalanceService {
                 }
 
             } else {
-                if (!hasRankOneCoin){
+                if (!hasRankOneCoin) {
                     model.addAttribute("errorMessage", "You have no rank 1 coin in your portfolio!");
                     break;
-                } else if (coin.getMarket_cap_rank() != 1) {
+                } else if (coin.getMarket_cap_rank() == 1) {
+                    percentage = 100d;
+                }else {
+                    percentage = 0;
                     investedAmount = 0;
                 }
 

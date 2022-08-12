@@ -14,9 +14,6 @@ import javax.servlet.http.HttpSession;
 public class LoginService {
 	
 	private final UserService userService;
-	private final String admin;
-	private final String adminEmail;
-	private final String adminPassword;
 	private final String incorrectPassword;
 	private final String emailNotValidated;
 	private final String badCred;
@@ -25,9 +22,6 @@ public class LoginService {
 	private final String login;
 	
 	public LoginService(UserService userService,
-	                    @Value("${admin.username}") String admin,
-	                    @Value("${admin.email}") String adminEmail,
-	                    @Value("${admin.password}") String adminPassword,
 	                    @Value("${messages.login.incorrectPassword}") String incorrectPassword,
 	                    @Value("${messages.login.emailNotValidated}") String emailNotValidated,
 	                    @Value("${messages.login.getLoggedIn.badCred}") String badCred,
@@ -35,9 +29,6 @@ public class LoginService {
 	                    @Value("${messages.login.getLoggedIn.disabled}") String disabled,
 	                    @Value("${messages.login.getLoggedIn.login}") String login) {
 		this.userService = userService;
-		this.admin = admin;
-		this.adminEmail = adminEmail;
-		this.adminPassword = adminPassword;
 		this.incorrectPassword = incorrectPassword;
 		this.emailNotValidated = emailNotValidated;
 		this.badCred = badCred;
@@ -47,10 +38,6 @@ public class LoginService {
 	}
 	
 	public String getLoggedIn(HttpServletRequest request, Model model) {
-		var oUser = userService.findUserByEmail(adminEmail);
-		if (oUser.isEmpty()){
-			userService.saveAdmin(new User(admin, adminEmail, adminPassword ));
-		}
 		HttpSession session = request.getSession(false);
 		String errorMessage = null;
 		if (session != null) {
