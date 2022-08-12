@@ -83,9 +83,10 @@ public class HomeAndPortfolioService {
             }
             userService.saveUser(user);
         }
+        model.addAttribute("coinString", getCoinsOfThDay());
         if (user.getCoinIds().isEmpty()) {
             model.addAttribute(title, empty);
-            return "portfolio";
+            return "home";
         }
         
         List<Coin> displayList;
@@ -94,8 +95,7 @@ public class HomeAndPortfolioService {
         } else {
             displayList = client.getCoinsById(user.getCoinIds());
         }
-        
-        model.addAttribute("coinString", getCoinsOfThDay());
+
         model.addAttribute(displayList);
         model.addAttribute("tableTitle", "My Portfolio");
         model.addAttribute("filter", filter);
