@@ -106,8 +106,8 @@
                             <span class="name"
                                 th:text="${coin.name} + ' (' + ${#strings.toUpperCase(coin.symbol)} + ')'" />
                         </td>
-                        <td th:text="${coin.current_price}" />
-                        <td th:text="${coin.ath}" />
+                        <td th:text="${coin.current_price_formatted}" />
+                        <td th:text="${coin.ath_formatted}" />
                         <td th:text="${coin.ath_change_percentage}" />
                         <td>
                             <a th:unless="${sorting}"

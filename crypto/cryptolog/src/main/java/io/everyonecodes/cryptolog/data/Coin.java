@@ -1,5 +1,7 @@
 package io.everyonecodes.cryptolog.data;
 
+import io.everyonecodes.cryptolog.Utils;
+
 import java.util.Objects;
 
 public class Coin {
@@ -64,6 +66,10 @@ public class Coin {
         return current_price;
     }
 
+    public String getCurrent_price_formatted() {
+        return Utils.formatDecimal(current_price);
+    }
+
     public double getMarket_cap() {
         return market_cap;
     }
@@ -82,6 +88,10 @@ public class Coin {
 
     public double getAth() {
         return ath;
+    }
+
+    public String getAth_formatted() {
+        return Utils.formatDecimal(ath);
     }
 
     public double getAth_change_percentage() {
